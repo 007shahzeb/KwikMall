@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:layout_below="@id/header"
+        android:id="@+id/contentsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_5sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvHotelNamebold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hunger's Delight"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                app:fontPath="fonts/HindVadodara-Bold.ttf"
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right"
+                android:layout_gravity="center"
+                >
+                <TextView
+                    android:id="@+id/tvDeliveryTimeMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp"
+                    android:text="44"
+                    app:fontPath="fonts/HindVadodara-Bold.ttf"
+
+                    android:layout_marginRight="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp"
+                    app:fontPath="fonts/HindVadodara-Bold.ttf"
+
+                    android:text="MINS"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTypeLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="North Indian, Italian Fast Fo..."
+                android:textSize="@dimen/_9sdp"
+                android:maxLength="25"
+                android:layout_marginTop="5dp"
+                />
+
+
+            <TextView
+                android:id="@+id/txtDeliveryTimeLight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginRight="@dimen/_1sdp"
+                android:text="Delivery Time"
+                android:layout_gravity="center"
+                android:textSize="@dimen/_9sdp"
+                />
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:src="@drawable/dotted"
+            android:layerType="software" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <!-- <ImageView
+                 android:id="@+id/star"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:background="@drawable/rate_star_button"/>
+
+             <TextView
+                 android:id="@+id/tvStarRatingsMedium"
+                 android:layout_toRightOf="@id/star"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="5dp"
+                 android:textColor="@color/black"
+                 android:textSize="13dp"
+                 android:text="3.9"/>
+ -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_5sdp">
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp">
+
+            <!--  <TextView
+                  android:id="@+id/tvRatingsnumberLight"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerVertical="true"
+                  android:text="15"
+                  android:textSize="10sp"
+                  />
+
+              <TextView
+                  android:id="@+id/tvRatingsTextLight"
+                  android:layout_toRightOf="@id/tvRatingsnumberLight"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="5dp"
+                  android:layout_centerVertical="true"
+                  android:text="Ratings"
+                  android:textSize="10sp"
+                  />-->
+
+
+
+
+        </RelativeLayout>
+
+
+        <!--
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="#FEFFEB">
+
+                    <TextView
+                        android:id="@+id/tvFoodTypeMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="VEG ONLY"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        />
+
+                    <ImageView
+                        android:layout_toRightOf="@id/tvFoodTypeMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/greenveg"
+                        android:layout_centerVertical="true"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvDiscountoffersMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
+                        android:text="Flat 20% off on all orders"
+                        android:textColor="#FF7E57"
+                        android:textSize="13sp" />
+
+
+                </RelativeLayout>
+        -->
+
+        <TextView
+            android:id="@+id/tvRecommededBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="RECOMMENDED"
+            android:textSize="@dimen/_10sdp"
+            app:fontPath="fonts/HindVadodara-Bold.ttf"
+            android:layout_marginTop="@dimen/_10sdp" />
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/btnMenu"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_350sdp"
+        android:background="@drawable/roundmenubtn"
+        android:drawableLeft="@drawable/menu"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:singleLine="true"
+        android:paddingLeft="@dimen/_4sdp"
+        android:text="menu"
+        android:textColor="@color/green"
+        android:textSize="@dimen/_10sdp"
+        />
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/contentsLayout"
+        android:id="@+id/recyclerViewSearch"
+        android:layout_width="match_parent"
+        android:padding="@dimen/_5sdp"
+        android:layout_height="match_parent"
+        android:numColumns="2">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+
+</RelativeLayout>

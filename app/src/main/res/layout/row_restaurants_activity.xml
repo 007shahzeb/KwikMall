@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="15dp">
+
+
+    <LinearLayout
+        android:id="@+id/rowClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/_4sdp">
+
+        <ImageView
+            android:id="@+id/imageViewRestaurants"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:scaleType="fitXY"
+            android:src="@drawable/burger"
+            />
+
+        <LinearLayout
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:paddingLeft="@dimen/_3sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                >
+
+
+                <TextView
+                    android:id="@+id/tvHotelname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hunger's Delight"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    app:fontPath="fonts/HindVadodara-Bold.ttf"
+                    android:layout_gravity="center"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/imageVedNonVeg"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    android:background="@drawable/veg"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    />
+
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvAddressHotel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="40"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="@dimen/_8sdp"
+                android:text="North Indian,Tandoor,Snacks"
+                />
+
+            <!--  <TextView
+                  android:id="@+id/tvDiscount"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Flat 20%off on all orders"
+                  android:padding="3dp"
+                  android:textSize="12sp"
+                  android:textColor="@color/green"/>-->
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#FFF4B8">
+            </View>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                >
+
+                <!--  <ImageView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center"
+                      android:background="@drawable/rate_star_button"
+                      android:layout_marginBottom="5dp"
+
+                      />
+
+                  <TextView
+                      android:id="@+id/tvRating"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:layout_marginBottom="5dp"
+                      android:textSize="12sp"
+                      android:layout_marginLeft="2dp"
+                      android:text="3.9"/>-->
+
+                <TextView
+                    android:id="@+id/tvDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="44"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="@dimen/_8sdp"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" MIN"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="@dimen/_8sdp"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/tvPhoneNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="@dimen/_8sdp"
+                    android:padding="2dp"
+                    android:gravity="right"
+                    android:textColor="#474AFF"
+                    android:text="9779269052"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

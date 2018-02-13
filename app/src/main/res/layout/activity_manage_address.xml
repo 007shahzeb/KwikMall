@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    tools:context="mall.kwik.kwikmall.activities.FoodDetailsActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/headerViewManageAdd"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/imageManageAddrBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="@dimen/_8sdp"
+            android:padding="10dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/leftarrowblack"
+            />
+
+        <TextView
+
+            android:id="@+id/tvmanageAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/manageaddress"
+            android:padding="5dp"
+            app:fontPath="fonts/HindVadodara-Bold.ttf"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13sdp"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/layoutSaved"
+        android:layout_below="@id/headerViewManageAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FCFCED"
+        android:gravity="center">
+
+        <TextView            android:id="@+id/tvSavedAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/black"
+            android:text="@string/savedaddresses"/>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutAddress"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/layoutSaved"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/nearmeblack"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="5dp">
+
+
+                <TextView
+                    android:id="@+id/tvNameOfCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Other"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+
+
+                <TextView                    android:id="@+id/tvDescripAddr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Smart iT Ventures, Giani Zail Singh Nagar, Ropar"
+                    android:lines="2"
+                    android:textSize="@dimen/_10sdp"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+
+                    <TextView
+                        android:id="@+id/tvDelete"
+                        app:fontPath="fonts/HindVadodara-Bold.ttf"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/delete"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginTop="5dp"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/orange_app"
+                        android:layout_weight="4"/>
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutNewAddress"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/relativeLayoutAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/nearmeblack"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="5dp">
+
+
+                <TextView                    android:id="@+id/tvFlatNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Other"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+
+
+                <TextView                    android:id="@+id/tvAddressNew"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Smart iT Ventures, Giani Zail Singh Nagar, Ropar"
+                    android:lines="2"
+                    android:textSize="@dimen/_10sdp"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+
+                    <TextView                        android:id="@+id/tvDeleteNewAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/delete"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/orange_app"
+                        android:layout_weight="4"/>
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/btnAddNewAddresses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayoutNewAddress"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_27sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
+        app:fontPath="fonts/HindVadodara-Bold.ttf"
+        android:background="@drawable/custom_background_selected"
+        android:text="@string/addnewaddress"
+        android:textColor="@color/green" />
+
+
+</RelativeLayout>

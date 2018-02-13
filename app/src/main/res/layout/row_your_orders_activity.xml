@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <RelativeLayout
+        android:id="@+id/view_foreground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_3sdp"
+        android:background="@drawable/my_custom_border_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+
+                <ImageView
+                    android:id="@+id/cartImageView"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/_3sdp"
+                    android:background="@drawable/burger"
+                    android:layout_margin="1dp"
+                    android:scaleType="fitXY"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/_3sdp">
+
+                    <TextView
+                        android:id="@+id/tvFoodName"
+                        app:fontPath="fonts/HindVadodara-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Japanese Food"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+
+                        />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PRICE: "
+                            android:padding="@dimen/_2sdp"
+                            android:textSize="@dimen/_9sdp"
+                            />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:id="@+id/tvPriceItem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="250"
+                            android:textColor="@color/red"
+                            android:padding="@dimen/_2sdp"
+                            android:textSize="@dimen/_9sdp"
+
+                            />
+
+                        <!-- <ImageView
+                             android:layout_width="20dp"
+                             android:layout_height="20dp"
+                             android:layout_marginRight="10dp"
+                             android:layout_gravity="center"
+                             android:background="@drawable/veg"/>
+ -->
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <TextView
+                            android:textSize="@dimen/_9sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Delivered: "
+                            android:padding="@dimen/_2sdp"
+                            />
+
+                        <TextView
+                            android:textSize="@dimen/_9sdp"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_2sdp"
+                            android:id="@+id/tvOrderDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="21-DEC-2017 "
+                            />
+
+
+                        <Button
+                            android:id="@+id/btnDelete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_gravity="right"
+                            android:background="@drawable/deletebtnbg"
+                            android:text="DELETE"
+                            android:layout_marginBottom="5dp"
+                            android:textSize="@dimen/_8sdp"
+                            android:layout_marginRight="10dp"
+                            />
+
+
+                    </LinearLayout>
+
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#aaa">
+            </View>
+
+
+            <RelativeLayout
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:id="@+id/relativeBuyitagain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    app:fontPath="fonts/HindVadodara-Bold.ttf"
+                    android:layout_height="wrap_content"
+                    android:text="@string/buyitagain"
+                    android:textColor="@color/black"
+                    android:padding="8dp"
+                    android:textSize="@dimen/_10sdp"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@drawable/anglearrowright"/>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    tools:context="mall.kwik.kwikmall.activities.FoodDetailsActivity">
+
+
+
+    <RelativeLayout
+        android:id="@+id/headerViewSuccess"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/imageSuccessBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="@dimen/_5sdp"
+            android:padding="@dimen/_6sdp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/leftarrowblack"
+            />
+
+        <TextView
+            app:fontPath="fonts/HindVadodara-Bold.ttf"
+            android:id="@+id/txtSuccess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/payment"
+            android:padding="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+
+
+    <View
+        android:id="@+id/lineSuccess"
+        android:layout_below="@+id/headerViewSuccess"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#B0B1B5"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp">
+
+    </View>
+
+    <FrameLayout
+        android:layout_below="@id/lineSuccess"
+        android:layout_above="@id/footerSuccess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                >
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="7"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/addressloc"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:background="@color/black"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/payment_green"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:background="@color/black"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/success_green"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        />
+
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="2dp"
+                    >
+                    <TextView
+                        android:id="@+id/tvAddress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:gravity="center"
+                        android:layout_weight="0.7"
+                        android:padding="5dp"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_10sdp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvPaymentMethod"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Payment Method"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:textSize="@dimen/_10sdp"
+                        android:textColor="@color/green"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvSuccessfully"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Successfully"
+                        android:layout_weight="0.7"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_10sdp"
+                        />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+
+                    android:gravity="center"
+
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/success_green"/>
+
+                    <TextView
+                        android:id="@+id/tvCongra"
+                        app:fontPath="fonts/HindVadodara-Bold.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/congratulations"
+                        android:gravity="center"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_13sdp"/>
+
+
+                    <TextView
+                        android:id="@+id/tvDes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/yourpaymentsuccess"
+                        android:gravity="center"
+                        android:textSize="@dimen/_11sdp"/>
+
+                </LinearLayout>
+
+
+                <TableLayout
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    >
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_10sdp"
+                            android:text="Payment Amount : " />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_10sdp"
+
+                            android:layout_height="wrap_content" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_10sdp"
+
+                            android:text="Status : " />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_10sdp"
+
+                            android:layout_height="wrap_content" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_10sdp"
+
+                            android:text="Payment Id : " />
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </TableRow>
+
+
+                </TableLayout>
+
+
+
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+    </FrameLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/footerSuccess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00d048"
+        android:layout_alignParentBottom="true">
+
+
+        <TextView            android:id="@+id/txtonSuccess"
+
+            app:fontPath="fonts/HindVadodara-Bold.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/trackyourorder"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <RelativeLayout
+        android:id="@+id/topFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:padding="@dimen/_5sdp"
+            android:id="@+id/btnCancel"
+            >
+
+
+            <Button
+                android:layout_width="@dimen/_11sdp"
+                android:layout_height="@dimen/_11sdp"
+                android:layout_gravity="center"
+                android:background="@drawable/crossblack"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                app:fontPath="fonts/HindVadodara-Bold.ttf"
+                android:layout_height="wrap_content"
+                android:text="@string/filter"
+                android:layout_gravity="center"
+                android:textSize="@dimen/_11sdp"
+                android:textStyle="bold"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:textColor="@color/black"
+                />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearClear"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_centerVertical="true">
+
+
+
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/tvClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CLEAR"
+                android:layout_gravity="center"
+                android:textSize="@dimen/_8sdp"
+                android:padding="@dimen/_5sdp"
+                android:textColor="@color/dimorange"
+                android:layout_marginRight="10dp"
+                />
+
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <View
+        android:id="@+id/lineFilter"
+        android:layout_below="@id/topFilter"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/grey">
+
+
+    </View>
+
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/lineFilter"
+        android:id="@+id/filterRecyclerview"
+        android:layout_above="@+id/footerFilter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="true"
+        android:padding="16dp"
+        android:saveEnabled="false">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/footerFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dimgreen"
+        android:layout_alignParentBottom="true">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            app:fontPath="fonts/HindVadodara-Bold.ttf"
+            android:layout_height="wrap_content"
+            android:text="@string/applyfilter"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:textSize="@dimen/_11sdp"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

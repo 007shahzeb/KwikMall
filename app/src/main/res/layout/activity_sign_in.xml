@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainLoginLayout"
+    android:background="@drawable/splach_bg"
+    tools:context="mall.kwik.kwikmall.activities.SignInSignUpButtonsActivity">
+
+
+    <ImageView
+        android:id="@+id/image2"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/logo"/>
+
+
+    <LinearLayout
+        android:layout_below="@+id/image2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_30sdp">
+
+        <ImageView
+            android:id="@+id/line1"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_10sdp"
+            android:background="#FFFFFF"/>
+
+
+        <ImageView
+            android:layout_below="@id/line1"
+            android:layout_width="@dimen/_222sdp"
+            android:layout_height="@dimen/_10sdp"
+            android:background="#FFFFFF"/>
+
+        <RelativeLayout
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_230sdp"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:background="#ffffff">
+
+
+                <TextView
+                    android:id="@+id/txtSignIn"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:text="@string/signin"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:textSize="@dimen/_13sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@color/green">
+
+                </TextView>
+
+
+                <EditText
+                    android:id="@+id/edEmailAddressLogin"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:padding="@dimen/_8sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="EMAIL ADDRESS"
+                    android:textSize="@dimen/_12sdp"
+                    android:ems="10"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:drawableLeft="@drawable/user"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="#EDEDED"
+                    android:textColorHint="@color/black"/>
+
+                <EditText
+
+                    android:id="@+id/edPasswordLogin"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:padding="@dimen/_8sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="PASSWORD"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    android:textSize="@dimen/_12sdp"
+                    android:singleLine="true"
+                    android:imeOptions="actionDone"
+                    android:layout_marginTop="5dp"
+                    android:drawableLeft="@drawable/key"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="#EDEDED"
+                    android:textColorHint="@color/black"/>
+
+                <TextView
+                    android:id="@+id/txtForgetPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@string/forgetpassword"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    android:gravity="center"/>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/btnArrow"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:elevation="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_365sdp"
+        android:src="@drawable/rightarrowwhite"
+        android:background="@drawable/circle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/image_size5"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        >
+
+        <TextView
+            android:id="@+id/txtDontAcc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11sdp"
+            android:text="@string/donthaveacc"
+            />
+
+        <TextView
+            android:id="@+id/txtCreateNow"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createnow"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/green"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

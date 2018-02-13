@@ -1,0 +1,23 @@
+<tabs>
+    <tab
+        id="@+id/tab_nearyby"
+        icon="@drawable/location"
+        title="Near Me"
+        />
+    <tab
+        id="@+id/tab_search"
+        icon="@drawable/searchicon"
+        title="Explore" />
+
+    <tab
+        id="@+id/tab_cart"
+        icon="@drawable/carticon"
+        title="Cart"
+        />
+
+    <tab
+        id="@+id/tab_account"
+        icon="@drawable/user"
+        title="Account"
+        />
+</tabs>

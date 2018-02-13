@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/bottom_sheet"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="200dp"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+
+        >
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        >
+
+
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:max="100"
+            android:maxHeight="5dip"
+            android:minHeight="10dip"
+            android:progress="10"
+            android:progressDrawable="@drawable/green_progress_drawable"
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutSavedLoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FCFCED"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:paddingLeft="@dimen/_8sdp">
+
+        <TextView
+
+            android:id="@+id/tvSavedAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            app:fontPath="fonts/HindVadodara-Bold.ttf"
+
+            android:text="@string/savedeliverylocation"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_below="@id/layoutSavedLoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/_8sdp"
+        android:layout_marginRight="@dimen/_8sdp">
+
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_current"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/TextLabel"
+            android:layout_marginTop="@dimen/image_size8"
+            android:textColorHint="#808080"
+            >
+
+            <EditText
+                android:id="@+id/edLocationCurrent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="LOCATION"
+                android:singleLine="true"
+                android:textSize="@dimen/_10sdp"
+                android:drawableTint="@color/grey"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_flat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/TextLabel"
+            android:layout_marginTop="@dimen/image_size8"
+            android:textColorHint="#808080"
+            >
+
+            <EditText
+                android:id="@+id/edFlatNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="HOUSE/FLAT NO"
+                android:singleLine="true"
+                android:textSize="@dimen/_10sdp"
+                android:drawableTint="@color/grey"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_landmark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/TextLabel"
+            android:layout_marginTop="@dimen/image_size8"
+            android:textColorHint="#808080"
+            >
+
+            <EditText
+                android:id="@+id/edLandmark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="LANDMARK"
+                android:singleLine="true"
+                android:textSize="@dimen/_10sdp"
+                android:drawableTint="@color/grey"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="15sp"-->
+        <!--android:includeFontPadding="false"-->
+        <!--android:lineSpacingExtra="0dp"-->
+        <!--android:inputType="number"-->
+        <!--android:textColor="@color/black"-->
+        <!--/>-->
+
+
+
+        <TextView            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LANDMARK"
+            android:padding="2dp"
+            android:lineSpacingExtra="0dp"
+            android:inputType="number"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/orange_app"
+            />
+
+        <TextView            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/image_size5"
+            android:layout_height="wrap_content"
+            android:text="SAVE AS"
+            android:textSize="@dimen/_12sdp"
+            android:padding="@dimen/_2sdp"
+            android:lineSpacingExtra="0dp"
+            android:inputType="number"
+
+            />
+
+
+
+
+        <LinearLayout
+            android:id="@+id/linearAll"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+
+
+                <LinearLayout
+                    android:id="@+id/homeLinear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageHome"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/home"/>
+
+                        <TextView                            android:id="@+id/tvHome"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Home"
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_marginLeft="5dp"
+                            />
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:id="@+id/lineHome"
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/grey">
+
+                    </View>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+
+
+                <LinearLayout
+                    android:id="@+id/workLinear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageWork"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/workwhite"/>
+
+                        <TextView                            android:id="@+id/tvWork"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Work"
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_marginLeft="5dp"
+                            />
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:id="@+id/lineWork"
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/grey">
+
+                    </View>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:id="@+id/otherLinear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageOther"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/home"/>
+
+                        <TextView                            android:id="@+id/tvOther"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Other"
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_marginLeft="5dp"
+                            />
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:id="@+id/lineOther"
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/grey">
+
+                    </View>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/relativeOther"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <EditText
+                android:id="@+id/edOtherText"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/workblack"
+                android:drawableStart="@drawable/workblack"
+                android:hint="e.g.: Dad's Place, John's Home"
+                android:drawablePadding="10dp"
+                android:textSize="@dimen/image_size8"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:maxLines="1"
+                android:inputType="text"
+                android:backgroundTint="@color/orange_app"/>
+
+
+            <TextView
+                android:id="@+id/txt_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="Cancel"
+                android:padding="5dp"
+                android:textSize="@dimen/image_size8"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/black"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/tvSubmitFlat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/enterhouseflatnot"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textSize="@dimen/_13sdp"
+        app:fontPath="fonts/HindVadodara-Bold.ttf"
+        android:textColor="@color/white"
+        android:background="#FFB499"
+        />
+
+
+
+
+</LinearLayout>

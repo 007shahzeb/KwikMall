@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/openProducts"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="mall.kwik.kwikmall.activities.FragmentsActivity">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_alignParentTop="true">
+
+
+                        <LinearLayout
+                            android:id="@+id/first"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                                <LinearLayout
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    android:clickable="true"
+                                    android:id="@+id/linearNearmeLocation"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="1">
+
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+
+
+
+                                                <TextView
+                                                    android:textSize="@dimen/_12sdp"
+                                                    android:id="@+id/tvCityName"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Locating..."
+                                                    app:fontPath="fonts/HindVadodara-Bold.ttf"
+                                                    android:layout_alignParentLeft="true"
+                                                    android:textColor="@color/black"/>
+
+
+                                                <ImageView
+                                                    android:layout_gravity="center"
+                                                    android:layout_width="@dimen/_8sdp"
+                                                    android:layout_height="@dimen/_8sdp"
+                                                    android:layout_marginLeft="5dp"
+                                                    android:layout_marginTop="@dimen/_2sdp"
+                                                    android:src="@drawable/downarrow"/>
+
+                                        </LinearLayout>
+
+                                        <TextView
+                                            android:id="@+id/tvAddress"
+                                            android:padding="2dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:ellipsize="end"
+                                            android:maxLines="1"
+                                            android:textSize="@dimen/_10sdp"
+                                            />
+                                </LinearLayout>
+
+
+
+                                <LinearLayout
+                                    android:id="@+id/filterLayout"
+                                    android:paddingLeft="15dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:layout_marginRight="5dp"
+
+                                    >
+
+
+
+                                        <ImageView
+                                            android:visibility="gone"
+                                            android:id="@+id/imageFilteOn"
+                                            android:layout_width="5dp"
+                                            android:layout_height="5dp"
+                                            android:layout_marginTop="1dp"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:background="@drawable/round_pointoffilter"/>
+
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/filter"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:layout_gravity="center"
+                                            app:fontPath="fonts/HindVadodara-Bold.ttf"
+                                            android:textColor="@color/black"/>
+
+                                        <ImageView
+                                            android:layout_width="@dimen/_12sdp"
+                                            android:layout_height="@dimen/_7sdp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="3dp"
+                                            android:src="@drawable/filter"
+                                            />
+
+                                </LinearLayout>
+
+
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_below="@id/first"
+                            android:layout_centerHorizontal="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:background="@drawable/layout_bg_green"
+                            android:orientation="horizontal">
+
+
+                                <TextView
+                                    android:id="@+id/txtRestaurants"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:layout_margin="@dimen/_2sdp"
+                                    android:text="RESTAURANTS"
+                                    android:textColor="@color/green"
+                                    android:gravity="center"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:background="@drawable/layout_bg_white"
+                                    />
+
+
+                                <TextView
+                                    android:id="@+id/txtShops"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:layout_margin="@dimen/_2sdp"
+                                    android:textColor="@color/white"
+                                    android:text="SHOPS"
+                                    android:gravity="center"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:background="@drawable/layout_bg_green"
+                                    />
+
+
+
+                        </LinearLayout>
+
+
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/viewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            >
+
+                        </android.support.v4.view.ViewPager>
+
+
+
+
+                </LinearLayout>
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>

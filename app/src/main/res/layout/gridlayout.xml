@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/gridRow"
+    android:padding="5dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageFood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                >
+
+                <TextView
+                    android:id="@+id/tvTypeofFood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FAST FOOD"
+                    android:textSize="@dimen/_9sdp"
+                    android:maxLength="12"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black"/>
+
+                <ImageView
+                    android:id="@+id/imageVedNonVeg"
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/veg"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                >
+
+
+                <TextView
+                    android:id="@+id/tvFoodNationality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Indian"
+                    android:textSize="@dimen/_7sdp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvPricefood"
+                    android:layout_below="@id/tvFoodNationality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$20"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_7sdp"
+                    />
+
+
+                <Button
+                    android:id="@+id/btnAddItemCart"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_alignParentRight="true"
+                    android:text="ADD"
+                    android:textSize="@dimen/_8sdp"
+                    android:textColor="@color/green"
+                    android:background="@drawable/btn_selector_cart"
+                    />
+
+
+            </RelativeLayout>
+
+
+
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+
+</RelativeLayout>

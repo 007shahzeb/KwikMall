@@ -1,0 +1,110 @@
+<resources>
+    <string name="app_name">Kwiq Mall</string>
+
+    <string name="nameerror">Enter Valid Name</string>
+    <string name="emailerror">Enter Valid Email</string>
+    <string name="mobileerror">Enter Valid Mobile Number</string>
+
+
+    <string name="signin">SIGN IN</string>
+    <string name="forgetpass">FORGET PASSWORD</string>
+    <string name="sign_in">Sign in</string>
+    <string name="signup">SIGN UP</string>
+
+    <string name="forgetpassword">Forget Password ?</string>
+
+    <string name="donthaveacc">Don\'t have an account?</string>
+    <string name="createnow">Create Now!</string>
+    <string name="filter">FILTERS</string>
+
+    <string name="permission_location_rationale">Allow us to find your exact location for pickup and fast experience</string>
+
+    <string name="button_allow">Allow</string>
+    <string name="button_deny">Deny</string>
+    <string name="account">ACCOUNT</string>
+    <string name="logincreateaccountquicklytomanage">Login/Create Account quickly to manage orders</string>
+    <string name="items">Items:</string>
+
+    <string name="loginorsignuptoplace">LOGIN TO PLACE YOUR ORDER</string>
+
+    <string name="viewcart">View Cart</string>
+    <string name="placeorder">Place Order</string>
+    <string name="applyfilter">APPLY FILTER</string>
+    <string name="nextpaymentmethod">Next - Payment Method</string>
+    <string name="payment">Payment</string>
+
+    <string name="fullname">FULL NAME</string>
+
+    <string name="countrycode">COUNTRY CODE</string>
+    <string name="mobile">MOBILE NO</string>
+    <string name="mobilemoney">Mobile</string>
+
+
+    <string name="emailaddress">EMAIL ADDRESS</string>
+    <string name="address">ADDRESS</string>
+    <string name="city">CITY</string>
+    <string name="zipcode">ZIP CODE</string>
+    <string name="confirmpayment">Confirm Payment</string>
+    <string name="cardnumbr">CARD NUMBER</string>
+    <string name="cvv">CVV</string>
+    <string name="expirydate">EXPIRY DATE</string>
+    <string name="amount">AMOUNT</string>
+
+    <string name="trackyourorder">Track Your Order</string>
+    <string name="congratulations">Congratulations</string>
+    <string name="yourpaymentsuccess">Your payment has been processed successfully.</string>
+
+    <string name="totaltime">Total Time</string>
+    <string name="totaldistance">Total Distance</string>
+
+    <string name="manageaddress">Manage Address</string>
+    <string name="offers">Offers</string>
+    <string name="retry">RETRY</string>
+    <string name="sendfeedback">Send Feedback</string>
+    <string name="appversion">App version 2.2.1(248)</string>
+    <string name="currentlocation">Current Location</string>
+    <string name="usinggps">Using GPS</string>
+    <string name="enterhouseflatnot">ENTER HOUSE / FLAT NO.</string>
+
+    <string name="your_orders">Your Orders</string>
+    <string name="favouritesitem">Favourites List</string>
+    <string name="buyitagain">Buy it again</string>
+    <string name="startorders">START NEW ORDERS</string>
+    <string name="ohcrumbs">OH CRUMBS!</string>
+    <string name="searchforarea">Search for area, street name....</string>
+    <string name="setdeliverylocation">SET DELIVERY LOCATION</string>
+    <string name="noresultsfound">No results found. Please check the spelling or try a different search.</string>
+
+    <string name="connectionunavailable">Connection Unavailable</string>
+    <string name="areyousuretologout">Are you sure you want yo logout?</string>
+    <string name="nointernetcoonection">Uh oh! Check your Internet connection and restart the app.</string>
+    <string name="opensettings">OPEN SETTINGS</string>
+    <string name="cancel">CANCEL</string>
+
+
+    <string name="logoutCap">LOGOUT</string>
+
+    <string name="login">LOGIN</string>
+    <string name="savedaddresses">Saved Addresses</string>
+    <string name="savedeliverylocation">Set Delivery Location</string>
+
+    <string name="delete">DELETE</string>
+    <string name="addnewaddress">ADD NEW ADDRESS</string>
+    <string name="kwikmallmoney">KWIK MALL MONEY</string>
+
+    <string name="wallet">WALLETS</string>
+    <string name="creditcard">Credit Card</string>
+    <string name="cashondelivery">Cash on delivery</string>
+    <string name="linkaccount">LINK ACCOUNT</string>
+    <string name="viewstatement">VIEW STATEMENT</string>
+
+    <string name="alreadyaccount">Already have an account?</string>
+
+    <string name="Disconnected">Please check your internet connection and try again.</string>
+    <string name="Connected">Internet is available.</string>
+
+    <string name="itemadded">Item added: </string>
+    <string name="addtocart">Add to Cart</string>
+    <string name="addedtocart">Added to Cart</string>
+    <string name="proceedcheckout">Proceed to checkout</string>
+</resources>

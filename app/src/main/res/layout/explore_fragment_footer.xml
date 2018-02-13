@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:cardView="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="20dp"
+        cardView:cardBackgroundColor="@android:color/white"
+        cardView:cardElevation="2dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/searchicon"/>
+
+            <EditText
+                android:id="@+id/search_products_ed"
+                android:hint="Search products"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:padding="5dp"
+                android:textSize="@dimen/_10sdp"
+                android:layout_height="wrap_content"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:background="@android:color/transparent"/>
+
+
+            <RelativeLayout
+                android:id="@+id/clearable_button_clear_explore"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/btnCross"
+                    android:background="@drawable/crossblack"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_margin="10dp"
+                    android:layout_marginRight="5dip"
+                    android:layout_centerInParent="true"/>
+
+                <ProgressBar
+                    android:visibility="gone"
+                    android:id="@+id/exploreProgressBar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    style="?android:attr/progressBarStyle"
+                    android:indeterminate="true"
+                    android:indeterminateTintMode="src_atop"
+                    android:indeterminateTint="#fd923f"
+                    />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linearNoItemsMatchLayout"
+        android:layout_below="@id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/grey"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="No match found for "
+            android:textSize="@dimen/_10sdp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/editextText"
+            android:layout_width="match_parent"
+            android:background="@color/grey"
+            android:textSize="@dimen/_10sdp"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linearNoInternetImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/linearNoItemsMatchLayout"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/nointernet2"
+            android:layout_gravity="center"
+            />
+
+        <RelativeLayout
+            android:id="@+id/btnRetryInternet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="50dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:background="@drawable/btnborder"
+            >
+
+
+            <TextView
+                app:fontPath="fonts/HindVadodara-Bold.ttf"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/retry"
+                android:gravity="center"
+                android:textSize="@dimen/_11sdp"
+                android:textColor="#FF6347"
+                />
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linearNoMatchFoundImage"
+        android:layout_below="@id/linearNoItemsMatchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/noitems"
+            android:layout_marginBottom="50dp"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            app:fontPath="fonts/HindVadodara-Bold.ttf"            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ohcrumbs"
+            android:textColor="@color/black"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            app:fontPath="fonts/HindVadodara-Bold.ttf"            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/noresultsfound"
+            android:lines="2"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/recyclerviewExplore"
+        android:layout_below="@id/linearNoItemsMatchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</RelativeLayout>

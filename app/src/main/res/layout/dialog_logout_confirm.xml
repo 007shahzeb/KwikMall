@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/areyousuretologout"
+            android:textColor="@color/black"
+            android:textSize="@dimen/image_size8"
+            android:padding="10dp"
+            />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right">
+
+
+<TextView
+    app:fontPath="fonts/HindVadodara-Bold.ttf"
+    android:id="@+id/tvCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:textColor="@color/orange_app"
+                android:padding="15dp"
+                android:textStyle="bold"
+                android:textSize="@dimen/image_size8"
+                android:layout_gravity="right" />
+
+
+<TextView                android:id="@+id/tvLogout"
+
+    app:fontPath="fonts/HindVadodara-Bold.ttf"
+
+    android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logoutCap"
+                android:textColor="@color/orange_app"
+                android:padding="15dp"
+                android:textStyle="bold"
+                android:textSize="@dimen/image_size8"
+                android:layout_gravity="right" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:id="@+id/foodDetailsContainer"
+    tools:context="mall.kwik.kwikmall.activities.FoodDetailsActivity">
+
+
+
+    <include
+        android:layout_alignParentTop="true"
+        android:id="@+id/top"
+        layout="@layout/toolbar_food_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <ImageView
+        android:id="@+id/imageFood"
+        android:layout_below="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        />
+
+
+
+    <RelativeLayout
+        android:layout_below="@+id/imageFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#fffcf7">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:id="@+id/firstLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtNameofItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Japanese Food"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"/>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/veg"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/firstLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25"
+                android:textSize="@dimen/_10sdp"
+                android:textColor="@color/black"/>
+
+            <LinearLayout
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                >
+
+
+                <Button
+                    android:id="@+id/btnDec"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/minus"
+                    />
+
+                <TextView
+                    android:id="@+id/txtCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:padding="5dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/image_size5"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/green"/>
+
+                <Button
+                    android:id="@+id/btnInc"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/plus"
+                    />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/tvDes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvPrice"
+                android:text="Description"
+                android:textSize="@dimen/_10sdp"
+                android:textColor="@color/green"/>
+
+            <LinearLayout
+                android:id="@+id/line"
+                android:layout_below="@+id/tvDes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="75dp"
+                    android:layout_height="1dp"
+                    android:background="@color/green">
+
+                </View>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#FBE8D0">
+
+                </View>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtdescription"
+                android:layout_below="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:padding="5dp"
+                android:singleLine="false"
+                android:textSize="@dimen/_9sdp"
+                android:text="Japanese cuisine encompasses the regional and traditional foods of Japan,
+               "/>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/layoutInvisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/green">
+
+            </View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnAddtoCart"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add to Cart"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_13sdp"
+                    android:background="@drawable/white_addtocart"/>
+
+                <Button
+                    android:id="@+id/btnBuyNow"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Buy Now"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/green_addtocart"/>
+
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/layoutOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="#00d048">
+
+
+            <TextView
+                android:id="@+id/txtCountItems"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="2"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:textSize="@dimen/image_size8"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/items"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:textSize="@dimen/image_size8"
+                />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:background="@color/white">
+
+            </View>
+
+            <TextView
+                android:id="@+id/txtTotatPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$25"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:textSize="@dimen/image_size8"
+                />
+
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtViewCart"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/viewcart"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:textSize="@dimen/image_size8"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>
