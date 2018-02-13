@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class SearchRestaurantsFragment extends BaseFragment {
     private RecyclerView recyclerviewSearch;
     private RecyclerViewAdapterSearch recyclerViewAdapter;
     private EditText clearable_edit;
-    private Button clearable_button_clear;
+    private ImageView imageCancel;
     LayoutInflater inflater = null;
     private ArrayList<StoreProductsPayload> storeProductsPayloadArrayList = new ArrayList<>();
     ArrayList<StoreProductsPayload> productsPayloadArrayList;
@@ -59,7 +60,7 @@ public class SearchRestaurantsFragment extends BaseFragment {
         clickListeners();
 
 
-        clearable_button_clear.setVisibility(RelativeLayout.INVISIBLE);
+        imageCancel.setVisibility(RelativeLayout.INVISIBLE);
         clearText();
         showHideClearButton();
 
@@ -150,122 +151,12 @@ public class SearchRestaurantsFragment extends BaseFragment {
 
 
 
-
-/*
-        restClient.GetStoreProducts(stringStringHashMap).enqueue(new Callback<StoreProductsSuccess>() {
-            @Override
-            public void onResponse(Call<StoreProductsSuccess> call, Response<StoreProductsSuccess> response) {
-
-                if(response.body().getSuccess()){
-
-                    storeProductsPayloadArrayList = new ArrayList<>(response.body().getPayload());
-
-                    productsPayloadArrayList = new ArrayList<>();
-
-                    for(int i =0;i<storeProductsPayloadArrayList.size();i++){
-
-                        StoreProductsPayload storeProductsPayload = new StoreProductsPayload();
-
-
-                        storeProductsPayload.setName(storeProductsPayloadArrayList.get(i).getName());
-
-                        productsPayloadArrayList.add(storeProductsPayload);
-
-
-                    }
-
-                    recyclerViewAdapter = new RecyclerViewAdapterSearch(productsPayloadArrayList,getActivity());
-
-                    recyclerViewAdapter.searchItemClickListener(new RecyclerViewAdapterSearch.ItemClickListener() {
-                        @Override
-                        public void ItemClick(String itemname) {
-
-
-                            Bundle args = new Bundle();
-                            args.putString("itemname",itemname);
-
-                            RestaurantsProductsFragment restaurantsProductsFragment = new RestaurantsProductsFragment();
-                            restaurantsProductsFragment.setArguments(args);
-                            getFragmentManager()
-                                    .beginTransaction()
-                                    .replace(R.id.mainFrame, restaurantsProductsFragment,"restaurantsProductsFragment")
-                                    .commit();
-
-
-
-                        }
-                    });
-
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                    recyclerviewSearch.setLayoutManager(mLayoutManager);
-                    recyclerviewSearch.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-                    recyclerviewSearch.setItemAnimator(new DefaultItemAnimator());
-                    recyclerviewSearch.setAdapter(recyclerViewAdapter);
-
-
-
-                }
-                else {
-
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-                    builder1.setMessage("No Data");
-                    builder1.setCancelable(true);
-
-                    builder1.setPositiveButton(
-                            "Yes",
-
-
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-
-                                }
-                            });
-
-                    builder1.setNegativeButton(
-                            "No",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-
-                                }
-                            });
-
-                    AlertDialog alert11 = builder1.create();
-                    alert11.show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<StoreProductsSuccess> call, Throwable t) {
-
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-                builder1.setMessage(t.getMessage());
-                builder1.setCancelable(true);
-
-                builder1.setPositiveButton(
-                        "Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-
-            }
-        });
-*/
-
     }
 
 
     void clearText(){
 
-        clearable_button_clear.setOnClickListener(new View.OnClickListener() {
+        imageCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clearable_edit.setText("");
@@ -286,10 +177,10 @@ public class SearchRestaurantsFragment extends BaseFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if(s.length()>0)
-                    clearable_button_clear.setVisibility(View.VISIBLE);
+                    imageCancel.setVisibility(View.VISIBLE);
 
                 else
-                    clearable_button_clear.setVisibility(RelativeLayout.INVISIBLE);
+                    imageCancel.setVisibility(RelativeLayout.INVISIBLE);
 
 
 
@@ -328,7 +219,7 @@ public class SearchRestaurantsFragment extends BaseFragment {
 
         recyclerviewSearch = view.findViewById(R.id.recyclerviewSearch);
         clearable_edit = view.findViewById(R.id.clearable_edit);
-        clearable_button_clear = view.findViewById(R.id.clearable_button_clear);
+        imageCancel = view.findViewById(R.id.imageCancel);
     }
 
     private void clickListeners() {

@@ -30,8 +30,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/searchicon"/>
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/searchicon"/>
 
             <EditText
                 android:id="@+id/search_products_ed"

@@ -27,6 +27,8 @@
 
     <string name="loginorsignuptoplace">LOGIN TO PLACE YOUR ORDER</string>
 
+    <string name="yourorder">Your Order</string>
+
     <string name="viewcart">View Cart</string>
     <string name="placeorder">Place Order</string>
     <string name="applyfilter">APPLY FILTER</string>

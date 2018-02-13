@@ -320,6 +320,9 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
             getActivity().overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);*/
 
+            getActivity().overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+
+
 
         }
 

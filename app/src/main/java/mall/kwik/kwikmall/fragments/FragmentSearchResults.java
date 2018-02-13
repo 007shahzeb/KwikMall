@@ -221,12 +221,6 @@ public class FragmentSearchResults extends BaseFragment implements View.OnClickL
 
         if(v==imageBackArrow){
 
-          /*  if ( getFragmentManager().getBackStackEntryCount() > 0)
-            {
-                getFragmentManager().popBackStack();
-                return;
-            }
-            getActivity().onBackPressed();*/
 
             FragmentManager fm = getFragmentManager();
             if (fm.getBackStackEntryCount() > 0) {

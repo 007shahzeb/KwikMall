@@ -73,21 +73,30 @@ public class FragmentsActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
 
-            Fragment fragment = null;
+          /*  Fragment fragment = null;
             fragment = new NearMeFragment();
 
-            if (fragment != null) {
+            if (fragment != null) {*/
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.mainFrame, fragment, "nearMeFragment").commit();
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction =    fragmentManager.beginTransaction();
+            fragmentTransaction.addToBackStack(null);
+            Fragment fragment = new NearMeFragment();
+            fragmentTransaction.replace(R.id.mainFrame, fragment);
+            fragmentTransaction.commit();
+
+
+               /* FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().add(R.id.mainFrame, fragment, "nearMeFragment").commit();
                 overridePendingTransition(R.anim.slide_in, R.anim.nothing);
-
+*/
 
                 for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
                     fragmentManager.popBackStack();
                 }
 
-            }
+           // }
 
         }
 
@@ -104,9 +113,19 @@ public class FragmentsActivity extends BaseActivity {
 
     public void replace(){
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new RestaurantsProductsFragment(),"RestaurantsProductsFragment")
-                .addToBackStack("RestaurantsProductsFragment")
-                .commit();
+     /*   getSupportFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.mainFrame,new RestaurantsProductsFragment(),"RestaurantsProductsFragment")
+                .setCustomAnimations(R.anim.enter, R.anim.exit)
+                .commit();*/
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction =    fragmentManager.beginTransaction();
+        fragmentTransaction.addToBackStack(null);
+        Fragment fragment = new RestaurantsProductsFragment();
+        fragmentTransaction.replace(R.id.mainFrame, fragment);
+        fragmentTransaction.commit();
+
 
 
 
@@ -115,10 +134,19 @@ public class FragmentsActivity extends BaseActivity {
 
     public void replace2(){
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new RestaurantsProductsFragment(),"RestaurantsProductsFragment")
-                .addToBackStack("RestaurantsProductsFragment")
+       /* getSupportFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.mainFrame,new RestaurantsProductsFragment(),"RestaurantsProductsFragment")
+                .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
                 .commit();
+*/
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction =    fragmentManager.beginTransaction();
+        fragmentTransaction.addToBackStack(null);
+        Fragment fragment = new RestaurantsProductsFragment();
+        fragmentTransaction.replace(R.id.mainFrame, fragment);
+        fragmentTransaction.commit();
 
     }
 
@@ -199,7 +227,7 @@ public class FragmentsActivity extends BaseActivity {
     public void onBackPressed() {
 
 
-        if (getFragmentManager().getBackStackEntryCount() == 0) {
+      /*  if (getFragmentManager().getBackStackEntryCount() == 0) {
             super.onBackPressed();
 
         } else if (getFragmentManager().getBackStackEntryCount() == 1) {
@@ -207,6 +235,22 @@ public class FragmentsActivity extends BaseActivity {
         } else {
             getSupportFragmentManager().popBackStack();
         }
+*/
+
+        // if there is a fragment and the back stack of this fragment is not empty,
+        // then emulate 'onBackPressed' behaviour, because in default, it is not working
+        FragmentManager fm = getSupportFragmentManager();
+        for (Fragment frag : fm.getFragments()) {
+            if (frag.isVisible()) {
+                FragmentManager childFm = frag.getChildFragmentManager();
+                if (childFm.getBackStackEntryCount() > 0) {
+                    childFm.popBackStack();
+                    return;
+                }
+            }
+        }
+        super.onBackPressed();
+
 
 
     }

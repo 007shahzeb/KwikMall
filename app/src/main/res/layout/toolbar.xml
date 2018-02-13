@@ -35,36 +35,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:background="@drawable/leftarrowblack"
+                    android:padding="@dimen/_15sdp"
+                    android:src="@drawable/leftarrowblack"
                     />
 
 
-
-
-
-              <!--  <ToggleButton
-                    android:id="@+id/button_favorite"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_toLeftOf="@+id/imageSearchProducts"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/button_favorite"
-                    android:checked="false"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn=""/>-->
 
                 <ImageView
                     android:id="@+id/imageSearchProducts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/_10sdp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:padding="@dimen/_5sdp"
-                    android:background="@drawable/searchicon"/>
+                    android:padding="@dimen/_12sdp"
+                    android:src="@drawable/searchicon"/>
 
 
             </RelativeLayout>

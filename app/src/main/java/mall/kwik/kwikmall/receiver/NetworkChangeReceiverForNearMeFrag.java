@@ -24,13 +24,11 @@ public class NetworkChangeReceiverForNearMeFrag extends BroadcastReceiver
             if (isOnline(context)) {
 
 
-                new RestaurantsFragment().dialogFrag(true);
-                Log.e("dharam", "Online Connect Intenet ");
 
 
 
             } else {
-                new RestaurantsFragment().dialogFrag(false);
+
 
                 Log.e("dharam", "Conectivity Failure !!! ");
             }

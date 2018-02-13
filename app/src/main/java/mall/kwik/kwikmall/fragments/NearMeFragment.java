@@ -165,17 +165,8 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
                                     }
                                 });
 
-
-
-
-
-
-
-
-
                     }
                 });
-
 
 
         adapterViewPager = new MyPagerAdapter(getChildFragmentManager());
@@ -255,12 +246,6 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    @Override
-    public void onStop() {
-        super.onStop();
-
-
-    }
 
     public static class MyPagerAdapter extends FragmentPagerAdapter {
 

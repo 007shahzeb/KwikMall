@@ -30,8 +30,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_8sdp"
-                android:background="@drawable/searchicon"/>
+                android:padding="@dimen/_12sdp"
+                android:src="@drawable/searchicon"/>
 
             <EditText
                 android:id="@+id/clearable_edit"
@@ -40,17 +40,18 @@
                 android:layout_gravity="center"
                 android:layout_width="0dp"
                 android:padding="@dimen/_3sdp"
-                android:textSize="@dimen/_8sdp"
+                android:textSize="@dimen/_10sdp"
                 android:layout_height="wrap_content"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:background="@android:color/transparent"
                 />
-            <Button
-                android:id="@+id/clearable_button_clear"
-                android:layout_width="@dimen/_8sdp"
-                android:layout_height="@dimen/_8sdp"
-                android:background="@drawable/crossblack"
-                android:layout_marginRight="5dip"/>
+            <ImageView
+                android:id="@+id/imageCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/crossblack"
+                android:padding="@dimen/_10sdp"
+                />
 
         </LinearLayout>
 

@@ -47,6 +47,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.taishi.flipprogressdialog.FlipProgressDialog;
 
 
 import java.util.ArrayList;
@@ -204,6 +205,9 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
 
 
     }
+
+
+
 
 
     @Override
@@ -376,6 +380,10 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
         if (v == txtPlaceorder) {
 
             if (isConnected()) {
+
+                flipProgress();
+
+
                 placeOrderApi();
 
 
@@ -443,9 +451,9 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
                         if(placeOrder.getSuccess()){
 
 
-                            showSuccessDialog("Order Registered");
-                            Bundle bundle = new Bundle();
+                            fpd.dismiss();
 
+                            Bundle bundle = new Bundle();
                             bundle.putString("totalAmount", String.valueOf(sum));
 
                             Intent intent = new Intent(getActivity(),EnterAddressActivity.class);
@@ -457,6 +465,7 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
                         }
                         else {
 
+                            fpd.dismiss();
                             showAlertDialog("Retry",placeOrder.getMessage());
 
                         }
@@ -465,6 +474,9 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
                     @Override
                     public void accept(Throwable throwable) throws Exception {
 
+                        fpd.dismiss();
+
+                        compositeDisposable.dispose();
                         noInternetDialog.show();
                     }
                 }));

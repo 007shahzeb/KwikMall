@@ -2,6 +2,8 @@ package mall.kwik.kwikmall.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import am.appwise.components.ni.NoInternetDialog;
 import mall.kwik.kwikmall.R;
+import mall.kwik.kwikmall.fragments.TrackYourOrderFragment;
 
 public class PaymentSuccessfullyActivity extends AppCompatActivity {
 
@@ -75,10 +78,14 @@ public class PaymentSuccessfullyActivity extends AppCompatActivity {
 
 
 
-                Intent intent = new Intent(PaymentSuccessfullyActivity.this,TrackOrderMapActivity.class);
-                startActivity(intent);
+                Fragment trackYourOrderFragment = new TrackYourOrderFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.mainFrame, trackYourOrderFragment, "trackYourOrderFragment");
+                fragmentTransaction.addToBackStack("trackYourOrderFragment");
+                fragmentTransaction.commit();
 
-                overridePendingTransition(R.anim.slide_in, R.anim.nothing);
+
+                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
 
             }
         });

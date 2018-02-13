@@ -31,7 +31,8 @@ public class RestaurantsProductsFragment extends Fragment{
 
         bundle = getArguments();
 
-        if(bundle != null){
+        if(bundle != null)
+        {
 
             itemname = bundle.getString("itemname");
             nameOfHotel = bundle.getString("nameOfHotel");
@@ -51,8 +52,7 @@ public class RestaurantsProductsFragment extends Fragment{
         else {
 
             FragmentWithoutSearchResults fragmentWithoutSearch = new FragmentWithoutSearchResults();
-            getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragmentWithoutSearch,"fragmentWithoutSearch")
-                    .commit();
+            getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragmentWithoutSearch,"fragmentWithoutSearch").commit();
 
 
         }

@@ -203,54 +203,6 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
                     }
                 }));
 
-
-
-/*
-        restClient.getOrderList(stringStringHashMap).enqueue(new Callback<GetOrderListSuccess>() {
-            @Override
-            public void onResponse(Call<GetOrderListSuccess> call, Response<GetOrderListSuccess> response) {
-
-                if(response.body().getSuccess()){
-
-                    saveOrdersModels = new ArrayList<>(response.body().getPayload());
-
-                    int size = saveOrdersModels.size();
-
-                    tvOrdersCount.setVisibility(View.VISIBLE);
-                    tvOrdersCount.setText(String.valueOf(size));
-
-
-
-
-                }
-                else {
-
-                    tvOrdersCount.setVisibility(View.GONE);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<GetOrderListSuccess> call, Throwable t) {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-                builder1.setMessage(t.getMessage());
-                builder1.setCancelable(true);
-
-                builder1.setPositiveButton(
-                        "Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-            }
-        });
-*/
     }
 
 
@@ -383,10 +335,21 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
 
         if(v==linearTrackorder){
 
-            Intent intent = new Intent(getActivity(),TrackOrderMapActivity.class);
-            startActivity(intent);
+
+            Fragment trackYourOrderFragment = new TrackYourOrderFragment();
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.mainFrame, trackYourOrderFragment, "trackYourOrderFragment");
+            fragmentTransaction.addToBackStack("trackYourOrderFragment");
+            fragmentTransaction.commit();
+
 
             getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+
+
+           /* Intent intent = new Intent(getActivity(),TrackOrderMapActivity.class);
+            startActivity(intent);
+
+            getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);*/
 
 
         }

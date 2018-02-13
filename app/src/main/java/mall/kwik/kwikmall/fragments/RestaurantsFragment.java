@@ -58,24 +58,20 @@ import mall.kwik.kwikmall.apiresponse.RestaurantsListSuccess.RestaurantsListSucc
 import mall.kwik.kwikmall.dialogs.DialogInternet;
 import mall.kwik.kwikmall.events.FilterEvent;
 import mall.kwik.kwikmall.models.DistanceModel;
-import mall.kwik.kwikmall.receiver.NetworkChangeReceiverForNearMeFrag;
 import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.sharedpreferences.SharedPrefData;
 import pl.charmas.android.reactivelocation2.ReactiveLocationProvider;
 
 
-public class RestaurantsFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class RestaurantsFragment extends BaseFragment  {
 
     private View view;
     private RecyclerView recyclerViewRestaurants;
     private AdapterRestaurantsFragment recyclerViewAdapter;
     private List<RestaurantsListPayload> restaurantsListPayloadArrayList = new ArrayList<>();
     private static final int PERMISSION_REQUEST_CODE = 1;
-    // private GoogleApiClient googleApiClient;
     private Location mLastLocation;
     private String latitute,longitude;
-    private BroadcastReceiver mNetworkReceiver;
-    private FrameLayout frame_near_me;
     private SharedPreferences mSharedPreference1;
     //  private BroadcastReceiver mMessageReceiver;
     private ShimmerLayout shimmerlayoutRestaurants;
@@ -96,8 +92,6 @@ public class RestaurantsFragment extends BaseFragment implements GoogleApiClient
                     .addApi(LocationServices.API)
                     .build();*/
 
-        mNetworkReceiver = new NetworkChangeReceiverForNearMeFrag();
-        registerNetworkBroadcastForNougat();
 
 
         findViewId();
@@ -108,12 +102,6 @@ public class RestaurantsFragment extends BaseFragment implements GoogleApiClient
         mSharedPreference1 =   PreferenceManager.getDefaultSharedPreferences(getActivity());
 
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-
-        recyclerViewRestaurants.setHasFixedSize(true);
-
-        recyclerViewRestaurants.setLayoutManager(mLayoutManager);
-        recyclerViewRestaurants.setItemAnimator(new DefaultItemAnimator());
 
         RestaurantsListApi();
 /*
@@ -168,83 +156,6 @@ public class RestaurantsFragment extends BaseFragment implements GoogleApiClient
         return view;
     }
 
-
-
-
-    public void dialogFrag(boolean value){
-
-
-        if(value){
-
-
-        }
-        else {
-
-            //Retrieve the values
-            Gson gson = new Gson();
-            String jsonText = mSharedPreference1.getString("key", null);
-            RestaurantsListPayload[] restaurantsListPayloadsNoNet = gson.fromJson(jsonText, RestaurantsListPayload[].class);  //EDIT: gso to gson
-
-
-            recyclerViewAdapter = new AdapterRestaurantsFragment(Arrays.asList(restaurantsListPayloadsNoNet), getActivity());
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-
-            recyclerViewRestaurants.setHasFixedSize(true);
-
-            recyclerViewRestaurants.setLayoutManager(mLayoutManager);
-            recyclerViewRestaurants.setItemAnimator(new DefaultItemAnimator());
-
-            recyclerViewRestaurants.setAdapter(recyclerViewAdapter);
-            shimmerlayoutRestaurants.setVisibility(View.GONE);
-
-
-        }
-
-    }
-
-    public boolean isConnected() {
-        ConnectivityManager connectivity = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        if (connectivity != null) {
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null)
-                for (int i = 0; i < info.length; i++)
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
-                        return true;
-                    }
-        }
-        return false;
-    }
-
-
-    private void registerNetworkBroadcastForNougat() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            getActivity().registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getActivity().registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        }
-
-    }
-    protected void unregisterNetworkChanges() {
-        try {
-            getActivity().unregisterReceiver(mNetworkReceiver);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unregisterNetworkChanges();
-        compositeDisposable.dispose();
-        // LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
-
-    }
 
     private void RestaurantsListApi() {
 
@@ -376,21 +287,6 @@ public class RestaurantsFragment extends BaseFragment implements GoogleApiClient
                                                     ((FragmentsActivity) getActivity()).replace();
 
 
-                                 /*   Fragment fragment = null;
-                                    fragment = new RestaurantsProductsFragment();
-
-                                    if(fragment!=null){
-
-
-
-                                        FragmentManager fragmentManager = getChildFragmentManager();
-                                        fragment.setArguments(bundle);
-                                        fragmentManager.beginTransaction().replace(R.id.openProducts, fragment, "restaurantsProductsFragment")
-                                                .addToBackStack(null).commit();
-                                        getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
-
-                                    }*/
-
 
                                                 }
 
@@ -402,6 +298,15 @@ public class RestaurantsFragment extends BaseFragment implements GoogleApiClient
 
 
                                             });
+
+                                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+
+                                            recyclerViewRestaurants.setHasFixedSize(true);
+
+                                            recyclerViewRestaurants.setLayoutManager(mLayoutManager);
+                                            recyclerViewRestaurants.setItemAnimator(new DefaultItemAnimator());
+
+
 
                                             recyclerViewRestaurants.setAdapter(recyclerViewAdapter);
 
@@ -481,7 +386,6 @@ public class RestaurantsFragment extends BaseFragment implements GoogleApiClient
 
 
         //Frame layout
-        frame_near_me = view.findViewById(R.id.viewPager);
         afterShimmerLayout = view.findViewById(R.id.afterShimmerLayout);
 
         //shimmer layout
@@ -494,57 +398,7 @@ public class RestaurantsFragment extends BaseFragment implements GoogleApiClient
 
 
 
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
 
-
-     /*   if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
-                (getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
-
-
-        }
-
-        else {
-            if(googleApiClient.isConnected()) {
-
-                mLastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-
-                if (mLastLocation != null) {
-                    System.out.println("latiTude....." + String.valueOf(mLastLocation.getLatitude()));
-                    System.out.println("longiTude....." + String.valueOf(mLastLocation.getLongitude()));
-
-
-                   *//* latitute = mLastLocation.getLatitude();
-                    longitude = mLastLocation.getLongitude();*//*
-
-                    findDistanceHotelFromMe();
-
-
-
-                }
-
-            }
-
-        }*/
-
-
-
-    }
-
-    @Override
-    public void onStart() {
-        //googleApiClient.connect();
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        // googleApiClient.disconnect();
-        super.onStop();
-    }
 
 
     @Override
@@ -599,16 +453,5 @@ public class RestaurantsFragment extends BaseFragment implements GoogleApiClient
     }
 
 
-    @Override
-    public void onConnectionSuspended(int i) {
-        System.out.println("onConnectionSuspended...."+ i);
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        System.out.println("onConnectionFailed...."+ connectionResult.toString());
-
-    }
 
 }
