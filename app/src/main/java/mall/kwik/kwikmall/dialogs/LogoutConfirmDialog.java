@@ -22,7 +22,6 @@ public class LogoutConfirmDialog extends Dialog {
     private TextView tvCancel,tvLogout;
 
 
-
     public LogoutConfirmDialog(@NonNull Context context,myOnClickListener myOnClickListener) {
         super(context);
         this.context = context;
@@ -56,9 +55,6 @@ public class LogoutConfirmDialog extends Dialog {
             public void onClick(View v) {
 
                 myListener.onButtonClick();
-
-
-
 
             }
         });

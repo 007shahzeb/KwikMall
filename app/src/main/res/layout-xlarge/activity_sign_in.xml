@@ -130,7 +130,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/image_size5"
+        android:padding="@dimen/_5sdp"
         android:gravity="center"
         android:layout_alignParentBottom="true"
         >

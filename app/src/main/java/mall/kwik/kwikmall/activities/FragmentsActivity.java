@@ -1,39 +1,25 @@
 package mall.kwik.kwikmall.activities;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import am.appwise.components.ni.NoInternetDialog;
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import mall.kwik.kwikmall.BaseFragActivity.BaseActivity;
+import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
 import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.fragments.AccountFragment;
 import mall.kwik.kwikmall.fragments.ExploreFragment;
-import mall.kwik.kwikmall.fragments.FragmentWithoutSearchResults;
 import mall.kwik.kwikmall.fragments.NearMeFragment;
-import mall.kwik.kwikmall.fragments.RestaurantsFragment;
 import mall.kwik.kwikmall.fragments.RestaurantsProductsFragment;
-import mall.kwik.kwikmall.fragments.ShopsFragments;
 import mall.kwik.kwikmall.fragments.ViewCartFragment;
 import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
-import permissions.dispatcher.NeedsPermission;
-import permissions.dispatcher.OnShowRationale;
-import permissions.dispatcher.PermissionRequest;
 
 
 public class FragmentsActivity extends BaseActivity {

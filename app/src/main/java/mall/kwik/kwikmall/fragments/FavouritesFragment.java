@@ -1,11 +1,9 @@
 package mall.kwik.kwikmall.fragments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.BaseFragActivity.BaseFragment;
+import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
 import mall.kwik.kwikmall.adapters.FavouritesAdapter;
 import mall.kwik.kwikmall.apiresponse.GetFavouriteResponse.GetFavouritePayload;
 import mall.kwik.kwikmall.apiresponse.GetFavouriteResponse.GetFavouriteSuccess;

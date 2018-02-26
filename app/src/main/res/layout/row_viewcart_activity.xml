@@ -30,7 +30,7 @@
                 android:textColor="@color/white"
                 android:padding="5dp"
                 android:layout_marginRight="20dp"
-                android:textSize="@dimen/image_size10"/>
+                android:textSize="@dimen/_10sdp"/>
 
 
             <ImageView
@@ -49,10 +49,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:background="@color/lightgrey"
         android:id="@+id/view_foreground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fffcf7"
         android:layout_margin="5dp"
         >
 
@@ -166,6 +166,16 @@
                         />
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="GHS"
+                        app:fontPath="fonts/HindVadodara-Bold.ttf"
+                        android:padding="@dimen/_3sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:textColor="@color/black"/>
+
+
+                    <TextView
                         android:id="@+id/tvpRICE"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -175,6 +185,7 @@
                         android:gravity="center"
                         android:padding="@dimen/_2sdp"
                         android:textSize="@dimen/_8sdp"                        />
+
 
                 </LinearLayout>
                 <View

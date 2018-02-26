@@ -1,6 +1,5 @@
 package mall.kwik.kwikmall.fragments;
 
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,15 +32,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.BaseFragActivity.BaseFragment;
+import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
 import mall.kwik.kwikmall.apiresponse.AddFavourites.AddFavouritesSuccess;
 import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
-import mall.kwik.kwikmall.sharedpreferences.UserDataUtility;
 import mall.kwik.kwikmall.sharedpreferences.UtilityCartData;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static mall.kwik.kwikmall.activities.FragmentsActivity.nearby;
 
@@ -70,7 +64,7 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
     private TextView tvHotelNameFoodDetailsTopbar;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-
+    String finalImageUri;
 
     @Nullable
     @Override
@@ -97,20 +91,32 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
 
         }
 
-      /*  nameofItem = getActivity().getIntent().getExtras().getString("nameOfFood");
-        nameofhotel = getActivity().getIntent().getExtras().getString("nameofhotel");
-        price = getActivity().getIntent().getExtras().getString("price");
-        imageUri = getActivity().getIntent().getExtras().getString("imageUri");
-        description = getActivity().getIntent().getExtras().getString("description");
-        cart_id = getActivity().getIntent().getExtras().getInt("position");
-        product_id = getActivity().getIntent().getExtras().getInt("productid");*/
+
+        if(imageUri.contains("http")){
+
+            Picasso.with(getActivity())
+                    .load(imageUri)
+                    .fit()
+                    .error(R.drawable.errortriangle)
+                    .into(imageFood);
 
 
-        Picasso.with(getActivity())
-                .load(imageUri)
-                .fit()
-                .error(R.drawable.errortriangle)
-                .into(imageFood);
+             finalImageUri = imageUri;
+
+
+        }
+        else {
+
+            Picasso.with(getActivity())
+                    .load("http://employeelive.com/kwiqmall/SuperAdmin/img/products/"+imageUri)
+                    .fit()
+                    .error(R.drawable.errortriangle)
+                    .into(imageFood);
+
+
+            finalImageUri = "http://employeelive.com/kwiqmall/SuperAdmin/img/products/"+imageUri;
+        }
+
 
         databaseHelper = new DBHelper(getActivity());
 
@@ -185,7 +191,7 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
         stringStringHashMap.put("productPrice",price);
         stringStringHashMap.put("productQty",totalItems1);
         stringStringHashMap.put("totalPrice",totalPrice2);
-        stringStringHashMap.put("imageUrl",imageUri);
+        stringStringHashMap.put("imageUrl",finalImageUri);
         stringStringHashMap.put("bussinessName",nameofhotel);
 
 
@@ -215,61 +221,6 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
                 }));
 
 
-
-/*
-        restClient.addFavourites(stringStringHashMap).enqueue(new Callback<AddFavouritesSuccess>() {
-            @Override
-            public void onResponse(Call<AddFavouritesSuccess> call, Response<AddFavouritesSuccess> response) {
-
-                if(response.body().getSuccess()){
-
-
-                    SaveButtonState(product_id);
-                    Toast.makeText(getActivity(),"Added to favourites",Toast.LENGTH_SHORT).show();
-                }
-                else {
-
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-                    builder1.setMessage(response.body().getMessage());
-                    builder1.setCancelable(true);
-
-                    builder1.setPositiveButton(
-                            "Cancel",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-
-
-                    AlertDialog alert11 = builder1.create();
-                    alert11.show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<AddFavouritesSuccess> call, Throwable t) {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-                builder1.setMessage(t.getMessage());
-                builder1.setCancelable(true);
-
-                builder1.setPositiveButton(
-                        "Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-            }
-        });
-*/
 
 
     }
@@ -338,11 +289,11 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
             utilityCartData.setNameOfFood(nameOfFood);
             utilityCartData.setPrice(price);
             utilityCartData.setTotalItems(totalItems);
-            utilityCartData.setImageUri(imageUri);
+            utilityCartData.setImageUri(finalImageUri);
             utilityCartData.setTotalPrice(totalPrice);
 
 
-            databaseHelper.insert(userId,product_id,nameOfFood,price,totalItems,imageUri,totalPrice);
+            databaseHelper.insert(userId,product_id,nameOfFood,price,totalItems,finalImageUri,totalPrice);
 
             int counter = databaseHelper.getProductsCount();
 
@@ -471,11 +422,11 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
             utilityCartData.setNameOfFood(nameOfFood);
             utilityCartData.setPrice(price);
             utilityCartData.setTotalItems(totalItems);
-            utilityCartData.setImageUri(imageUri);
+            utilityCartData.setImageUri(finalImageUri);
             utilityCartData.setTotalPrice(totalPrice);
 
 
-            databaseHelper.insert(userId,product_id,nameOfFood,price,totalItems,imageUri,totalPrice);
+            databaseHelper.insert(userId,product_id,nameOfFood,price,totalItems,finalImageUri,totalPrice);
 
 
             int counter = databaseHelper.getProductsCount();
@@ -489,35 +440,11 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
-           /* Fragment mFragment = null;
-            mFragment = new ViewCartFragment();
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .add(R.id.mainFrame, mFragment).commit();
-
-*/
-
 
 
         }
     }
 
-/*
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        layoutOverlay.setVisibility(View.INVISIBLE);
-
-        Animation pushUpIn = AnimationUtils.loadAnimation(this, R.anim.push_up_in);
-
-        layoutInvisible.startAnimation(pushUpIn);
-
-
-        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-
-
-    }*/
 
 
 }

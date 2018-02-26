@@ -1,19 +1,15 @@
 package mall.kwik.kwikmall.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,13 +25,12 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.BaseFragActivity.BaseFragment;
+import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
 import mall.kwik.kwikmall.activities.FragmentsActivity;
 import mall.kwik.kwikmall.adapters.RecyclerViewAdapterSearch;
 import mall.kwik.kwikmall.apiresponse.GetStoreProducts.StoreProductsPayload;
@@ -46,9 +41,6 @@ import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
 import mall.kwik.kwikmall.sharedpreferences.SharedPrefData;
 import mall.kwik.kwikmall.sharedpreferences.UserDataUtility;
 import mall.kwik.kwikmall.sharedpreferences.UtilityCartData;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static mall.kwik.kwikmall.activities.FragmentsActivity.nearby;
 
@@ -373,7 +365,7 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
 
             holder.tvTypeofFood.setText(storeProductsPayload.getName());
-            holder.tvPricefood.setText(storeProductsPayload.getPrice());
+            holder.tvPricefood.setText("GHS "+storeProductsPayload.getPrice());
 
             if(storeProductsPayload.getCatagoryType().equalsIgnoreCase("Non-veg")){
 

@@ -5,38 +5,38 @@ import com.google.gson.annotations.SerializedName;
 
 public class ValidateOTPSuccess {
 
-    @SerializedName("isSuccess")
+
     @Expose
-    private Boolean isSuccess;
+    @SerializedName("message")
+    private String message;
+    @Expose
     @SerializedName("isError")
+    private boolean isError;
     @Expose
-    private Boolean isError;
-    @SerializedName("payload")
-    @Expose
-    private Payload payload;
+    @SerializedName("isSuccess")
+    private boolean isSuccess;
 
-    public Boolean getIsSuccess() {
-        return isSuccess;
+    public String getMessage() {
+        return message;
     }
 
-    public void setIsSuccess(Boolean isSuccess) {
-        this.isSuccess = isSuccess;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public Boolean getIsError() {
+    public boolean getIsError() {
         return isError;
     }
 
-    public void setIsError(Boolean isError) {
+    public void setIsError(boolean isError) {
         this.isError = isError;
     }
 
-    public Payload getPayload() {
-        return payload;
+    public boolean getIsSuccess() {
+        return isSuccess;
     }
 
-    public void setPayload(Payload payload) {
-        this.payload = payload;
+    public void setIsSuccess(boolean isSuccess) {
+        this.isSuccess = isSuccess;
     }
-
 }

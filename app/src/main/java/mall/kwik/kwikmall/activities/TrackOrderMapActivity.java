@@ -12,7 +12,6 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -54,7 +53,7 @@ import java.util.List;
 
 import am.appwise.components.ni.NoInternetDialog;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.BaseFragActivity.BaseActivity;
+import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
 import mall.kwik.kwikmall.sharedpreferences.MarkerDataPreference;
 import mall.kwik.kwikmall.R;
 

@@ -1,14 +1,13 @@
-package mall.kwik.kwikmall.BaseFragActivity;
+package mall.kwik.kwikmall.baseFragActivity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
@@ -32,48 +31,34 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by dharamveer on 29/1/18.
  */
 
-public class BaseFragment extends Fragment {
+public class BaseActivity extends AppCompatActivity {
+
 
     @Inject
     public GitApiInterface apiService;
 
-
-    protected ProgressDialog pDialog;
-
-    protected android.app.AlertDialog alertDialog;
-
     @Inject
     public SharedPrefsHelper sharedPrefsHelper;
+
+    protected Unbinder unbinder;
 
     public NoInternetDialog noInternetDialog;
     public FlipProgressDialog fpd;
 
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ((AppController) getActivity().getApplication()).getComponent().inject(this);
-    }
-
-
-    public void alertLoading() {
-
-        pDialog =new ProgressDialog(getActivity());
-        pDialog.setMessage("Loading...");
-        pDialog.setCancelable(false);
-        pDialog.setCanceledOnTouchOutside(true);
-
-
-        android.app.AlertDialog.Builder alertDialogBuilder;
-        alertDialogBuilder =new android.app.AlertDialog.Builder(getActivity());
-
-        alertDialogBuilder.setCancelable(true);
-        alertDialogBuilder.setPositiveButton(
-                "Ok",
-                (dialog,id)->dialog.cancel());
-        alertDialog =alertDialogBuilder.create();
+    public void setContentView(int layoutRedID) {
+        super.setContentView(layoutRedID);
+        ((AppController) getApplication()).getComponent().inject(this);
+        unbinder = ButterKnife.bind(this);
 
     }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
 
+    }
 
 
     public void flipProgress() {
@@ -109,15 +94,17 @@ public class BaseFragment extends Fragment {
         fpd.setMaxAlpha(1.0f);                                    // Set an alpha while image is flipping
 
 
-        fpd.show(getActivity().getFragmentManager(),"");                        // Show flip-progress-dialg
+        fpd.show(getFragmentManager(),"");                        // Show flip-progress-dialg
 
 
     }
 
 
+
+
     public void showSuccessDialog(String title){
 
-        new AwesomeSuccessDialog(getActivity())
+        new AwesomeSuccessDialog(this)
                 .setTitle(title)
                 .setMessage("Successfully")
                 .setColoredCircle(R.color.green)
@@ -134,21 +121,46 @@ public class BaseFragment extends Fragment {
                     }
                 }).show();
 
-
     }
 
 
 
 
+    public void navigateToNextActivity(Class cla){
+
+        startActivity(new Intent(BaseActivity.this,cla));
+        overridePendingTransition(R.anim.enter, R.anim.exit);
+
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        ((AppController) getApplication()).getComponent().inject(this);
+        super.onCreate(savedInstanceState);
+        noInternetDialog =  new NoInternetDialog.Builder(BaseActivity.this).build();
+    }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        noInternetDialog.onDestroy();
+    }
 
 
 
     public void showAlertDialog(String action,String message){
 
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage(message);
         builder1.setCancelable(true);
 
@@ -173,7 +185,5 @@ public class BaseFragment extends Fragment {
 
 
 
-
-
-
 }
+

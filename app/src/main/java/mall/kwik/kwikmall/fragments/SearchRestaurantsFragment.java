@@ -1,9 +1,6 @@
 package mall.kwik.kwikmall.fragments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,30 +9,22 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.BaseFragActivity.BaseFragment;
+import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
 import mall.kwik.kwikmall.adapters.RecyclerViewAdapterSearch;
 import mall.kwik.kwikmall.apiresponse.GetStoreProducts.StoreProductsPayload;
 import mall.kwik.kwikmall.apiresponse.GetStoreProducts.StoreProductsSuccess;
 import mall.kwik.kwikmall.R;
-import mall.kwik.kwikmall.sharedpreferences.UtilityCartData;
 import mall.kwik.kwikmall.SimpleDividerItemDecoration;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-
 
 
 public class SearchRestaurantsFragment extends BaseFragment {

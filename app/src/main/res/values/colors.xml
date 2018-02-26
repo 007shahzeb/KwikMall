@@ -4,10 +4,12 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="green">#00d048</color>
+    <color name="holo_green_dark">#ff669900</color>
     <color name="darkgreen">#006400</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
     <color name="red">#ff0000</color>
+    <color name="redDark">#cc0000</color>
 
     <color name="orange_app">#fd923f</color>
 

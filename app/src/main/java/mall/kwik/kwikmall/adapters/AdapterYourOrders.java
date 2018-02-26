@@ -36,7 +36,7 @@ public class AdapterYourOrders extends RecyclerView.Adapter<AdapterYourOrders.My
 
     public interface ItemClickListenerYourOrder{
         void ItemClick(int productid,String itemname,String price,String imagepath, String des,String nameofhotel);
-        void onDelete(View view, int position);
+        void onDelete(int pos,int userId, String orderNo,int productId);
 
     }
 
@@ -72,8 +72,6 @@ public class AdapterYourOrders extends RecyclerView.Adapter<AdapterYourOrders.My
         holder.tvOrderDate.setText(spliteddate[0]);
 
 
-
-
         Picasso.with(view.getContext())
                 .load("http://employeelive.com/kwiqmall/SuperAdmin/img/products/"+getOrderListPayload.getImage())
                 .fit()
@@ -105,7 +103,8 @@ public class AdapterYourOrders extends RecyclerView.Adapter<AdapterYourOrders.My
             public void onClick(View v) {
 
 
-                itemClickListenerYourOrder.onDelete(v, position);
+                itemClickListenerYourOrder.onDelete(position,getOrderListPayload.getUserId(),
+                                    getOrderListPayload.getOrderNo(),getOrderListPayload.getProductId());
 
 
             }

@@ -35,12 +35,13 @@
 
             <EditText
                 android:id="@+id/search_products_ed"
-                android:hint="Search products"
+                android:hint="Search for dishes"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:layout_width="0dp"
-                android:padding="5dp"
-                android:textSize="@dimen/_10sdp"
+                android:padding="@dimen/_5sdp"
+                android:textSize="@dimen/_15sdp"
+                app:fontPath="fonts/HindVadodara-Bold.ttf"
                 android:layout_height="wrap_content"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:background="@android:color/transparent"/>

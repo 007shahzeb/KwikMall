@@ -70,7 +70,7 @@
 
                 <EditText
                     android:id="@+id/edUsername"
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="USER NAME"
@@ -88,7 +88,7 @@
                 <EditText
                     android:id="@+id/edEmailAddress"
                     android:layout_margin="12dp"
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="EMAIL ADDRESS"
@@ -108,7 +108,7 @@
                     android:id="@+id/edPassword"
 
                     android:layout_margin="12dp"
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="PASSWORD"
@@ -127,7 +127,7 @@
                     android:id="@+id/edMobileNo"
 
                     android:layout_margin="12dp"
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Mobile"
@@ -145,7 +145,7 @@
                 <EditText
                     android:id="@+id/edAddressRegister"
                     android:layout_margin="12dp"
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Address"

@@ -67,11 +67,11 @@
 
 
                 <EditText
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="USER NAME"
-                    android:textSize="12dp"
+                    android:textSize="@dimen/_10sdp"
                     android:drawableLeft="@drawable/user"
                     android:layout_marginLeft="5dp"
                     android:drawablePadding="10dp"
@@ -82,11 +82,11 @@
                     android:textColorHint="@color/black"/>
 
                 <EditText
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="EMAIL ADDRESS"
-                    android:textSize="12dp"
+                    android:textSize="@dimen/_10sdp"
                     android:drawableLeft="@drawable/mail"
                     android:layout_marginLeft="5dp"
                     android:drawablePadding="10dp"
@@ -99,11 +99,11 @@
 
 
                 <EditText
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="PASSWORD"
-                    android:textSize="12dp"
+                    android:textSize="@dimen/_10sdp"
                     android:layout_marginTop="5dp"
                     android:drawableLeft="@drawable/key"
                     android:drawablePadding="10dp"
@@ -115,11 +115,11 @@
 
 
                 <EditText
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="CONFIRM PASSWORD"
-                    android:textSize="12dp"
+                    android:textSize="@dimen/_10sdp"
                     android:layout_marginTop="5dp"
                     android:drawableLeft="@drawable/key"
                     android:drawablePadding="10dp"
@@ -154,7 +154,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/image_size5"
+        android:padding="@dimen/_5sdp"
         android:gravity="center"
         android:layout_alignParentBottom="true"
         >

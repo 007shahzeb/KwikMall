@@ -41,7 +41,6 @@ public class PaymentMethodActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_payment_method);
 
         context = this;
@@ -54,11 +53,14 @@ public class PaymentMethodActivity extends AppCompatActivity implements View.OnC
         //Extract the data…
         // totalAmt = bundle.getString("totalAmount");
 
-        tvTotalAmount.setText("155");
+        //tvTotalAmount.setText("155");
 
         clickListeners();
 
         EditTextChangedOnListener();
+
+
+
 
 
     }
@@ -155,6 +157,10 @@ public class PaymentMethodActivity extends AppCompatActivity implements View.OnC
         imagePayMethodBack = findViewById(R.id.imagePayMethodBack);
         txtonfirmpayment = findViewById(R.id.txtonfirmpayment);
         txtPaymentMethod = findViewById(R.id.txtPaymentMethod);
+
+
+        //Text view
+       // tvTotalAmount = findViewById(R.id.tvTotalAmount);
 
 
         //Check Boxes
@@ -327,7 +333,6 @@ public class PaymentMethodActivity extends AppCompatActivity implements View.OnC
         });
 
     }
-
 
 
     @Override

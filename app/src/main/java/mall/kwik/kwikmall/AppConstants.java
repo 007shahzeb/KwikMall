@@ -19,6 +19,7 @@ public class AppConstants {
     public static final String DEL_LAT = "DEL_LAT";
     public static final String DEL_LONG = "DEL_LONG";
     public static final String FILTER_DATA = "FILTER_DATA";
+    public static final String PHONEWITHCCP = "PHONEWITHCCP";
 
 
 

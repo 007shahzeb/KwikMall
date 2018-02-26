@@ -68,7 +68,7 @@
 
                 <EditText
                     android:id="@+id/edEmailAddressLogin"
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="EMAIL ADDRESS"
@@ -84,7 +84,7 @@
 
                 <EditText
                     android:id="@+id/edPasswordLogin"
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="PASSWORD"
@@ -103,7 +103,7 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_marginTop="10dp"
                     android:text="@string/forgetpassword"
                     android:textColor="@color/black"
@@ -133,7 +133,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/image_size5"
+        android:padding="@dimen/_5sdp"
         android:gravity="center"
         android:layout_alignParentBottom="true"
         >

@@ -1,14 +1,11 @@
 package mall.kwik.kwikmall.activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -32,16 +29,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.BaseFragActivity.BaseActivity;
+import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
 import mall.kwik.kwikmall.apiresponse.AddFavourites.AddFavouritesSuccess;
 import mall.kwik.kwikmall.fragments.ViewCartFragment;
 import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
-import mall.kwik.kwikmall.sharedpreferences.UserDataUtility;
 import mall.kwik.kwikmall.sharedpreferences.UtilityCartData;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static mall.kwik.kwikmall.activities.FragmentsActivity.nearby;
 

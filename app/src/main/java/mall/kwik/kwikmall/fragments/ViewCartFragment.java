@@ -1,15 +1,14 @@
 package mall.kwik.kwikmall.fragments;
 
 import android.Manifest;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 
+import com.expresspaygh.api.ExpressPayApi;
 import com.google.android.gms.location.LocationListener;
 
 import android.net.ConnectivityManager;
@@ -20,10 +19,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,17 +44,21 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.taishi.flipprogressdialog.FlipProgressDialog;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.BaseFragActivity.BaseFragment;
+import mall.kwik.kwikmall.activities.FragmentsActivity;
+import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
 import mall.kwik.kwikmall.activities.EnterAddressActivity;
 import mall.kwik.kwikmall.activities.SignInActivity;
 import mall.kwik.kwikmall.adapters.RecyclerViewAdapterTouch;
@@ -79,11 +80,11 @@ import static mall.kwik.kwikmall.fragments.FragmentWithoutSearchResults.Recycler
 
 public class ViewCartFragment extends BaseFragment implements View.OnClickListener, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener,
         LocationListener, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener{
 
 
     private View view;
-    private TextView txtViewCart, txtItems, txtTotalItems, txtTotal, txtTotatPriceViewCart, txtPlaceorder, loginForOrder;
+    private TextView txtViewCart, txtItems, txtTotalItems, txtTotal, txtTotatPriceViewCart, txtPlaceorder ;
     private ImageView imageViewCartBack, imageCartEmpty;
     private RecyclerView recyclerViewCart;
 
@@ -96,7 +97,7 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
     int finalsum;
     int deleted;
     public int size;
-    private LinearLayout bottomPlaceOrder;
+    private LinearLayout bottomPlaceOrder,loginForOrder;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     Location mLastLocation;
     GoogleApiClient mGoogleApiClient;
@@ -121,6 +122,8 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
         clickListeners();
 
         database = new DBHelper(getActivity());
+
+
 
 
         final UtilityCartData utilityCartData = new UtilityCartData(getActivity());
@@ -458,7 +461,6 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
 
                             Intent intent = new Intent(getActivity(),EnterAddressActivity.class);
                             intent.putExtras(bundle);
-
                             startActivity(intent);
                             getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
 
@@ -483,7 +485,6 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
 
 
     }
-
 
 
 
@@ -612,5 +613,8 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
 
 
     }
+
+
+
 
 }

@@ -48,16 +48,15 @@
         android:paddingLeft="@dimen/_8sdp">
 
         <TextView
-
             android:id="@+id/tvSavedAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="@dimen/_5sdp"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_13sdp"
             app:fontPath="fonts/HindVadodara-Bold.ttf"
-
             android:text="@string/savedeliverylocation"/>
+
     </RelativeLayout>
 
 
@@ -76,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintTextAppearance="@style/TextLabel"
-            android:layout_marginTop="@dimen/image_size8"
+            android:layout_marginTop="@dimen/_5sdp"
             android:textColorHint="#808080"
             >
 
@@ -99,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintTextAppearance="@style/TextLabel"
-            android:layout_marginTop="@dimen/image_size8"
+            android:layout_marginTop="@dimen/_5sdp"
             android:textColorHint="#808080"
             >
 
@@ -121,7 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintTextAppearance="@style/TextLabel"
-            android:layout_marginTop="@dimen/image_size8"
+            android:layout_marginTop="@dimen/_5sdp"
             android:textColorHint="#808080"
             >
 
@@ -162,7 +161,7 @@
             />
 
         <TextView            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/image_size5"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_height="wrap_content"
             android:text="SAVE AS"
             android:textSize="@dimen/_12sdp"
@@ -356,14 +355,14 @@
 
             <EditText
                 android:id="@+id/edOtherText"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/workblack"
                 android:drawableStart="@drawable/workblack"
                 android:hint="e.g.: Dad's Place, John's Home"
                 android:drawablePadding="10dp"
-                android:textSize="@dimen/image_size8"
+                android:textSize="@dimen/_10sdp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:maxLines="1"
@@ -379,7 +378,7 @@
                 android:layout_centerVertical="true"
                 android:text="Cancel"
                 android:padding="5dp"
-                android:textSize="@dimen/image_size8"
+                android:textSize="@dimen/_10sdp"
                 android:layout_marginRight="10dp"
                 android:textColor="@color/black"
                 />

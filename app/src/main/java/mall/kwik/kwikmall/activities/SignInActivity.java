@@ -1,43 +1,36 @@
 package mall.kwik.kwikmall.activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.util.HashMap;
-
 import am.appwise.components.ni.NoInternetDialog;
-import mall.kwik.kwikmall.BaseFragActivity.BaseActivity;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.apiresponse.FirebaseNotification.FCMSUCCESS;
-import mall.kwik.kwikmall.apiresponse.LoginResponse.UserLoginSuccess;
+import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
 import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.presenter.LoginPresenter;
 import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
 import mall.kwik.kwikmall.sharedpreferences.UserDataUtility;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SignInActivity extends BaseActivity implements View.OnClickListener, LoginPresenter.View{
 
@@ -50,6 +43,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     private Context context;
     private NoInternetDialog noInternetDialog;
     private RelativeLayout mainLoginLayout;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
     @Override
@@ -132,6 +126,30 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         if(v==btnArrow){
 
 
+
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+
+            compositeDisposable.add(apiService.firebaseNotification(refreshedToken,edEmailAddressLogin.getText().toString())
+                    .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<FCMSUCCESS>() {
+                        @Override
+                        public void accept(FCMSUCCESS fcmsuccess) throws Exception {
+
+
+                           // Toast.makeText(SignInActivity.this,fcmsuccess.getMessage(),Toast.LENGTH_LONG).show();
+
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+
+                            compositeDisposable.dispose();
+
+                        }
+                    }));
+
             if (TextUtils.isEmpty(edEmailAddressLogin.getText().toString()) ||  TextUtils.isEmpty(edPasswordLogin.getText().toString())) {
 
                 if (TextUtils.isEmpty(edEmailAddressLogin.getText().toString())) {
@@ -208,7 +226,6 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     public void loginSuccessful(String message) {
 
 
-
         Snackbar.make(mainLoginLayout, message, Snackbar.LENGTH_SHORT).show();
 
 
@@ -233,9 +250,6 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
 
 
 
-
-
-
     }
 
     @Override
@@ -245,4 +259,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
 
 
     }
+
+
+
 }

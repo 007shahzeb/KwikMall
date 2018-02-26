@@ -1,6 +1,7 @@
 package mall.kwik.kwikmall.presenter;
 
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -54,28 +55,6 @@ public class LoginPresenter extends BasePresenter{
 
 
                         if(userLoginSuccess.getSuccess()){
-
-
-                            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-
-
-                            compositeDisposable.add(apiService.firebaseNotification(refreshedToken,email)
-                                            .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(new Consumer<FCMSUCCESS>() {
-                                                @Override
-                                                public void accept(FCMSUCCESS fcmsuccess) throws Exception {
-
-
-
-                                                }
-                                            }, new Consumer<Throwable>() {
-                                                @Override
-                                                public void accept(Throwable throwable) throws Exception {
-
-                                                }
-                                            }));
-
 
 
 

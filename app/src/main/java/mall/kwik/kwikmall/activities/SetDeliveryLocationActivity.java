@@ -4,8 +4,10 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -18,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -29,8 +32,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.arsy.maps_library.MapRadar;
-import com.arsy.maps_library.MapRipple;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -40,6 +41,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -52,9 +54,12 @@ import am.appwise.components.ni.NoInternetDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mall.kwik.kwikmall.R;
+import mall.kwik.kwikmall.activities.maps_library.MapRadar;
+import mall.kwik.kwikmall.activities.maps_library.MapRipple;
+import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
 import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
 
-public class SetDeliveryLocationActivity extends AppCompatActivity implements
+public class SetDeliveryLocationActivity extends BaseActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -83,7 +88,7 @@ public class SetDeliveryLocationActivity extends AppCompatActivity implements
     private EditText edFlatNo, edLandmark;
     private String homeworkother;
     private Circle mCircle;
-    private Marker mMarker;
+    private Marker marker;
     private ProgressBar progressBar1;
     MapRipple mapRipple;
     private MapRadar mapRadar;
@@ -243,7 +248,7 @@ public class SetDeliveryLocationActivity extends AppCompatActivity implements
 
 
         imageBackArrowEnter = findViewById(R.id.imageBackArrowEnter);
-        markerImage = findViewById(R.id.markerImage);
+       // markerImage = findViewById(R.id.markerImage);
 
         //TextInputLayout
         input_layout_flat = findViewById(R.id.input_layout_flat);
@@ -415,15 +420,12 @@ public class SetDeliveryLocationActivity extends AppCompatActivity implements
     }
 
 
+
     //Getting current location
     private void getCurrentLocation() {
         //Creating a location object
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            return;
-        }
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
 
         if (location != null) {
             //Getting longitude and latitude
@@ -469,7 +471,7 @@ public class SetDeliveryLocationActivity extends AppCompatActivity implements
                 .icon(icon);
         mMap.addMarker(markerOptions);
 
-        mMarker = mMap.addMarker(markerOptions);
+        marker = mMap.addMarker(markerOptions);
 
 
         //Animating the camera
@@ -532,6 +534,45 @@ public class SetDeliveryLocationActivity extends AppCompatActivity implements
 
         latLng = new LatLng(latitude, longitude);
 
+        mMap.setInfoWindowAdapter(new BalloonAdapter(getLayoutInflater()));
+
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.markerpin);
+
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng)
+                .title("Move pin to adjust")
+                .icon(icon);
+        mMap.addMarker(markerOptions);
+
+        marker = mMap.addMarker(markerOptions);
+
+        marker.showInfoWindow();
+
+        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition)
+            {
+                if(marker==null)
+                {
+                    marker = mMap.addMarker(new MarkerOptions().position(cameraPosition.target).
+                            title("Marker").icon(BitmapDescriptorFactory.fromResource(R.drawable.markerpin)));
+
+
+
+
+                }
+                else
+                {
+
+                    marker.setPosition(cameraPosition.target);
+
+
+
+
+
+                }
+            }
+        });
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
@@ -541,9 +582,6 @@ public class SetDeliveryLocationActivity extends AppCompatActivity implements
         }
 
         mMap.setMyLocationEnabled(true);
-
-
-
 
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
@@ -571,66 +609,79 @@ public class SetDeliveryLocationActivity extends AppCompatActivity implements
         });
 
 
-
         if (mMap != null) {
             mMap.getUiSettings().setScrollGesturesEnabled(true);
             mMap.getUiSettings().setAllGesturesEnabled(true);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-                return;
-            }
-            mMap.setMyLocationEnabled(true);
-            Location location = mMap.getMyLocation();
-            if (location == null)
+
                 getCurrentLocation();
-            try {
 
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),10));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),15));
 
 
                 Handler handler1 = new Handler();
                 handler1.postDelayed(new Runnable() {
                     public void run() {
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 18));
+
+
+                        LatLng point = new LatLng(latitude, longitude);
+
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
+
+                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                .target(new LatLng(latitude,longitude)  )    // Sets the center of the map to location user
+                                .zoom(17)                   // Sets the zoom
+                                .bearing(10)                // Sets the orientation of the camera to east
+                                .build();                   // Creates a CameraPosition from the builder
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                        //Add pointer to the map at location
+
+                        mapRipple = new MapRipple(mMap, point, context);
+                        simpleRipple();
 
                     }
                 }, 1000);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-            mapRipple = new MapRipple(mMap, latLng, SetDeliveryLocationActivity.this);
-
-            mapRipple.withNumberOfRipples(3);
-            mapRipple.withFillColor(Color.parseColor("#FFA3D2E4"));
-            mapRipple.withStrokeColor(Color.BLACK);
-            mapRipple.withStrokewidth(0);      // 10dp
-            mapRipple.withDistance(2000);      // 2000 metres radius
-            mapRipple.withRippleDuration(12000);    //12000ms
-            mapRipple.withTransparency(0.5f);
-            mapRipple.startRippleMapAnimation();
-
-
-            mapRadar = new MapRadar(mMap, latLng, SetDeliveryLocationActivity.this);
-            //mapRadar.withClockWiseAnticlockwise(true);
-            mapRadar.withDistance(2000);
-            mapRadar.withClockwiseAnticlockwiseDuration(2);
-            //mapRadar.withOuterCircleFillColor(Color.parseColor("#12000000"));
-            mapRadar.withOuterCircleStrokeColor(Color.parseColor("#fccd29"));
-            //mapRadar.withRadarColors(Color.parseColor("#00000000"), Color.parseColor("#ff000000"));  //starts from transparent to fuly black
-            mapRadar.withRadarColors(Color.parseColor("#00fccd29"), Color.parseColor("#fffccd29"));  //starts from transparent to fuly black
-            //mapRadar.withOuterCircleStrokewidth(7);
-            //mapRadar.withRadarSpeed(5);
-            mapRadar.withOuterCircleTransparency(0.5f);
-            mapRadar.withRadarTransparency(0.5f);
 
 
 
 
 
         }
+    }
+
+
+    public class BalloonAdapter implements GoogleMap.InfoWindowAdapter {
+        LayoutInflater inflater = null;
+        private TextView textViewTitle;
+
+        public BalloonAdapter(LayoutInflater inflater) {
+            this.inflater = inflater;
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            View v = inflater.inflate(R.layout.balloon, null);
+            if (marker != null) {
+                textViewTitle =  v.findViewById(R.id.textViewTitle);
+                textViewTitle.setText(marker.getTitle());
+            }
+            return (v);
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            return (null);
+        }
+    }
+
+
+
+    public void simpleRipple() {
+        mapRipple.withNumberOfRipples(1);
+        mapRipple.withFillColor(Color.parseColor("#00000000"));
+        mapRipple.withStrokeColor(Color.BLACK);
+        mapRipple.withStrokewidth(10);      // 10dp
+        mapRipple.startRippleMapAnimation();
     }
 
 

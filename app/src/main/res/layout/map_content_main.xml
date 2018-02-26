@@ -32,12 +32,12 @@
             tools:ignore="VectorDrawableCompat" />
 
 
-        <ImageView
+      <!--  <ImageView
             android:id="@+id/markerImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/markerpin" />
+            android:src="@drawable/markerpin" />-->
 
 
     </RelativeLayout>

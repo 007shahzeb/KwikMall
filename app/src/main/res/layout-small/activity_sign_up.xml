@@ -69,7 +69,7 @@
 
 
                 <EditText
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="USER NAME"
@@ -86,7 +86,7 @@
 
                 <EditText
                     android:layout_margin="12dp"
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="EMAIL ADDRESS"
@@ -104,7 +104,7 @@
 
                 <EditText
                     android:layout_margin="12dp"
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="PASSWORD"
@@ -121,7 +121,7 @@
 
                 <EditText
                     android:layout_margin="12dp"
-                    android:padding="@dimen/image_size5"
+                    android:padding="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="CONFIRM PASSWORD"

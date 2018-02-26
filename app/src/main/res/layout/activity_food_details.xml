@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:id="@+id/foodDetailsContainer"
     tools:context="mall.kwik.kwikmall.activities.FoodDetailsActivity">
@@ -72,15 +73,36 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvPrice"
-                android:layout_marginTop="5dp"
+            <LinearLayout
+                android:id="@+id/priceLayout"
                 android:layout_below="@id/firstLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="25"
-                android:textSize="@dimen/_10sdp"
-                android:textColor="@color/black"/>
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GHS"
+                    app:fontPath="fonts/HindVadodara-Bold.ttf"
+                    android:padding="@dimen/_3sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="25"
+                    android:padding="@dimen/_3sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+
+
 
             <LinearLayout
                 android:layout_alignParentRight="true"
@@ -107,7 +129,7 @@
                     android:text="1"
                     android:padding="5dp"
                     android:layout_weight="1"
-                    android:layout_margin="@dimen/image_size5"
+                    android:layout_margin="@dimen/_5sdp"
                     android:layout_gravity="center"
                     android:textSize="@dimen/_10sdp"
                     android:textColor="@color/green"/>
@@ -129,7 +151,7 @@
                 android:id="@+id/tvDes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvPrice"
+                android:layout_below="@id/priceLayout"
                 android:text="Description"
                 android:textSize="@dimen/_10sdp"
                 android:textColor="@color/green"/>
@@ -253,8 +275,8 @@
                 android:text="2"
                 android:layout_gravity="center"
                 android:textColor="@color/white"
-                android:padding="10dp"
-                android:textSize="@dimen/image_size8"/>
+                android:padding="@dimen/_10sdp"
+                android:textSize="@dimen/_10sdp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -262,8 +284,8 @@
                 android:text="@string/items"
                 android:textColor="@color/white"
                 android:layout_gravity="center"
-                android:padding="10dp"
-                android:textSize="@dimen/image_size8"
+                android:padding="@dimen/_10sdp"
+                android:textSize="@dimen/_10sdp"
                 />
 
             <View
@@ -274,16 +296,38 @@
 
             </View>
 
-            <TextView
-                android:id="@+id/txtTotatPrice"
+
+
+            <LinearLayout
+
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$25"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:padding="10dp"
-                android:textSize="@dimen/image_size8"
-                />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GHS"
+                    android:layout_gravity="center"
+                    app:fontPath="fonts/HindVadodara-Bold.ttf"
+                    android:padding="@dimen/_5sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/white"/>
+
+
+                <TextView
+                    android:id="@+id/txtTotatPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="25"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:padding="@dimen/_5sdp"
+                    android:textSize="@dimen/_10sdp"
+                    />
+
+
+            </LinearLayout>
 
 
 
@@ -294,12 +338,12 @@
             android:id="@+id/txtViewCart"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:text="@string/viewcart"
             android:textColor="@color/white"
-            android:padding="10dp"
-            android:textSize="@dimen/image_size8"
+            android:padding="@dimen/_10sdp"
+            android:textSize="@dimen/_10sdp"
             />
 
     </RelativeLayout>

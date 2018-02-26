@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import mall.kwik.kwikmall.BaseFragActivity.BaseFragment;
+import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
 import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.adapters.TimeLineAdapter;
 import mall.kwik.kwikmall.models.TimeLineModel;
@@ -67,8 +67,6 @@ public class TrackYourOrderFragment extends BaseFragment {
         return view;
 
     }
-
-
 
 
     @Override

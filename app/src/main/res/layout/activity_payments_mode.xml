@@ -116,7 +116,7 @@
 
 
         <RelativeLayout
-            android:layout_marginTop="@dimen/image_size5"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
@@ -171,7 +171,7 @@
         </View>
 
         <RelativeLayout
-            android:layout_marginTop="@dimen/image_size5"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
@@ -226,7 +226,7 @@
 
         </View>
         <RelativeLayout
-            android:layout_marginTop="@dimen/image_size5"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >

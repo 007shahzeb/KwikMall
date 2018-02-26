@@ -69,11 +69,35 @@ public class RecyclerViewAdapterTouch extends RecyclerView.Adapter<RecyclerViewA
         count = Integer.parseInt(viewCartModel.getKEY_qty());
 
 
-        Picasso.with(context)
-                .load(viewCartModel.getKEY_ImageUri())
-                .fit()
-                .error(R.drawable.errortriangle)
-                .into(holder.cartImageView);
+
+        String imageUri = viewCartModel.getKEY_ImageUri();
+
+        if(imageUri.contains("http")){
+
+
+            Picasso.with(context)
+                    .load(viewCartModel.getKEY_ImageUri())
+                    .fit()
+                    .error(R.drawable.errortriangle)
+                    .into(holder.cartImageView);
+
+
+
+
+        }
+        else {
+
+            Picasso.with(context)
+                    .load("http://employeelive.com/kwiqmall/SuperAdmin/img/products/"+imageUri)
+                    .fit()
+                    .error(R.drawable.errortriangle)
+                    .into(holder.cartImageView);
+
+        }
+
+
+
+
 
         final Integer[] Quantity = {Integer.valueOf(viewCartModel.getKEY_qty())};
 

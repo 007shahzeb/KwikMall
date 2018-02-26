@@ -62,7 +62,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Indian"
-                    android:textSize="@dimen/_7sdp"
+                    android:padding="@dimen/_3sdp"
+
+                    android:textSize="@dimen/_10sdp"
                     />
 
                 <TextView
@@ -70,9 +72,10 @@
                     android:layout_below="@id/tvFoodNationality"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$20"
+                    android:text="20"
+                    android:padding="@dimen/_3sdp"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_7sdp"
+                    android:textSize="@dimen/_10sdp"
                     />
 
 

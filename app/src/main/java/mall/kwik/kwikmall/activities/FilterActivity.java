@@ -1,13 +1,10 @@
 package mall.kwik.kwikmall.activities;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +24,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.BaseFragActivity.BaseActivity;
+import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
 import mall.kwik.kwikmall.activities.aplicationclass.AppController;
 import mall.kwik.kwikmall.adapters.RecyclerViewAdapterFilter;
 import mall.kwik.kwikmall.apiresponse.FilterListResponse.FilterListPayload;
@@ -35,11 +32,6 @@ import mall.kwik.kwikmall.apiresponse.FilterListResponse.FilterListSuccess;
 import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.events.FilterEvent;
 import mall.kwik.kwikmall.sharedpreferences.UtilitySP;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 
 
 /**

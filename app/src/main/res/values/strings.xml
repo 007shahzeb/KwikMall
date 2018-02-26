@@ -8,6 +8,7 @@
 
     <string name="signin">SIGN IN</string>
     <string name="forgetpass">FORGET PASSWORD</string>
+    <string name="newpass">NEW PASSWORD</string>
     <string name="sign_in">Sign in</string>
     <string name="signup">SIGN UP</string>
 
@@ -68,6 +69,9 @@
     <string name="usinggps">Using GPS</string>
     <string name="enterhouseflatnot">ENTER HOUSE / FLAT NO.</string>
 
+    <string name="almostthere">Almost There</string>
+    <string name="loginorsignup">Login or Sign up to place your order</string>
+
     <string name="your_orders">Your Orders</string>
     <string name="favouritesitem">Favourites List</string>
     <string name="buyitagain">Buy it again</string>
@@ -109,4 +113,6 @@
     <string name="addtocart">Add to Cart</string>
     <string name="addedtocart">Added to Cart</string>
     <string name="proceedcheckout">Proceed to checkout</string>
+    <string name="enterotp">Please Enter OTP</string>
+    <string name="reg_screen_submit">Submit</string>
 </resources>

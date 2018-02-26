@@ -1,0 +1,177 @@
+package mall.kwik.kwikmall.dialogs;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatEditText;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+
+import java.util.HashMap;
+
+import javax.inject.Inject;
+
+import am.appwise.components.ni.NoInternetDialog;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import mall.kwik.kwikmall.AppConstants;
+import mall.kwik.kwikmall.R;
+import mall.kwik.kwikmall.activities.NewPassActivity;
+import mall.kwik.kwikmall.activities.aplicationclass.AppController;
+import mall.kwik.kwikmall.apiresponse.ForgetPassword.ValidateOTPSuccess;
+import mall.kwik.kwikmall.di.modules.SharedPrefsHelper;
+import mall.kwik.kwikmall.manager.GitApiInterface;
+
+/**
+ * Created by dharamveer on 18/1/18.
+ */
+
+public class EnterOTPDialog extends Dialog {
+
+    Context context;
+    @BindView(R.id.edAccessCode)
+    EditText edAccessCode;
+    @BindView(R.id.btnSubmit)
+    Button btnSubmit;
+
+    @BindView(R.id.edPhoneNo)
+    AppCompatEditText edPhoneNO;
+    private String phone;
+
+
+    NoInternetDialog noInternetDialog;
+
+    @Inject
+    public GitApiInterface apiService;
+
+
+    @Inject
+    public SharedPrefsHelper sharedPrefsHelper;
+
+    @BindView(R.id.dialog_progress_bar)
+    ProgressBar dialogProgressBar;
+
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+
+    public EnterOTPDialog(@NonNull Context context) {
+        super(context);
+        this.context = context;
+
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setCanceledOnTouchOutside(false);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ((AppController) getContext().getApplicationContext()).getComponent().inject(EnterOTPDialog.this);
+
+
+        setContentView(R.layout.dialog_otp);
+        ButterKnife.bind(this);
+
+        noInternetDialog = new NoInternetDialog.Builder(context).build();
+        dialogProgressBar = findViewById(R.id.dialog_progress_bar);
+
+
+        phone = sharedPrefsHelper.get(AppConstants.PHONEWITHCCP, "");
+
+        edPhoneNO.setText(phone);
+
+
+    }
+
+
+    @OnClick(R.id.btnSubmit)
+    public void onViewClicked() {
+
+
+        if (TextUtils.isEmpty(edPhoneNO.getText().toString().trim()) || TextUtils.isEmpty(edAccessCode.getText().toString().trim())) {
+
+            if (TextUtils.isEmpty(edPhoneNO.getText().toString())) {
+                edPhoneNO.setError("Enter phone no");
+
+            } else if (TextUtils.isEmpty(edAccessCode.getText().toString())) {
+                edAccessCode.setError("Enter Access Code");
+            }
+        } else {
+
+            dialogProgressBar.setVisibility(View.VISIBLE);
+
+            String otp = edAccessCode.getText().toString().trim();
+
+            compositeDisposable.add(apiService.validateOTP(phone, otp)
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<ValidateOTPSuccess>() {
+                        @Override
+                        public void accept(ValidateOTPSuccess validateOTPSuccess) throws Exception {
+
+                            if (validateOTPSuccess.getIsSuccess()) {
+
+
+                                dialogProgressBar.setVisibility(View.GONE);
+
+
+                                Intent intent = new Intent(context, NewPassActivity.class);
+                                context.startActivity(intent);
+
+
+
+                            } else {
+
+                                dialogProgressBar.setVisibility(View.GONE);
+
+                                edAccessCode.setText("");
+
+                                Toast.makeText(context,"OTP is not Valid",Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+
+                            edAccessCode.setText("");
+                            dialogProgressBar.setVisibility(View.GONE);
+                            noInternetDialog.show();
+
+
+                        }
+                    }));
+        }
+
+
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        noInternetDialog.onDestroy();
+
+    }
+
+
+
+}

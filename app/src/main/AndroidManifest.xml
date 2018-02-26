@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:uses-featureandroid="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     package="mall.kwik.kwikmall">
-
-
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -19,19 +17,18 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-
     <application
         android:name=".activities.aplicationclass.AppController"
-        android:configChanges="orientation|screenSize"
-        android:icon="@mipmap/kwiq_mall"
-        android:largeHeap="true"
         android:allowBackup="true"
+        android:configChanges="orientation|screenSize"
         android:hardwareAccelerated="false"
+        android:icon="@mipmap/kwiq_mall"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/kwiq_mall"
         android:supportsRtl="true"
         android:theme="@style/NoInternetTheme"
-        >
+        tools:replace="android:allowBackup,icon,theme,label,name">
         <service android:name=".firebasenotification.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -51,10 +48,6 @@
             </intent-filter>
         </receiver>
 
-<!--
-        <service android:name=".services.LocationService" />
--->
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAGBhiRN9SOnn85S7Isnb6acqDvWpMUeh8" />
@@ -70,29 +63,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".activities.SignInSignUpButtonsActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
             android:theme="@style/DashBoardTheme"
-            />
-
-
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.FragmentsActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-
-
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".activities.FilterActivity"
             android:alwaysRetainTaskState="true"
@@ -100,18 +86,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
-
-
         <activity
             android:name=".activities.SearchForAreaActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
-
-
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".activities.SignInActivity"
             android:alwaysRetainTaskState="true"
@@ -119,8 +100,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
-
-
         <activity
             android:name=".activities.SignUpActivity"
             android:alwaysRetainTaskState="true"
@@ -128,8 +107,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
-
-
         <activity
             android:name=".activities.ForgetPasswordActivity"
             android:alwaysRetainTaskState="true"
@@ -137,33 +114,26 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
-
-
-
         <activity
             android:name=".activities.FoodDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.EnterAddressActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
-            android:theme="@style/DashBoardTheme"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:theme="@style/DashBoardTheme"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.PaymentMethodActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
-            android:windowSoftInputMode="stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".activities.PaymentSuccessfullyActivity"
             android:alwaysRetainTaskState="true"
@@ -171,42 +141,35 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
-
-        <activity android:name=".activities.TrackOrderMapActivity"
+        <activity
+            android:name=".activities.TrackOrderMapActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
-            android:windowSoftInputMode="stateHidden"
-            />
-
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.ManageAddressActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
-            android:theme="@style/DashBoardTheme"
-
             android:screenOrientation="portrait"
+            android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.SetDeliveryLocationActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
-            android:theme="@style/DashBoardTheme"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
-
-
-
-        </activity>
-
+            android:theme="@style/DashBoardTheme"
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".activities.PaymentsModeActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
-            android:theme="@style/DashBoardTheme"
             android:screenOrientation="portrait"
+            android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activities.NewPassActivity"></activity>
     </application>
 
 </manifest>

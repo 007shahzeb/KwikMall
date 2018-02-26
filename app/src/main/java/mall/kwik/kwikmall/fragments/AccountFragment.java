@@ -1,14 +1,12 @@
 package mall.kwik.kwikmall.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +24,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.BaseFragActivity.BaseFragment;
+import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
 import mall.kwik.kwikmall.activities.ManageAddressActivity;
 import mall.kwik.kwikmall.activities.PaymentsModeActivity;
 import mall.kwik.kwikmall.activities.SignInActivity;
-import mall.kwik.kwikmall.activities.TrackOrderMapActivity;
 import mall.kwik.kwikmall.apiresponse.GetFavouriteResponse.GetFavouritePayload;
 import mall.kwik.kwikmall.apiresponse.GetFavouriteResponse.GetFavouriteSuccess;
 import mall.kwik.kwikmall.apiresponse.GetOrderListResponse.GetOrderListPayload;
@@ -38,10 +35,6 @@ import mall.kwik.kwikmall.apiresponse.GetOrderListResponse.GetOrderListSuccess;
 import mall.kwik.kwikmall.dialogs.LogoutConfirmDialog;
 import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.sharedpreferences.UserDataUtility;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 
 
 public class AccountFragment extends BaseFragment implements View.OnClickListener {

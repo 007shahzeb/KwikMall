@@ -23,18 +23,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.chootdev.csnackbar.Duration;
 import com.chootdev.csnackbar.Snackbar;
 import com.chootdev.csnackbar.Type;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +34,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.BaseFragActivity.BaseFragment;
+import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
 import mall.kwik.kwikmall.adapters.RecyclerViewAdapterSearchAllPro;
 import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.apiresponse.GetAllProductsResponse.GetAllProductsPayload;
 import mall.kwik.kwikmall.apiresponse.GetAllProductsResponse.GetAllProductsSuccess;
-import mall.kwik.kwikmall.sharedpreferences.UtilityCartData;
 import mall.kwik.kwikmall.SimpleDividerItemDecoration;
 
 

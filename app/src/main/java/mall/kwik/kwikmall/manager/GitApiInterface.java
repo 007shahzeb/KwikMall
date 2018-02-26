@@ -6,12 +6,14 @@ import java.util.HashMap;
 
 import io.reactivex.Observable;
 import mall.kwik.kwikmall.apiresponse.AddFavourites.AddFavouritesSuccess;
+import mall.kwik.kwikmall.apiresponse.DeleteOrderSuccess.DeleteOrderSuccess;
 import mall.kwik.kwikmall.apiresponse.FilterListResponse.FilterListSuccess;
 import mall.kwik.kwikmall.apiresponse.FirebaseNotification.FCMSUCCESS;
 import mall.kwik.kwikmall.apiresponse.ForgetPassword.ForgetPasswordSuccess;
 import mall.kwik.kwikmall.apiresponse.ForgetPassword.UpdatePassSuccess;
 import mall.kwik.kwikmall.apiresponse.ForgetPassword.ValidateOTPSuccess;
 import mall.kwik.kwikmall.apiresponse.GetAllProductsResponse.GetAllProductsSuccess;
+import mall.kwik.kwikmall.apiresponse.GetDeliveryStatus.GetDeliveryStatusSuccess;
 import mall.kwik.kwikmall.apiresponse.GetFavouriteResponse.GetFavouriteSuccess;
 import mall.kwik.kwikmall.apiresponse.GetOrderListResponse.GetOrderListSuccess;
 import mall.kwik.kwikmall.apiresponse.GetStoreProducts.StoreProductsSuccess;
@@ -80,17 +82,15 @@ public interface GitApiInterface {
 
 
     //------------------------9
-    @FormUrlEncoded
     @POST("forgotPassword")
     Observable<ForgetPasswordSuccess> forgetPassword(@Body HashMap<String, String> hashMap);
 
     //------------------------10
-    @FormUrlEncoded
     @POST("validateOTP")
-    Observable<ValidateOTPSuccess> validateOTP(@Body HashMap<String, String> hashMap);
+    Observable<ValidateOTPSuccess> validateOTP(@Field("phoneNo") String Phone,
+                                               @Field("OTP") String OTP);
 
     //------------------------11
-    @FormUrlEncoded
     @POST("updatePassword")
     Observable<UpdatePassSuccess> updatePassword(@Body HashMap<String, String> hashMap);
 
@@ -100,7 +100,6 @@ public interface GitApiInterface {
     Observable<GetOrderListSuccess> getOrderList(@Body HashMap<String, String> hashMap);
 
     //------------------------13
-    @FormUrlEncoded
     @POST("addToFavourites")
     Observable<AddFavouritesSuccess> addFavourites(@Body HashMap<String, String> hashMap);
 
@@ -117,7 +116,17 @@ public interface GitApiInterface {
     @POST("GetCatagories")
     Observable<SendCatToSuccess> sendCategories(@Body HashMap<String, String> hashMap);
 
+    //------------------------16
+    @FormUrlEncoded
+    @POST("GetDeliveryStatus")
+    Observable<GetDeliveryStatusSuccess> GetDeliveryStatus(@Field("bussinessId") String bussinessId,
+                                                           @Field("orderNo") String orderNo,
+                                                           @Field("userId") String userId);
 
+
+    //------------------------17
+    @POST("deleteOrderByUser")
+    Observable<DeleteOrderSuccess> deleteOrderByUser(@Body HashMap<String, String> hashMap);
 
 
 }

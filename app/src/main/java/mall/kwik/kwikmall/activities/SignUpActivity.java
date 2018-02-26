@@ -1,11 +1,9 @@
 package mall.kwik.kwikmall.activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -19,16 +17,10 @@ import android.widget.TextView;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 
-import java.util.HashMap;
-
 import am.appwise.components.ni.NoInternetDialog;
-import mall.kwik.kwikmall.BaseFragActivity.BaseActivity;
-import mall.kwik.kwikmall.apiresponse.RegisterResponse.RegisterSuccess;
+import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
 import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.presenter.RegisterPresenter;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SignUpActivity extends BaseActivity implements View.OnClickListener, RegisterPresenter.View  {
