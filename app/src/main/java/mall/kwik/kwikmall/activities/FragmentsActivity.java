@@ -59,10 +59,6 @@ public class FragmentsActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
 
-          /*  Fragment fragment = null;
-            fragment = new NearMeFragment();
-
-            if (fragment != null) {*/
 
 
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -72,17 +68,10 @@ public class FragmentsActivity extends BaseActivity {
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.commit();
 
-
-               /* FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.mainFrame, fragment, "nearMeFragment").commit();
-                overridePendingTransition(R.anim.slide_in, R.anim.nothing);
-*/
-
                 for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
                     fragmentManager.popBackStack();
                 }
 
-           // }
 
         }
 

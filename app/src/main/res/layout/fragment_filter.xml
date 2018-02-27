@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/_5sdp"
             android:padding="@dimen/_5sdp"
             android:id="@+id/btnCancel"
             >
@@ -50,37 +50,35 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:id="@+id/linearClear"
+        <!--      <LinearLayout
+                  android:id="@+id/linearClear"
+                  android:layout_alignParentRight="true"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center"
+                  android:foreground="?android:attr/selectableItemBackground"
+                  android:layout_centerVertical="true">
+
+
+      -->
+
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/tvClear"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_centerVertical="true">
+            android:text="CLEAR"
+            android:layout_gravity="center"
+            android:textSize="@dimen/_10sdp"
+            android:padding="@dimen/_8sdp"
+            app:fontPath="fonts/HindVadodara-Bold.ttf"
+            android:textColor="@color/dimorange"
+            android:layout_marginRight="10dp"
+            />
 
 
-
-
-            <TextView
-                android:textStyle="bold"
-                android:id="@+id/tvClear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CLEAR"
-                android:layout_gravity="center"
-                android:textSize="@dimen/_8sdp"
-                android:padding="@dimen/_5sdp"
-                android:textColor="@color/dimorange"
-                android:layout_marginRight="10dp"
-                />
-
-
-
-
-        </LinearLayout>
 
     </RelativeLayout>
 

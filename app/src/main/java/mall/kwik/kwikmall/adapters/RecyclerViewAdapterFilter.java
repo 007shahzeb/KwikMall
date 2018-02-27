@@ -25,12 +25,12 @@ import static mall.kwik.kwikmall.activities.FilterActivity.tvClear;
  */
 
 public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerViewAdapterFilter.MyHolderRight>
-  {
+{
 
     List<FilterListPayload> filterListPayloadList = Collections.emptyList();
     Context context;
     View view;
-    public static boolean isUnSelectedAll;
+    public  boolean isUnSelectedAll;
     private RecyclerViewAdapterFilter.ItemClickListenerCheck itemClickListenerCheck;
     private HashMap<Integer, Boolean> ischecked = new HashMap<>();
 
@@ -43,7 +43,7 @@ public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerView
 
     public interface ItemClickListenerCheck{
 
-        void itemClick(int pos,  int catId);
+        void itemClick(int catId);
     }
 
 
@@ -79,12 +79,11 @@ public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerView
         final FilterListPayload filterListPayload = filterListPayloadList.get(position);
 
 
-
-
         if(filterListPayload!=null){
 
 
             holder.checkboxRecyclerRight.setText(filterListPayload.getName());
+
 
             if(isUnSelectedAll){
 
@@ -105,7 +104,7 @@ public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerView
             }
 
 
-           holder.checkboxRecyclerRight.setOnCheckedChangeListener(null);
+            holder.checkboxRecyclerRight.setOnCheckedChangeListener(null);
 
 
             holder.checkboxRecyclerRight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -119,24 +118,23 @@ public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerView
 
                         ischecked.put(position, isChecked);
 
-
-                        itemClickListenerCheck.itemClick(position,1);
+                        itemClickListenerCheck.itemClick(filterListPayload.getId());
 
                         footerFilter.setBackgroundColor(Color.parseColor("#00d048")); //darkgreen
                         tvClear.setTextColor(Color.parseColor("#FF6347")); //darkorange
 
-
+                        footerFilter.setEnabled(true);
 
                     }
                     else {
 
                         ischecked.put(position, isChecked);
 
-
                         holder.checkboxRecyclerRight.setChecked(isChecked);
 
                         footerFilter.setBackgroundColor(Color.parseColor("#B2D0B2")); //dimgreen
 
+                        footerFilter.setEnabled(false);
                     }
 
 

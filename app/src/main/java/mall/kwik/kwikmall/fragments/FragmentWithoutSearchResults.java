@@ -255,11 +255,10 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
 
 
-
                         }
                         else {
 
-                           // showAlertDialog("Retry","False");
+                            // showAlertDialog("Retry","False");
                             btnMenu.setVisibility(View.GONE);
                             recyclerViewWithoutSearch.setVisibility(View.GONE);
 

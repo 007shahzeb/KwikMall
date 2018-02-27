@@ -10,17 +10,44 @@
 
 
 
-    <android.support.v7.widget.RecyclerView
+
+    <FrameLayout
+        android:id="@+id/afterShimmerLayout"
         android:visibility="gone"
-        android:id="@+id/recyclerViewShops"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_marginRight="@dimen/_5sdp">
+        android:layout_height="match_parent">
 
 
-    </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewShops"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp">
+
+
+        </android.support.v7.widget.RecyclerView>
+
+
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/imageNoFoodProd"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/nofoodproducts"
+            />
+
+
+
+    </FrameLayout>
+
+
+
+
 
     <io.supercharge.shimmerlayout.ShimmerLayout
         android:id="@+id/shimmerlayoutShops"

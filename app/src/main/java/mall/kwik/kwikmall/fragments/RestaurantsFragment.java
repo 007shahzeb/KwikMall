@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,6 +59,7 @@ public class RestaurantsFragment extends BaseFragment  {
     private ShimmerLayout shimmerlayoutRestaurants;
     private FrameLayout afterShimmerLayout;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private ImageView imageNoFoodProd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,7 +86,7 @@ public class RestaurantsFragment extends BaseFragment  {
 
 
 
-        RestaurantsListApi();
+        RestaurantsListApi("");
 /*
 
         if(isConnected()){
@@ -132,19 +134,38 @@ public class RestaurantsFragment extends BaseFragment  {
 
         }*/
 
+        ((AppController)  getActivity().getApplication()).bus().toObservable().subscribe(new Consumer<Object>()
+        {
+            @Override
+            public void accept(Object o) throws Exception {
 
+                if (o instanceof FilterEvent) {
+
+
+                    String ids = ((FilterEvent) o).getFilteredIds();
+
+                    restaApi(ids,latitute,longitude);
+
+
+
+                }
+
+            }
+        });
 
         return view;
     }
 
 
-    private void RestaurantsListApi() {
+    private void RestaurantsListApi(String ids) {
 
 
         ReactiveLocationProvider locationProvider = new ReactiveLocationProvider(getActivity());
 
         if (ActivityCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
@@ -157,174 +178,124 @@ public class RestaurantsFragment extends BaseFragment  {
                         latitute = String.valueOf(location.getLatitude());
                         longitude = String.valueOf(location.getLongitude());
 
-
-                        HashMap<String, String> stringStringHashMap = new HashMap<>();
-                        stringStringHashMap.put("lat", latitute);
-                        stringStringHashMap.put("lng", longitude);
-                        stringStringHashMap.put("type", "Restaurant");
-
-                        stringStringHashMap.put("catId","");
-
-
-                        ((AppController)  getActivity().getApplication()).bus().toObservable().subscribe(new Consumer<Object>() {
-                            @Override
-                            public void accept(Object o) throws Exception {
-
-                                if(o instanceof FilterEvent){
-                                    String ids =     ((FilterEvent)o) .getFilteredIds();
-
-
-                                }
-
-                            }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-
-                            }
-                        });
-
-
-                     /*   if(sharedPrefsHelper.get(AppConstants.FILTER_DATA,"")!=null){
-
-                            stringStringHashMap.put("catId",sharedPrefsHelper.get(AppConstants.FILTER_DATA,""));
-                            imageFilteOn.setVisibility(View.VISIBLE);
-
-                        }
-                        else {
-
-                            stringStringHashMap.put("catId","");
-                            imageFilteOn.setVisibility(View.GONE);
-
-
-                        }*/
-
-                        compositeDisposable.add(apiService.restaurantsList(stringStringHashMap)
-                                .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Consumer<RestaurantsListSuccess>() {
-                                    @Override
-                                    public void accept(RestaurantsListSuccess restaurantsListSuccess) throws Exception {
-
-                                        if(restaurantsListSuccess.getSuccess()){
-
-                                            restaurantsListPayloadArrayList = new ArrayList<>(restaurantsListSuccess.getPayload());
-
-                                            SharedPreferences.Editor mEdit1 = mSharedPreference1.edit();
-
-
-                                          /*  Gson gson = new Gson();
-                                            List<RestaurantsListPayload> textList = new ArrayList<RestaurantsListPayload>();
-                                            textList.addAll(restaurantsListPayloadArrayList);
-                                            String jsonText = gson.toJson(textList);
-                                            mEdit1.putString("key", jsonText);
-                                            mEdit1.commit();
-*/
-
-                                            recyclerViewAdapter = new AdapterRestaurantsFragment(restaurantsListPayloadArrayList, getActivity());
-
-
-                                            recyclerViewAdapter.setOnPhoneClickListener(new AdapterRestaurantsFragment.PhoneClickLisetener() {
-                                                @Override
-                                                public void onPhoneTextClick(String phone_no) {
-
-                                                    try {
-                                                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                                                        callIntent.setData(Uri.parse("tel:"+Uri.encode(phone_no.trim())));
-                                                        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                        startActivity(callIntent);
-                                                    } catch (Exception e) {
-
-
-                                                        showAlertDialog("Retry","No Activity found to handle Intent.");
-
-                                                    }
-                                                }
-                                            });
-
-
-                                            recyclerViewAdapter.setOnItemClickListener(new AdapterRestaurantsFragment.ClickListener() {
-                                                @Override
-                                                public void onItemClick(String string_form,String nameOfHotel, String address, int StoreId, View v) {
-
-
-                                                    sharedPrefsHelper.put(AppConstants.STORE_ID,StoreId);
-
-                                                    SharedPrefData sharedPrefData = new SharedPrefData(getActivity());
-
-
-                                                    sharedPrefData.setNameOfHotel(nameOfHotel);
-                                                    sharedPrefData.setAddress(address);
-                                                    sharedPrefData.setString_form(string_form);
-
-                                                    Bundle bundle = new Bundle();
-
-                                                    bundle.putString("nameOfHotel",nameOfHotel);
-                                                    bundle.putString("address",address);
-                                                    bundle.putString("string_form",string_form);
-
-                                                    ((FragmentsActivity) getActivity()).replace();
-
-
-
-                                                }
-
-                                                @Override
-                                                public void onItemLongClick(String nameOfHotel, String address, int StoreId, View v) {
-
-                                                }
-
-
-
-                                            });
-
-                                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-
-                                            recyclerViewRestaurants.setHasFixedSize(true);
-
-                                            recyclerViewRestaurants.setLayoutManager(mLayoutManager);
-                                            recyclerViewRestaurants.setItemAnimator(new DefaultItemAnimator());
-
-
-
-                                            recyclerViewRestaurants.setAdapter(recyclerViewAdapter);
-
-                                            shimmerlayoutRestaurants.setVisibility(View.GONE);
-                                            afterShimmerLayout.setVisibility(View.VISIBLE);
-
-
-
-                                        }
-                                        else {
-
-                                            showAlertDialog("Retry","Success False");
-
-                                        }
-
-                                    }
-                                }, new Consumer<Throwable>() {
-                                    @Override
-                                    public void accept(Throwable throwable) throws Exception {
-
-
-                                        showAlertDialog("Retry",throwable.getMessage());
-
-                                    }
-                                }));
-
-
-
+                        restaApi(ids,latitute,longitude);
 
 
                     }
                 });
 
 
+    }
+
+    private void restaApi(String ids,String latitute, String longitude) {
+
+        compositeDisposable.add(apiService.restaurantsList(latitute,longitude,"Restaurant",ids)
+                .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<RestaurantsListSuccess>() {
+                    @Override
+                    public void accept(RestaurantsListSuccess restaurantsListSuccess) throws Exception {
+
+                        if(restaurantsListSuccess.getSuccess()){
+
+                            restaurantsListPayloadArrayList = new ArrayList<>(restaurantsListSuccess.getPayload());
+
+
+                            recyclerViewAdapter = new AdapterRestaurantsFragment(restaurantsListPayloadArrayList, getActivity());
+
+
+                            recyclerViewAdapter.setOnPhoneClickListener(new AdapterRestaurantsFragment.PhoneClickLisetener() {
+                                @Override
+                                public void onPhoneTextClick(String phone_no) {
+
+                                    try {
+                                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                                        callIntent.setData(Uri.parse("tel:"+Uri.encode(phone_no.trim())));
+                                        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(callIntent);
+                                    } catch (Exception e) {
+
+
+                                        showAlertDialog("Retry","No Activity found to handle Intent.");
+
+                                    }
+                                }
+                            });
+
+
+                            recyclerViewAdapter.setOnItemClickListener(new AdapterRestaurantsFragment.ClickListener() {
+                                @Override
+                                public void onItemClick(String string_form,String nameOfHotel, String address, int StoreId, View v) {
+
+
+                                    sharedPrefsHelper.put(AppConstants.STORE_ID,StoreId);
+
+                                    SharedPrefData sharedPrefData = new SharedPrefData(getActivity());
+
+
+                                    sharedPrefData.setNameOfHotel(nameOfHotel);
+                                    sharedPrefData.setAddress(address);
+                                    sharedPrefData.setString_form(string_form);
+
+                                    Bundle bundle = new Bundle();
+
+                                    bundle.putString("nameOfHotel",nameOfHotel);
+                                    bundle.putString("address",address);
+                                    bundle.putString("string_form",string_form);
+
+                                    ((FragmentsActivity) getActivity()).replace();
 
 
 
+                                }
+
+                                @Override
+                                public void onItemLongClick(String nameOfHotel, String address, int StoreId, View v) {
+
+                                }
 
 
+
+                            });
+
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+
+                            recyclerViewRestaurants.setHasFixedSize(true);
+
+                            recyclerViewRestaurants.setLayoutManager(mLayoutManager);
+                            recyclerViewRestaurants.setItemAnimator(new DefaultItemAnimator());
+
+
+
+                            recyclerViewRestaurants.setAdapter(recyclerViewAdapter);
+
+                            shimmerlayoutRestaurants.setVisibility(View.GONE);
+                            afterShimmerLayout.setVisibility(View.VISIBLE);
+
+
+
+                        }
+                        else {
+
+                          //  showAlertDialog("Retry","Success False");
+
+
+                            imageNoFoodProd.setVisibility(View.VISIBLE);
+                            recyclerViewRestaurants.setVisibility(View.GONE);
+
+
+                        }
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+
+                        showAlertDialog("Retry",throwable.getMessage());
+
+                    }
+                }));
 
     }
 
@@ -369,6 +340,7 @@ public class RestaurantsFragment extends BaseFragment  {
 
         //shimmer layout
         shimmerlayoutRestaurants = view.findViewById(R.id.shimmerlayoutRestaurants);
+        imageNoFoodProd = view.findViewById(R.id.imageNoFoodProd);
 
         shimmerlayoutRestaurants.startShimmerAnimation();
 

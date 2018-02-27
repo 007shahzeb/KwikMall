@@ -48,7 +48,6 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
     public static TextView tvClear;
     private String data = "";
     private List<Integer> list = new ArrayList<>();
-    private UtilitySP utilitySP;
     private Context context;
     private NoInternetDialog noInternetDialog;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -84,7 +83,8 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
 
                             recyclerViewAdapterFilter.setItemClickListenerCheck(new RecyclerViewAdapterFilter.ItemClickListenerCheck() {
                                 @Override
-                                public void itemClick(int pos, int catId) {
+                                public void itemClick(int catId) {
+
 
                                     list.add(catId);
 
@@ -108,7 +108,6 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
 
                             filterRecyclerview.setLayoutManager(mLayoutManager);
                             filterRecyclerview.smoothScrollToPosition(0);
-                            // filterRecyclerview.addItemDecoration(new SimpleDividerItemDecoration(FilterActivity.this));
                             filterRecyclerview.setItemAnimator(new DefaultItemAnimator());
                             filterRecyclerview.setAdapter(recyclerViewAdapterFilter);
 
@@ -137,12 +136,10 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
         compositeDisposable.dispose();
     }
 
-
-
     private void clikListeners() {
 
         btnCancel.setOnClickListener(this);
-        linearClear.setOnClickListener(this);
+       // linearClear.setOnClickListener(this);
         footerFilter.setOnClickListener(this);
         tvClear.setOnClickListener(this);
 
@@ -153,7 +150,7 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
 
         filterRecyclerview = findViewById(R.id.filterRecyclerview);
 
-        linearClear = findViewById(R.id.linearClear);
+       // linearClear = findViewById(R.id.linearClear);
 
         btnCancel = findViewById(R.id.btnCancel);
 
@@ -166,10 +163,9 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
-
-
-
         switch (v.getId()){
+
+
             case R.id.btnCancel:
 
                 MaterialRippleLayout.on(btnCancel)
@@ -180,35 +176,30 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
 
-
-
                 break;
 
             case R.id.footerFilter:
 
                 if(data!=null) {
 
+
                     ( (AppController)  getApplication()).bus().send(new FilterEvent(data));
                     sharedPrefsHelper.put(AppConstants.FILTER_DATA,"");
 
-                   // imageFilteOn.setVisibility(View.VISIBLE);
-                    startActivity(new Intent(context,FragmentsActivity.class));
-                    overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+                    finish();
+
 
                 }
 
                 break;
 
 
-
-            case R.id.linearClear:
-
-                ( (AppController)  getApplication()).bus().send(new FilterEvent(""));
-
+            case R.id.tvClear:
 
                 recyclerViewAdapterFilter.unselectAll();
-                //imageFilteOn.setVisibility(View.GONE);
-                footerFilter.setBackgroundColor(Color.parseColor("#00d048")); //darkgreen
+                footerFilter.setBackgroundColor(Color.parseColor("#B2D0B2")); //dimgreen
+
+               // ( (AppController)  getApplication()).bus().send(new FilterEvent(""));
 
                 break;
 
@@ -216,34 +207,6 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
         }
 
 
-
-
-        if(v==btnCancel){
-
-
-
-
-        }
-
-        if(v==footerFilter){
-
-
-
-        }
-
-
-        if(v==tvClear){
-
-
-        }
-
-        if(v==linearClear){
-
-
-
-
-
-        }
 
     }
 

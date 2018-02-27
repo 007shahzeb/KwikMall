@@ -220,9 +220,11 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
             public void accept(Object o) throws Exception {
 
                 if(o instanceof FilterEvent){
-                    String ids =     ((FilterEvent)o) .getFilteredIds();
+
+                    String ids =   ((FilterEvent)o) .getFilteredIds();
 
                     imageFilteOn.setVisibility(View.VISIBLE);
+
                   if( TextUtils.isEmpty(ids)) {
 
 

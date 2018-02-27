@@ -50,8 +50,12 @@ public interface GitApiInterface {
 
 
     //------------------------3
+    @FormUrlEncoded
     @POST("getShopsOrRestaurants")
-    Observable<RestaurantsListSuccess> restaurantsList(@Body HashMap<String, String> hashMap);
+    Observable<RestaurantsListSuccess> restaurantsList(@Field("lat") String lat,
+                                                       @Field("lng") String lng,
+                                                       @Field("type") String type,
+                                                       @Field("catId") String catId);
 
 
     //------------------------4

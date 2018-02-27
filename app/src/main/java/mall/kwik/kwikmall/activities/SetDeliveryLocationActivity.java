@@ -624,7 +624,25 @@ public class SetDeliveryLocationActivity extends BaseActivity implements
                     public void run() {
 
 
+                        Intent it = getIntent();
+
+                        if (it != null) {
+
+
+                            Bundle params = it.getExtras();
+                            if (params != null) {
+                                latitude = params.getDouble("lat");
+                                longitude = params.getDouble("lng");
+
+                            }
+                        }
+
+
+
                         LatLng point = new LatLng(latitude, longitude);
+
+
+
 
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
 
