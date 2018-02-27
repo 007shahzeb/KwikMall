@@ -10,30 +10,25 @@ import com.google.gson.annotations.SerializedName;
 public class PlaceOrder {
 
 
-    @SerializedName("success")
     @Expose
-    private Boolean success;
-    @SerializedName("error")
+    @SerializedName("payload")
+    private PlaceOrderPayload payload;
     @Expose
-    private Boolean error;
     @SerializedName("message")
-    @Expose
     private String message;
+    @Expose
+    @SerializedName("error")
+    private boolean error;
+    @Expose
+    @SerializedName("success")
+    private boolean success;
 
-    public Boolean getSuccess() {
-        return success;
+    public PlaceOrderPayload getPayload() {
+        return payload;
     }
 
-    public void setSuccess(Boolean success) {
-        this.success = success;
-    }
-
-    public Boolean getError() {
-        return error;
-    }
-
-    public void setError(Boolean error) {
-        this.error = error;
+    public void setPayload(PlaceOrderPayload payload) {
+        this.payload = payload;
     }
 
     public String getMessage() {
@@ -44,5 +39,20 @@ public class PlaceOrder {
         this.message = message;
     }
 
+    public boolean getError() {
+        return error;
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
+    }
+
+    public boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 }
 

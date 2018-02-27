@@ -123,23 +123,6 @@
                     android:textColorHint="@color/black"/>
 
 
-                <EditText
-                    android:id="@+id/edMobileNo"
-
-                    android:layout_margin="12dp"
-                    android:padding="@dimen/_5sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter Mobile"
-                    android:textSize="@dimen/_9sdp"
-                    android:layout_marginTop="5dp"
-                    android:drawableLeft="@drawable/phonecall"
-                    android:drawablePadding="10dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:textColor="@color/black"
-                    android:backgroundTint="#EDEDED"
-                    android:textColorHint="@color/black"/>
 
 
                 <EditText
@@ -159,6 +142,36 @@
                     android:backgroundTint="#EDEDED"
                     android:textColorHint="@color/black"/>
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    >
+
+
+                    <com.rilixtech.CountryCodePicker
+                        android:id="@+id/ccp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"/>
+
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/edMobileNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="ENTER MOBILE NO"
+                        android:inputType="phone"
+                        android:textSize="@dimen/_11sdp"
+                        android:textColor="@color/black"
+                        android:backgroundTint="#EDEDED"
+                        android:textColorHint="@color/black"/>
+
+
+                </LinearLayout>
 
 
             </LinearLayout>

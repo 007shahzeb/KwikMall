@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.rilixtech.CountryCodePicker;
 
 import am.appwise.components.ni.NoInternetDialog;
 import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
@@ -34,6 +35,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
     private Context context;
     private NoInternetDialog noInternetDialog;
     private RelativeLayout mainRegisterLayout;
+    CountryCodePicker ccp;
 
 
     @Override
@@ -66,10 +68,6 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         noInternetDialog.onDestroy();
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     private void findViewId() {
 
@@ -89,6 +87,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
 
         //relative layout
         mainRegisterLayout = findViewById(R.id.mainRegisterLayout);
+        ccp =  findViewById(R.id.ccp);
 
 
         awesomeValidation.addValidation(SignUpActivity.this, R.id.edUsername, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.nameerror);
@@ -133,6 +132,11 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
 
             case R.id.btnSignUp:
 
+                ccp.registerPhoneNumberTextView(edMobileNo);
+
+
+                String codeWithPh = ccp.getFullNumberWithPlus();
+
 
                 if (TextUtils.isEmpty(edUsername.getText().toString()) || !isValidEmail(edEmailAddress.getText().toString()) || TextUtils.isEmpty(edAddressRegister.getText().toString())
                         || TextUtils.isEmpty(edMobileNo.getText().toString()) || TextUtils.isEmpty(edPassword.getText().toString())) {
@@ -169,7 +173,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                         imm.hideSoftInputFromWindow(view1.getWindowToken(),0);
                     }
                     new RegisterPresenter(SignUpActivity.this,apiService,sharedPrefsHelper,edUsername.getText().toString().trim(),edEmailAddress.getText().toString().trim(),
-                            edPassword.getText().toString().trim(),edMobileNo.getText().toString().trim(),edAddressRegister.getText().toString().trim());
+                            edPassword.getText().toString().trim(),codeWithPh,edAddressRegister.getText().toString().trim());
 
 
                 }

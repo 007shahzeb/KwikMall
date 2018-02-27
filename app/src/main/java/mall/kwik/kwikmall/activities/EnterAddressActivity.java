@@ -216,10 +216,8 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
             else
             {
 */
+
             flipProgress();
-
-
-
 
             name = edFullName.getText().toString();
             countycode = edCountryCode.getText().toString();
@@ -238,7 +236,6 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
             pay();
 
 
-
               /*  Bundle bundle = new Bundle();
 
                 bundle.putString("totalAmount",totalAmt);
@@ -251,9 +248,6 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
                 overridePendingTransition(R.anim.slide_in, R.anim.nothing);*/
 
             //   }
-
-
-
 
         }
 
@@ -281,9 +275,12 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
          * In Dev: Use amount 1.00 to simulate a failed transaction and greater than or equals 2.00 for a successful transaction
          */
 
+        String order_no = sharedPrefsHelper.get(AppConstants.ORDER_NO,"");
+
+
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("request","submit");
-        params.put("order_id", "82373");
+        params.put("order_id", order_no);
         params.put("currency", "GHS");
         params.put("amount", totalAmt);
         params.put("order_desc", "Food Items");
@@ -295,8 +292,6 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
         params.put("account_number","233244123123");
 
 
-
-
         expressPayApi.submit(params, EnterAddressActivity.this, new ExpressPayApi.ExpressPaySubmitCompletionListener() {
             @Override
             public void onExpressPaySubmitFinished(JSONObject jsonObject, String message) {
@@ -304,7 +299,6 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
                  * Once the request is completed this listener is called with the response
                  * if the jsonObject is null then there was an error
                  */
-
 
                 if (jsonObject!=null){
                     //You can access the returned token

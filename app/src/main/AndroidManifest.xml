@@ -161,7 +161,11 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden">
+
+        </activity>
+
+
         <activity
             android:name=".activities.PaymentsModeActivity"
             android:alwaysRetainTaskState="true"
@@ -169,7 +173,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activities.NewPassActivity"></activity>
+
+
+        <activity android:name=".activities.NewPassActivity"
+            android:theme="@style/DashBoardTheme"
+            android:screenOrientation="portrait"
+
+            >
+
+        </activity>
+
+
     </application>
 
 </manifest>

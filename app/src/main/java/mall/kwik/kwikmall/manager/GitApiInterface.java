@@ -53,26 +53,24 @@ public interface GitApiInterface {
     @POST("getShopsOrRestaurants")
     Observable<RestaurantsListSuccess> restaurantsList(@Body HashMap<String, String> hashMap);
 
-    //------------------------4
-    @POST("getShops")
-    Observable<ShopsListSuccess> ShopsList();
 
-    //------------------------5
+    //------------------------4
 
     @POST("GetAllProducts")
     Observable<GetAllProductsSuccess> getAllProducts();
 
-    //------------------------6
+    //------------------------5
     @FormUrlEncoded
     @POST("GetStoreProducts")
     Observable<StoreProductsSuccess> getStoreProducts(@Field("bussinessId") String businessId);
 
 
-    //------------------------7
+    //------------------------6
     @POST("orderRegister")
     Observable<PlaceOrder> placeOrder(@Body JsonArray String);
 
-    //------------------------8
+
+    //------------------------7
 
     @FormUrlEncoded
     @POST("registerDevice")
@@ -81,25 +79,29 @@ public interface GitApiInterface {
 
 
 
-    //------------------------9
+    //------------------------8
     @POST("forgotPassword")
     Observable<ForgetPasswordSuccess> forgetPassword(@Body HashMap<String, String> hashMap);
 
-    //------------------------10
+
+    //------------------------9
+    @FormUrlEncoded
     @POST("validateOTP")
     Observable<ValidateOTPSuccess> validateOTP(@Field("phoneNo") String Phone,
                                                @Field("OTP") String OTP);
 
-    //------------------------11
+    //------------------------10
+    @FormUrlEncoded
     @POST("updatePassword")
-    Observable<UpdatePassSuccess> updatePassword(@Body HashMap<String, String> hashMap);
+    Observable<UpdatePassSuccess> updatePassword(@Field("email") String email,
+                                                 @Field("password") String password);
 
 
-    //------------------------12
+    //------------------------11
     @POST("GetOrderList")
     Observable<GetOrderListSuccess> getOrderList(@Body HashMap<String, String> hashMap);
 
-    //------------------------13
+    //------------------------12
     @POST("addToFavourites")
     Observable<AddFavouritesSuccess> addFavourites(@Body HashMap<String, String> hashMap);
 
@@ -119,10 +121,9 @@ public interface GitApiInterface {
     //------------------------16
     @FormUrlEncoded
     @POST("GetDeliveryStatus")
-    Observable<GetDeliveryStatusSuccess> GetDeliveryStatus(@Field("bussinessId") String bussinessId,
+    Observable<GetDeliveryStatusSuccess> getDeliveryStatus(@Field("bussinessId") String bussinessId,
                                                            @Field("orderNo") String orderNo,
                                                            @Field("userId") String userId);
-
 
     //------------------------17
     @POST("deleteOrderByUser")

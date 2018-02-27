@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
 import android.location.Location;
 
 import com.expresspaygh.api.ExpressPayApi;
@@ -53,9 +54,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import mall.kwik.kwikmall.AppConstants;
 import mall.kwik.kwikmall.activities.FragmentsActivity;
 import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
@@ -69,6 +73,7 @@ import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
 import mall.kwik.kwikmall.sharedpreferences.UserDataUtility;
 import mall.kwik.kwikmall.sharedpreferences.UtilityCartData;
 import mall.kwik.kwikmall.swipedItemtouchhelper.RecyclerItemTouchHelper;
+import pl.charmas.android.reactivelocation2.ReactiveLocationProvider;
 
 
 import static mall.kwik.kwikmall.activities.FragmentsActivity.nearby;
@@ -80,11 +85,11 @@ import static mall.kwik.kwikmall.fragments.FragmentWithoutSearchResults.Recycler
 
 public class ViewCartFragment extends BaseFragment implements View.OnClickListener, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener,
         LocationListener, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener {
 
 
     private View view;
-    private TextView txtViewCart, txtItems, txtTotalItems, txtTotal, txtTotatPriceViewCart, txtPlaceorder ;
+    private TextView txtViewCart, txtItems, txtTotalItems, txtTotal, txtTotatPriceViewCart, txtPlaceorder;
     private ImageView imageViewCartBack, imageCartEmpty;
     private RecyclerView recyclerViewCart;
 
@@ -97,13 +102,12 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
     int finalsum;
     int deleted;
     public int size;
-    private LinearLayout bottomPlaceOrder,loginForOrder;
+    private LinearLayout bottomPlaceOrder, loginForOrder;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     Location mLastLocation;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
     private double latituteR, longitudeR;
-
 
     @Nullable
     @Override
@@ -122,8 +126,6 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
         clickListeners();
 
         database = new DBHelper(getActivity());
-
-
 
 
         final UtilityCartData utilityCartData = new UtilityCartData(getActivity());
@@ -208,9 +210,6 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
 
 
     }
-
-
-
 
 
     @Override
@@ -387,7 +386,13 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
                 flipProgress();
 
 
+
+
+
+
                 placeOrderApi();
+
+
 
 
             } else {
@@ -422,66 +427,97 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
         JsonArray jsonArray = new JsonArray();
 
 
-        for(int i=0;i<viewCartModels.size();i++){
+        ReactiveLocationProvider locationProvider = new ReactiveLocationProvider(getActivity());
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            JsonObject object = new JsonObject();
-
-            object.addProperty("userId",sharedPrefsHelper.get(AppConstants.USER_ID,1));
-            object.addProperty("productId",viewCartModels.get(i).getKEY_ID());
-            object.addProperty("productName",viewCartModels.get(i).getKEY_name());
-            object.addProperty("productPrice",viewCartModels.get(i).getKEY_price());
-            object.addProperty("productQty",viewCartModels.get(i).getKEY_qty());
-            object.addProperty("bussinessId",sharedPrefsHelper.get(AppConstants.STORE_ID,0));
-            object.addProperty("total",viewCartModels.get(i).getKEY_TotalPrice());
-            object.addProperty("userLat","30.975465");
-            object.addProperty("userLng","76.524882");
-
-            jsonArray.add(object);
-
-
-
+            return;
         }
-
-
-        compositeDisposable.add(apiService.placeOrder(jsonArray)
-                .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<PlaceOrder>() {
+        locationProvider.getLastKnownLocation()
+                .subscribe(new Consumer<Location>() {
                     @Override
-                    public void accept(PlaceOrder placeOrder) throws Exception {
+                    public void accept(Location location) throws Exception {
+
+                            latituteR = location.getLatitude();
+                            longitudeR = location.getLongitude();
 
 
-                        if(placeOrder.getSuccess()){
+                        for(int i=0;i<viewCartModels.size();i++){
 
+                            JsonObject object = new JsonObject();
 
-                            fpd.dismiss();
+                            object.addProperty("userId",sharedPrefsHelper.get(AppConstants.USER_ID,1));
+                            object.addProperty("productId",viewCartModels.get(i).getKEY_ID());
+                            object.addProperty("productName",viewCartModels.get(i).getKEY_name());
+                            object.addProperty("productPrice",viewCartModels.get(i).getKEY_price());
+                            object.addProperty("productQty",viewCartModels.get(i).getKEY_qty());
+                            object.addProperty("bussinessId",sharedPrefsHelper.get(AppConstants.STORE_ID,0));
+                            object.addProperty("total",viewCartModels.get(i).getKEY_TotalPrice());
+                            object.addProperty("userLat",latituteR);
+                            object.addProperty("userLng",longitudeR);
 
-                            Bundle bundle = new Bundle();
-                            bundle.putString("totalAmount", String.valueOf(sum));
+                            jsonArray.add(object);
 
-                            Intent intent = new Intent(getActivity(),EnterAddressActivity.class);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                            getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
 
                         }
-                        else {
 
-                            fpd.dismiss();
-                            showAlertDialog("Retry",placeOrder.getMessage());
 
-                        }
+
+                        compositeDisposable.add(apiService.placeOrder(jsonArray)
+                                .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Consumer<PlaceOrder>() {
+                                    @Override
+                                    public void accept(PlaceOrder placeOrder) throws Exception {
+
+
+                                        if(placeOrder.getSuccess()){
+
+                                            database.deleteAllOrders();
+
+                                            fpd.dismiss();
+
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("totalAmount", String.valueOf(sum));
+
+
+                                            String orderNo = placeOrder.getPayload().getOrderNo();
+
+
+                                            sharedPrefsHelper.put(AppConstants.ORDER_NO,orderNo);
+
+                                            Intent intent = new Intent(getActivity(),EnterAddressActivity.class);
+                                            intent.putExtras(bundle);
+                                            startActivity(intent);
+                                            getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
+
+                                        }
+                                        else {
+
+                                            fpd.dismiss();
+                                            showAlertDialog("Retry",placeOrder.getMessage());
+
+                                        }
+                                    }
+                                }, new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+
+                                        fpd.dismiss();
+
+                                        compositeDisposable.dispose();
+                                        noInternetDialog.show();
+                                    }
+                                }));
+
+
+
+
+
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
+                });
 
-                        fpd.dismiss();
-
-                        compositeDisposable.dispose();
-                        noInternetDialog.show();
-                    }
-                }));
 
 
     }
@@ -495,8 +531,6 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
 
         mLastLocation = location;
 
-        latituteR = location.getLatitude();
-        longitudeR = location.getLongitude();
 
         //stop location updates
         if (mGoogleApiClient != null) {

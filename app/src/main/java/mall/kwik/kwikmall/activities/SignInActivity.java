@@ -51,7 +51,6 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-
         context = this;
         noInternetDialog = new NoInternetDialog.Builder(context).build();
 
@@ -59,25 +58,19 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
 
         findViewId();
 
-        edPasswordLogin.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-
+     /* edPasswordLogin.setImeOptions(EditorInfo.IME_ACTION_DONE);
         edPasswordLogin.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
 
-
-                    //submitForm();
-
                     return true;
-
 
                 }
                 return false;
             }
-        });
+        });*/
 
 
         awesomeValidation.addValidation(SignInActivity.this, R.id.edEmailAddressLogin, Patterns.EMAIL_ADDRESS, R.string.emailerror);
@@ -87,7 +80,6 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
 
         edEmailAddressLogin.setText("");
         edPasswordLogin.setText("");
-
 
     }
 

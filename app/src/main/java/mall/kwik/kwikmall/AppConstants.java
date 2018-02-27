@@ -20,6 +20,7 @@ public class AppConstants {
     public static final String DEL_LONG = "DEL_LONG";
     public static final String FILTER_DATA = "FILTER_DATA";
     public static final String PHONEWITHCCP = "PHONEWITHCCP";
+    public static final String ORDER_NO = "ORDER_NO";
 
 
 

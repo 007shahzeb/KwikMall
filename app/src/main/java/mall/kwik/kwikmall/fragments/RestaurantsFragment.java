@@ -263,8 +263,6 @@ public class RestaurantsFragment extends BaseFragment  {
                                                     bundle.putString("address",address);
                                                     bundle.putString("string_form",string_form);
 
-
-
                                                     ((FragmentsActivity) getActivity()).replace();
 
 

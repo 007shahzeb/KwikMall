@@ -44,9 +44,7 @@ import mall.kwik.kwikmall.sharedpreferences.UtilityCartData;
 
 import static mall.kwik.kwikmall.activities.FragmentsActivity.nearby;
 
-/**
- * Created by dharamveer on 15/12/17.
- */
+
 
 public class FragmentWithoutSearchResults extends BaseFragment implements View.OnClickListener {
 
@@ -61,7 +59,7 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
 
     private RecyclerViewAdapterSearch recyclerViewAdapterSearch;
-    private ImageView imageBackArrow,imageSearchProducts;
+    private ImageView imageBackArrow,imageSearchProducts,imageNoFoodProd;
     private Button btnMenu;
     private ScaleAnimation scaleAnimation;
     String itemname,nameOfHotel,address,string_form;
@@ -96,6 +94,7 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
         imageBackArrow = view.findViewById(R.id.imageBackArrow);
         imageSearchProducts = view.findViewById(R.id.imageSearchProducts);
+        imageNoFoodProd = view.findViewById(R.id.imageNoFoodProd);
 
 
         btnMenu = view.findViewById(R.id.btnMenu);
@@ -186,6 +185,17 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
                             ArrayList<StoreProductsPayload> productsPayloadArrayList = new ArrayList<>();
 
 
+                            if(storeProductsPayloadArrayList.size()==0){
+
+
+                                btnMenu.setVisibility(View.GONE);
+                                recyclerViewWithoutSearch.setVisibility(View.GONE);
+
+                                imageNoFoodProd.setVisibility(View.VISIBLE);
+
+
+                            }
+
 
                             for (int i = 0; i < storeProductsPayloadArrayList.size(); i++) {
 
@@ -226,7 +236,6 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
                                     bundle.putString("nameofhotel", nameOfHotel);
 
 
-
                                     Fragment foodDeatailsFragment = new FoodDetailsFragment();
                                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                                     fragmentTransaction.replace(R.id.mainFrame, foodDeatailsFragment, "foodDeatailsFragment");
@@ -250,6 +259,11 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
                         }
                         else {
 
+                           // showAlertDialog("Retry","False");
+                            btnMenu.setVisibility(View.GONE);
+                            recyclerViewWithoutSearch.setVisibility(View.GONE);
+
+                            imageNoFoodProd.setVisibility(View.VISIBLE);
 
                         }
                     }
