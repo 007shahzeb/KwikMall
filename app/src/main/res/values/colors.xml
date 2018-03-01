@@ -3,6 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="progressBackgroundColorLight">#33000000</color>
+
+    <color name="window_background">#FFF5F5F5</color>
+
+
     <color name="green">#00d048</color>
     <color name="holo_green_dark">#ff669900</color>
     <color name="darkgreen">#006400</color>
@@ -23,5 +28,6 @@
 
     <color name="colorBackground">#eeeeee</color>
 
+    <color name="window_background_dark">#212121</color>
 
 </resources>

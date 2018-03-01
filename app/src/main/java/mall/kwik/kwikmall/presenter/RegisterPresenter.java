@@ -8,28 +8,34 @@ import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.activities.SignUpActivity;
 import mall.kwik.kwikmall.apiresponse.RegisterResponse.RegisterSuccess;
 import mall.kwik.kwikmall.di.modules.SharedPrefsHelper;
+import mall.kwik.kwikmall.interfaces.LoginView;
+import mall.kwik.kwikmall.interfaces.SignUpView;
 import mall.kwik.kwikmall.manager.GitApiInterface;
 import rx.schedulers.Schedulers;
 
 
-public class RegisterPresenter extends BasePresenter{
+public class RegisterPresenter {
 
-
-
-    private RegisterPresenter.View view;
 
     private CompositeDisposable compositeDisposable;
 
 
+    private SignUpView view;
 
-    public RegisterPresenter(final RegisterPresenter.View view, GitApiInterface apiService,
-                             SharedPrefsHelper sharedPrefsHelper, String username, String email, String pass, String mobile, String address) {
-        super((SignUpActivity) view);
+    public void bind(SignUpView view) {
         this.view = view;
+    }
 
+    public void unbind() {
+        view = null;
+    }
+
+
+    public void ok_signUp(GitApiInterface apiService, String username, String email, String pass, String mobile, String address){
 
         compositeDisposable = new CompositeDisposable();
 
+        view.showLoadingDialog();
 
         compositeDisposable.add(apiService.registerUser(username,email,pass,mobile,address)
                 .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
@@ -39,18 +45,20 @@ public class RegisterPresenter extends BasePresenter{
                     public void accept(RegisterSuccess registerSuccess) throws Exception {
 
 
-                        pDialog.dismiss();
                         compositeDisposable.dispose();
 
                         if(registerSuccess.getSuccess()){
 
 
-                            view.registerSuccessful(registerSuccess.getMessage());
+                            view.dismissLoadingDialog();
+                            view.startLoginActivity();
+
+
                         }
                         else {
+                            view.dismissLoadingDialog();
 
-                            alertDialog.setMessage(registerSuccess.getMessage());
-                            alertDialog.show();
+                            view.showError(registerSuccess.getMessage());
 
                         }
 
@@ -60,24 +68,14 @@ public class RegisterPresenter extends BasePresenter{
                     @Override
                     public void accept(Throwable throwable) throws Exception {
 
-                        view.registerFailed(throwable);
                         compositeDisposable.dispose();
 
                     }
                 }));
 
 
-
-
-
     }
 
-
-    public interface View {
-        void registerSuccessful(String message);
-
-        void registerFailed(Throwable t);
-    }
 
 
 

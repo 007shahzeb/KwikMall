@@ -30,7 +30,7 @@ import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
 
 public class EnterAddressActivity extends BaseActivity implements View.OnClickListener
-                                ,ExpressPayApi.ExpressPayPaymentCompletionListener{
+        ,ExpressPayApi.ExpressPayPaymentCompletionListener{
 
 
     private ImageView imagepaymenyBack;
@@ -142,12 +142,25 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
 
         //Edit Text Views
         edFullName = findViewById(R.id.edFullName);
-        edCountryCode = findViewById(R.id.edCountryCode);
+
+        //edCountryCode = findViewById(R.id.edCountryCode);
+
         edMobileNo = findViewById(R.id.edMobileNo);
         edEmailAddress = findViewById(R.id.edEmailAddress);
         edAdd = findViewById(R.id.edAdd);
-        edCity = findViewById(R.id.edCity);
+     /*   edCity = findViewById(R.id.edCity);
         edZipCode = findViewById(R.id.edZipCode);
+        */
+
+
+        edFullName.setText(sharedPrefsHelper.get(AppConstants.USER_NAME,""));
+        edMobileNo.setText(sharedPrefsHelper.get(AppConstants.PHONE_NUMBER,""));
+        edEmailAddress.setText(sharedPrefsHelper.get(AppConstants.EMAIL,""));
+        edAdd.setText(sharedPrefsHelper.get(AppConstants.ADDRESS,""));
+
+
+
+
     }
 
 
@@ -177,75 +190,36 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
         if(v==txtPlaceorder){
 
 
-            /*//Validation for Blank Field
-            if(edFullName.getText().toString().length()==0)
-            {
-                edFullName.setError("Enter full name");
-                return;
-            }
-            else if(edCountryCode.getText().toString().length()==0)
-            {
-                edCountryCode.setError("Enter country code");
-                return;
-            }
-            else if(edMobileNo.getText().toString().length()==0)
-            {
-                edMobileNo.setError("Enter mobile no");
-                return;
-            }
-            else if(edEmailAddress.getText().toString().length()==0)
-            {
-                edEmailAddress.setError("Enter Email");
-                return;
-            }
-            else if(edAdd.getText().toString().length()==0)
-            {
-                edAdd.setError("Enter Address");
-                return;
-            }
-            else if(edCity.getText().toString().length()==0)
-            {
-                edCity.setError("Enter City Name");
-                return;
-            }
-            else if(edZipCode.getText().toString().length()==0)
-            {
-                edZipCode.setError("Enter Zip Code");
-                return;
-            }
-            else
-            {
-*/
 
             flipProgress();
 
             name = edFullName.getText().toString();
-            countycode = edCountryCode.getText().toString();
+            //countycode = edCountryCode.getText().toString();
             contactno = edMobileNo.getText().toString();
             emailAdd = edEmailAddress.getText().toString();
             addre = edAdd.getText().toString();
-            cityname = edCity.getText().toString();
-            zipcode = edZipCode.getText().toString();
+            //cityname = edCity.getText().toString();
+            //zipcode = edZipCode.getText().toString();
 
             getLocationFromAddress(this,addre);
 
 
-            dbHelper.insertAddress(name,countycode,contactno,emailAdd,addre,cityname,zipcode);
+            dbHelper.insertAddress(name,contactno,emailAdd,addre);
 
 
-            pay();
+            //  pay();
 
 
-              /*  Bundle bundle = new Bundle();
+            Bundle bundle = new Bundle();
 
-                bundle.putString("totalAmount",totalAmt);
+            bundle.putString("totalAmount",totalAmt);
 
 
-                Intent intent = new Intent(EnterAddressActivity.this,PaymentMethodActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+            Intent intent = new Intent(EnterAddressActivity.this,PaymentMethodActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
 
-                overridePendingTransition(R.anim.slide_in, R.anim.nothing);*/
+            overridePendingTransition(R.anim.slide_in, R.anim.nothing);
 
             //   }
 
@@ -255,7 +229,7 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -265,7 +239,7 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
         fpd.dismiss();
 
     }
-
+*/
 
     public void pay(){
         /**
@@ -372,7 +346,6 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
             }
         });
     }
-
 
 
 

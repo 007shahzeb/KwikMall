@@ -178,7 +178,6 @@
 
 
         <LinearLayout
-            android:weightSum="0.4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -187,11 +186,11 @@
             android:layout_marginLeft="5dp">
 
             <LinearLayout
-                android:layout_weight="0.1"
                 android:id="@+id/customCreditLinearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_margin="@dimen/_10sdp"
                 android:background="@drawable/custom_background_unselected">
 
 
@@ -199,7 +198,7 @@
                     android:id="@+id/checkboxCreditCard"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Visa / Master Card"
+                    android:text="Pay using card / Mobile"
                     android:checked="false"
                     android:padding="@dimen/_5sdp"
                     android:layout_marginLeft="@dimen/_5sdp"
@@ -211,14 +210,14 @@
 
 
                 <ImageView
-                    android:layout_width="@dimen/_50sdp"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_margin="@dimen/_10sdp"
                     android:layout_gravity="center"
                     android:src="@drawable/visa"/>
 
                 <ImageView
-                    android:layout_width="@dimen/_50sdp"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_margin="@dimen/_10sdp"
                     android:layout_gravity="center"
@@ -228,6 +227,7 @@
 
 
 
+<!--
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/creditCardLayout"
@@ -239,25 +239,25 @@
                 android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
-                <!--<TextView-->
-                <!--android:id="@+id/tvCardNumber"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/cardnumbr"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:textSize="16sp"-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--/>-->
+                &lt;!&ndash;<TextView&ndash;&gt;
+                &lt;!&ndash;android:id="@+id/tvCardNumber"&ndash;&gt;
+                &lt;!&ndash;android:layout_marginTop="10dp"&ndash;&gt;
+                &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+                &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                &lt;!&ndash;android:text="@string/cardnumbr"&ndash;&gt;
+                &lt;!&ndash;android:textColor="@color/black"&ndash;&gt;
+                &lt;!&ndash;android:textSize="16sp"&ndash;&gt;
+                &lt;!&ndash;android:layout_marginLeft="5dp"&ndash;&gt;
+                &lt;!&ndash;/>&ndash;&gt;
 
-                <!--<EditText-->
-                <!--android:id="@+id/edCardnumber"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:hint="3444 5555 6666 7777"-->
-                <!--android:maxLength="24"-->
-                <!--android:singleLine="true"-->
-                <!--android:inputType="number"/>-->
+                &lt;!&ndash;<EditText&ndash;&gt;
+                &lt;!&ndash;android:id="@+id/edCardnumber"&ndash;&gt;
+                &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+                &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                &lt;!&ndash;android:hint="3444 5555 6666 7777"&ndash;&gt;
+                &lt;!&ndash;android:maxLength="24"&ndash;&gt;
+                &lt;!&ndash;android:singleLine="true"&ndash;&gt;
+                &lt;!&ndash;android:inputType="number"/>&ndash;&gt;
 
 
                 <android.support.design.widget.TextInputLayout
@@ -292,31 +292,31 @@
                     android:layout_marginTop="@dimen/_5sdp">
 
 
-                    <!--<LinearLayout-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:orientation="vertical"-->
-                    <!--&gt;-->
+                    &lt;!&ndash;<LinearLayout&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:orientation="vertical"&ndash;&gt;
+                    &lt;!&ndash;&gt;&ndash;&gt;
 
-                    <!--<TextView-->
-                    <!--android:textSize="16sp"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:id="@+id/tvSecurityCode"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="5dp"-->
-                    <!--android:text="@string/cvv"/>-->
+                    &lt;!&ndash;<TextView&ndash;&gt;
+                    &lt;!&ndash;android:textSize="16sp"&ndash;&gt;
+                    &lt;!&ndash;android:textColor="@color/black"&ndash;&gt;
+                    &lt;!&ndash;android:id="@+id/tvSecurityCode"&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:layout_marginLeft="5dp"&ndash;&gt;
+                    &lt;!&ndash;android:text="@string/cvv"/>&ndash;&gt;
 
-                    <!--<EditText-->
-                    <!--android:id="@+id/edCode"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:hint="756"-->
-                    <!--android:maxLength="3"-->
-                    <!--android:inputType="number"/>-->
-                    <!---->
-                    <!---->
-                    <!--</LinearLayout>-->
+                    &lt;!&ndash;<EditText&ndash;&gt;
+                    &lt;!&ndash;android:id="@+id/edCode"&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:hint="756"&ndash;&gt;
+                    &lt;!&ndash;android:maxLength="3"&ndash;&gt;
+                    &lt;!&ndash;android:inputType="number"/>&ndash;&gt;
+                    &lt;!&ndash;&ndash;&gt;
+                    &lt;!&ndash;&ndash;&gt;
+                    &lt;!&ndash;</LinearLayout>&ndash;&gt;
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="0dp"
@@ -342,32 +342,32 @@
 
 
 
-                    <!--<LinearLayout-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:orientation="vertical"-->
+                    &lt;!&ndash;<LinearLayout&ndash;&gt;
+                    &lt;!&ndash;android:layout_marginLeft="10dp"&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:orientation="vertical"&ndash;&gt;
 
-                    <!--android:layout_weight="1">-->
+                    &lt;!&ndash;android:layout_weight="1">&ndash;&gt;
 
-                    <!--<TextView-->
-                    <!--android:textSize="16sp"-->
-                    <!--android:textColor="@color/black"-->
+                    &lt;!&ndash;<TextView&ndash;&gt;
+                    &lt;!&ndash;android:textSize="16sp"&ndash;&gt;
+                    &lt;!&ndash;android:textColor="@color/black"&ndash;&gt;
 
-                    <!--android:id="@+id/tvExpiryDate"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="@string/expirydate"/>-->
+                    &lt;!&ndash;android:id="@+id/tvExpiryDate"&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:text="@string/expirydate"/>&ndash;&gt;
 
-                    <!--<EditText-->
-                    <!--android:id="@+id/edExpiryDate"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:inputType="number"-->
-                    <!--android:hint="12/19"-->
-                    <!--android:maxLength="5"-->
-                    <!--/>-->
-                    <!--</LinearLayout>-->
+                    &lt;!&ndash;<EditText&ndash;&gt;
+                    &lt;!&ndash;android:id="@+id/edExpiryDate"&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:inputType="number"&ndash;&gt;
+                    &lt;!&ndash;android:hint="12/19"&ndash;&gt;
+                    &lt;!&ndash;android:maxLength="5"&ndash;&gt;
+                    &lt;!&ndash;/>&ndash;&gt;
+                    &lt;!&ndash;</LinearLayout>&ndash;&gt;
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -391,54 +391,54 @@
                     </android.support.design.widget.TextInputLayout>
 
 
-                    <!--<LinearLayout-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:orientation="vertical"-->
-                    <!--android:layout_weight="1">-->
+                    &lt;!&ndash;<LinearLayout&ndash;&gt;
+                    &lt;!&ndash;android:layout_marginLeft="10dp"&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:orientation="vertical"&ndash;&gt;
+                    &lt;!&ndash;android:layout_weight="1">&ndash;&gt;
 
-                    <!--<TextView-->
-                    <!--android:textSize="16sp"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="@string/amount"/>-->
+                    &lt;!&ndash;<TextView&ndash;&gt;
+                    &lt;!&ndash;android:textSize="16sp"&ndash;&gt;
+                    &lt;!&ndash;android:textColor="@color/black"&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:text="@string/amount"/>&ndash;&gt;
 
-                    <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:orientation="horizontal">-->
+                    &lt;!&ndash;<LinearLayout&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:orientation="horizontal">&ndash;&gt;
 
 
-                    <!--<ImageView-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="22dp"-->
-                    <!--android:layout_marginTop="15dp"-->
-                    <!--android:background="@drawable/ghana"/>-->
+                    &lt;!&ndash;<ImageView&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="20dp"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="22dp"&ndash;&gt;
+                    &lt;!&ndash;android:layout_marginTop="15dp"&ndash;&gt;
+                    &lt;!&ndash;android:background="@drawable/ghana"/>&ndash;&gt;
 
-                    <!--<TextView-->
-                    <!--android:id="@+id/tvTotalAmount"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textColorHint="@color/black"-->
-                    <!--android:text="125"-->
-                    <!--android:layout_marginLeft="3dp"-->
-                    <!--android:textSize="18sp"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:layout_marginTop="12dp"-->
-                    <!--/>-->
+                    &lt;!&ndash;<TextView&ndash;&gt;
+                    &lt;!&ndash;android:id="@+id/tvTotalAmount"&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                    &lt;!&ndash;android:textColorHint="@color/black"&ndash;&gt;
+                    &lt;!&ndash;android:text="125"&ndash;&gt;
+                    &lt;!&ndash;android:layout_marginLeft="3dp"&ndash;&gt;
+                    &lt;!&ndash;android:textSize="18sp"&ndash;&gt;
+                    &lt;!&ndash;android:textColor="@color/black"&ndash;&gt;
+                    &lt;!&ndash;android:layout_marginTop="12dp"&ndash;&gt;
+                    &lt;!&ndash;/>&ndash;&gt;
 
-                    <!--</LinearLayout>-->
+                    &lt;!&ndash;</LinearLayout>&ndash;&gt;
 
-                    <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="0.7dp"-->
-                    <!--android:background="@color/black"-->
-                    <!--&gt;-->
+                    &lt;!&ndash;<View&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="0.7dp"&ndash;&gt;
+                    &lt;!&ndash;android:background="@color/black"&ndash;&gt;
+                    &lt;!&ndash;&gt;&ndash;&gt;
 
-                    <!--</View>-->
-                    <!--</LinearLayout>-->
+                    &lt;!&ndash;</View>&ndash;&gt;
+                    &lt;!&ndash;</LinearLayout>&ndash;&gt;
 
 
                     <android.support.design.widget.TextInputLayout
@@ -467,8 +467,10 @@
 
 
             </LinearLayout>
+-->
 
 
+<!--
             <LinearLayout
                 android:layout_weight="0.1"
                 android:id="@+id/customDiscoverLinearLayout"
@@ -504,8 +506,10 @@
 
 
             </LinearLayout>
+-->
 
 
+<!--
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/DiscoverCardLayout"
@@ -553,14 +557,16 @@
                     />
 
             </LinearLayout>
+-->
 
             <LinearLayout
-                android:layout_weight="0.1"
                 android:id="@+id/customPaypalLinearLayout"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_margin="@dimen/_10sdp"
+
                 android:background="@drawable/custom_background_unselected">
 
 
@@ -663,7 +669,7 @@
             app:fontPath="fonts/HindVadodara-Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/confirmpayment"
+            android:text="SUBMIT"
             android:gravity="center"
             android:padding="@dimen/_10sdp"
             android:textSize="@dimen/_12sdp"

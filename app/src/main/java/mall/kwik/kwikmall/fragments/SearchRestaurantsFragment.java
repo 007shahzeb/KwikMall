@@ -5,12 +5,14 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -39,6 +41,8 @@ public class SearchRestaurantsFragment extends BaseFragment {
     private ArrayList<StoreProductsPayload> storeProductsPayloadArrayList = new ArrayList<>();
     ArrayList<StoreProductsPayload> productsPayloadArrayList;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private LinearLayout linearNoMatchFoundImage;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
@@ -47,7 +51,6 @@ public class SearchRestaurantsFragment extends BaseFragment {
         findViewId();
 
         clickListeners();
-
 
         imageCancel.setVisibility(RelativeLayout.INVISIBLE);
         clearText();
@@ -65,11 +68,7 @@ public class SearchRestaurantsFragment extends BaseFragment {
     private void GetStoreProductsApi() {
 
 
-
-
         int storeId= sharedPrefsHelper.get(AppConstants.STORE_ID,0);
-
-
 
 
         compositeDisposable.add(apiService.getStoreProducts(String.valueOf(storeId))
@@ -129,6 +128,11 @@ public class SearchRestaurantsFragment extends BaseFragment {
                         }
                         else {
 
+
+                            linearNoMatchFoundImage.setVisibility(View.VISIBLE);
+
+                            clearable_edit.setEnabled(false);
+
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -164,6 +168,19 @@ public class SearchRestaurantsFragment extends BaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+
+                if(recyclerViewAdapter.getLength()<=0){
+
+
+                    linearNoMatchFoundImage.setVisibility(View.VISIBLE);
+
+                    clearable_edit.setEnabled(false);
+
+                }
+
+
 
                 if(s.length()>0)
                     imageCancel.setVisibility(View.VISIBLE);
@@ -209,6 +226,7 @@ public class SearchRestaurantsFragment extends BaseFragment {
         recyclerviewSearch = view.findViewById(R.id.recyclerviewSearch);
         clearable_edit = view.findViewById(R.id.clearable_edit);
         imageCancel = view.findViewById(R.id.imageCancel);
+        linearNoMatchFoundImage = view.findViewById(R.id.linearNoMatchFoundImage);
     }
 
     private void clickListeners() {

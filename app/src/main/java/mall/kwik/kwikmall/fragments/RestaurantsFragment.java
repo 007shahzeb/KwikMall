@@ -229,6 +229,10 @@ public class RestaurantsFragment extends BaseFragment  {
 
 
                                     sharedPrefsHelper.put(AppConstants.STORE_ID,StoreId);
+                                    sharedPrefsHelper.put(AppConstants.NAME_HOTEL,nameOfHotel);
+                                    sharedPrefsHelper.put(AppConstants.ADDRESS,address);
+                                    sharedPrefsHelper.put(AppConstants.STRING_FORM,string_form);
+
 
                                     SharedPrefData sharedPrefData = new SharedPrefData(getActivity());
 

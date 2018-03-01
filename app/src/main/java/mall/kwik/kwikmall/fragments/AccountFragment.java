@@ -34,6 +34,7 @@ import mall.kwik.kwikmall.apiresponse.GetOrderListResponse.GetOrderListPayload;
 import mall.kwik.kwikmall.apiresponse.GetOrderListResponse.GetOrderListSuccess;
 import mall.kwik.kwikmall.dialogs.LogoutConfirmDialog;
 import mall.kwik.kwikmall.R;
+import mall.kwik.kwikmall.dialogs.SendFeedbackDialog;
 import mall.kwik.kwikmall.sharedpreferences.UserDataUtility;
 
 
@@ -66,13 +67,11 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
         noInternetDialog = new NoInternetDialog.Builder(context).build();
 
 
-
         findViewId();
 
         clikListeners();
 
         idUser = String.valueOf(sharedPrefsHelper.get(AppConstants.USER_ID,0));
-
 
         tvUserName.setText(sharedPrefsHelper.get(AppConstants.USER_NAME,"Dharam"));
         tvUserEmail.setText(sharedPrefsHelper.get(AppConstants.EMAIL,"abc"));
@@ -270,6 +269,16 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+
+
+        if(v==sendFeedbacklayout){
+
+
+            SendFeedbackDialog sendFeedbackDialog = new SendFeedbackDialog(getActivity());
+            sendFeedbackDialog.show();
+
+        }
+
 
         if(v==txtLoginAgain){
 

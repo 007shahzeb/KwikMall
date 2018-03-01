@@ -78,6 +78,14 @@ public class RecyclerViewAdapterSearch extends RecyclerView.Adapter<RecyclerView
 
     }
 
+    public int getLength(){
+
+        return storeProductsPayloadArrayList.size();
+
+    }
+
+
+
     @Override
     public int getItemCount() {
         return storeProductsPayloadArrayList.size();

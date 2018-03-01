@@ -199,6 +199,7 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
                 recyclerViewAdapterFilter.unselectAll();
                 footerFilter.setBackgroundColor(Color.parseColor("#B2D0B2")); //dimgreen
 
+
                // ( (AppController)  getApplication()).bus().send(new FilterEvent(""));
 
                 break;

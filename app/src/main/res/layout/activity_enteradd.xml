@@ -179,7 +179,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -211,15 +211,15 @@
                 </android.support.design.widget.TextInputLayout>
 
 
-                <LinearLayout
+              <!--  <LinearLayout
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+-->
 
 
-
-                    <android.support.design.widget.TextInputLayout
+              <!--      <android.support.design.widget.TextInputLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:hintTextAppearance="@style/TextLabel"
@@ -238,12 +238,11 @@
                             android:drawableTint="@color/grey"
                             />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </android.support.design.widget.TextInputLayout>-->
 
                     <android.support.design.widget.TextInputLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         app:hintTextAppearance="@style/TextLabel"
                         android:textColorHint="#808080"
                         >
@@ -262,17 +261,16 @@
                     </android.support.design.widget.TextInputLayout>
 
 
-                </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     app:hintTextAppearance="@style/TextLabel"
                     android:textColorHint="#808080"
                     >
 
-                    <EditText                    android:id="@+id/edEmailAddress"
+                    <EditText
+                        android:id="@+id/edEmailAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
@@ -306,6 +304,7 @@
                 </android.support.design.widget.TextInputLayout>
 
 
+<!--
                 <LinearLayout
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
@@ -321,7 +320,8 @@
                         android:textColorHint="#808080"
                         >
 
-                        <EditText                        android:id="@+id/edCity"
+                        <EditText
+                            android:id="@+id/edCity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:singleLine="true"
@@ -358,6 +358,7 @@
 
 
                 </LinearLayout>
+-->
 
             </LinearLayout>
 

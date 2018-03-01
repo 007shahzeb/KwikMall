@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.rilixtech.CountryCodePicker;
@@ -21,10 +22,12 @@ import com.rilixtech.CountryCodePicker;
 import am.appwise.components.ni.NoInternetDialog;
 import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
 import mall.kwik.kwikmall.R;
+import mall.kwik.kwikmall.interfaces.SignUpView;
+import mall.kwik.kwikmall.presenter.LoginPresenter;
 import mall.kwik.kwikmall.presenter.RegisterPresenter;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class SignUpActivity extends BaseActivity implements View.OnClickListener, RegisterPresenter.View  {
+public class SignUpActivity extends BaseActivity implements View.OnClickListener, SignUpView {
 
 
     private EditText  edUsername,edEmailAddress,edPassword,edMobileNo,edAddressRegister;
@@ -36,6 +39,8 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
     private NoInternetDialog noInternetDialog;
     private RelativeLayout mainRegisterLayout;
     CountryCodePicker ccp;
+    private RegisterPresenter registerPresenter = new RegisterPresenter();
+    private MaterialDialog dialog;
 
 
     @Override
@@ -45,7 +50,11 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_up);
 
+
         context = this;
+        registerPresenter.bind(this);
+
+
         noInternetDialog = new NoInternetDialog.Builder(context).build();
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
@@ -172,7 +181,11 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(view1.getWindowToken(),0);
                     }
-                    new RegisterPresenter(SignUpActivity.this,apiService,sharedPrefsHelper,edUsername.getText().toString().trim(),edEmailAddress.getText().toString().trim(),
+                   /* new RegisterPresenter(apiService,sharedPrefsHelper,edUsername.getText().toString().trim(),edEmailAddress.getText().toString().trim(),
+                            edPassword.getText().toString().trim(),codeWithPh,edAddressRegister.getText().toString().trim());
+*/
+
+                    registerPresenter.ok_signUp(apiService,edUsername.getText().toString().trim(),edEmailAddress.getText().toString().trim(),
                             edPassword.getText().toString().trim(),codeWithPh,edAddressRegister.getText().toString().trim());
 
 
@@ -195,12 +208,35 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
 
     }
 
+
+
+
     @Override
-    public void registerSuccessful(String message) {
+    public void showLoadingDialog() {
+        dialog = new MaterialDialog.Builder(this)
+                .title(R.string.app_name)
+                .content("Please wait...")
+                .progress(true, 0)
+                .show();
+    }
+
+    @Override
+    public void dismissLoadingDialog() {
+        dialog.dismiss();
+    }
+
+
+    @Override
+    public void showError(String message) {
 
 
         Snackbar.make(mainRegisterLayout, message, Snackbar.LENGTH_SHORT).show();
 
+
+    }
+
+    @Override
+    public void startLoginActivity() {
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -213,18 +249,6 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
 
             }
         }, 1000);
-
-
-
-
-    }
-
-    @Override
-    public void registerFailed(Throwable t) {
-
-
-        Snackbar.make(mainRegisterLayout, t.getLocalizedMessage(), Snackbar.LENGTH_SHORT).show();
-
 
 
     }

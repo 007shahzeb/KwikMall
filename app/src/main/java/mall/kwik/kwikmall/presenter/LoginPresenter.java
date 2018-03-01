@@ -18,6 +18,7 @@ import mall.kwik.kwikmall.activities.SignUpActivity;
 import mall.kwik.kwikmall.apiresponse.FirebaseNotification.FCMSUCCESS;
 import mall.kwik.kwikmall.apiresponse.LoginResponse.UserLoginSuccess;
 import mall.kwik.kwikmall.di.modules.SharedPrefsHelper;
+import mall.kwik.kwikmall.interfaces.LoginView;
 import mall.kwik.kwikmall.manager.GitApiInterface;
 import mall.kwik.kwikmall.sharedpreferences.UserDataUtility;
 import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
@@ -26,20 +27,30 @@ import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
  * Created by dharamveer on 29/1/18.
  */
 
-public class LoginPresenter extends BasePresenter{
+public class LoginPresenter{
 
-    private LoginPresenter.View view;
 
     private CompositeDisposable compositeDisposable;
 
+    private LoginView view;
 
-
-    public LoginPresenter(final LoginPresenter.View view , GitApiInterface apiService, SharedPrefsHelper sharedPrefsHelper, String email, String passw) {
-        super((SignInActivity) view);
+    public void bind(LoginView view) {
         this.view = view;
+    }
+
+    public void unbind() {
+        view = null;
+    }
+
+
+
+
+    public void ok_login(GitApiInterface apiService, SharedPrefsHelper sharedPrefsHelper, String email, String passw){
 
 
         compositeDisposable = new CompositeDisposable();
+
+        view.showLoadingDialog();
 
 
         compositeDisposable.add(apiService.LoginUser(email,passw)
@@ -50,13 +61,10 @@ public class LoginPresenter extends BasePresenter{
                     public void accept(UserLoginSuccess userLoginSuccess) throws Exception {
 
 
-                        pDialog.dismiss();
                         compositeDisposable.dispose();
 
 
                         if(userLoginSuccess.getSuccess()){
-
-
 
 
                             sharedPrefsHelper.put(AppConstants.USER_ID,userLoginSuccess.getPayload().getId());
@@ -64,14 +72,16 @@ public class LoginPresenter extends BasePresenter{
                             sharedPrefsHelper.put(AppConstants.EMAIL,userLoginSuccess.getPayload().getEmail());
                             sharedPrefsHelper.put(AppConstants.PHONE_NUMBER,userLoginSuccess.getPayload().getPhoneNo());
 
-
-                            view.loginSuccessful("Success");
+                            view.startMainActivity();
+                            view.dismissLoadingDialog();
 
 
                         }
                         else {
-                            alertDialog.setMessage("Invalid email or password");
-                            alertDialog.show();
+                            view.dismissLoadingDialog();
+
+                            view.showError();
+
                         }
 
 
@@ -81,8 +91,6 @@ public class LoginPresenter extends BasePresenter{
                     public void accept(Throwable throwable) throws Exception {
 
 
-
-                        view.loginFailed(throwable);
                         compositeDisposable.dispose();
 
 
@@ -90,12 +98,10 @@ public class LoginPresenter extends BasePresenter{
                 }));
 
 
+
     }
 
 
-    public interface View {
-        void loginSuccessful(String message);
-        void loginFailed(Throwable t);
-    }
+
 
 }

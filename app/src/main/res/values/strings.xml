@@ -71,6 +71,7 @@
 
     <string name="almostthere">Almost There</string>
     <string name="loginorsignup">Login or Sign up to place your order</string>
+    <string name="nodata">No Data</string>
 
     <string name="your_orders">Your Orders</string>
     <string name="favouritesitem">Favourites List</string>

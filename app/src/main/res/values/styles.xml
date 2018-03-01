@@ -1,5 +1,16 @@
 <resources>
 
+    <attr format="reference" name="cardStyle"/>
+
+    <attr format="reference" name="accentColor"/>
+    <attr format="reference" name="iconColor"/>
+    <attr format="reference" name="windowBackground"/>
+    <attr format="reference" name="progressBackgroundColor"/>
+    <attr format="reference" name="progressDrawable"/>
+    <attr format="reference" name="progressDrawableWithBackground" />
+    <attr format="reference" name="stateSelector" />
+
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -15,6 +26,31 @@
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="AppThemeNormalLight" parent="ThemeBaseLight">
+    </style>
+
+    <style name="ThemeBaseLight" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="cardStyle">@style/CardViewStyle.Light</item>
+        <item name="accentColor">@color/colorAccent</item>
+        <item name="iconColor">@android:color/black</item>
+        <item name="windowBackground">@color/window_background</item>
+        <item name="stateSelector">@color/state_selector_light</item>
+        <item name="progressBackgroundColor">@color/progressBackgroundColorLight</item>
+        <item name="progressDrawable">@drawable/progress_drawable</item>
+        <item name="progressDrawableWithBackground">@drawable/progress_drawable_withbackground</item>
+
+    </style>
+
+    <style name="CardViewStyle.Light" parent="CardView">
+        <item name="cardBackgroundColor">@color/window_background</item>
+    </style>
+
+
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/logo</item>

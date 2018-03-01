@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper{
 
 
 
-    private static final String DATABASE_NAME = "kwiqmallDB14.db";
+    private static final String DATABASE_NAME = "kwiqmallDB1.db";
     private static final int DATABASE_VERSION = 1;
 
     public static final String TABLE1 = "productsList";
@@ -118,12 +118,10 @@ public class DBHelper extends SQLiteOpenHelper{
 
     private static final String CREATE_TABLE3 = "CREATE TABLE "+TABLE3+"("+ID3+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
             +PER_NAME+ " Text, "
-            +CNTRY_CODE+ " Text, "
             +CONTACT_NO+ " Text, "
             +EMAIL_ADD+ " Text, "
-            +ADDR+ " Text, "
-            +CITY_NAME+ " Text, "
-            +ZIP_CODE+ " Text);";
+            +ADDR+ " Text);";
+
 
     private static final String CREATE_TABLE4 = "CREATE TABLE "+TABLE4+"("+ID4+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
             +MAPADDRESS+ " Text, "
@@ -239,7 +237,7 @@ public class DBHelper extends SQLiteOpenHelper{
                 new String[] { Integer.toString(id) });
     }
 
-
+/*
 
     public void insertAddress(String name,String countryCode,String contact,String email,String addr,String cityName,String Zip){
 
@@ -263,7 +261,29 @@ public class DBHelper extends SQLiteOpenHelper{
             db.insert(TABLE3,null,values);
         }
 
+    }*/
+
+    public void insertAddress(String name,String contact,String email,String addr){
+
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PER_NAME,name);
+        values.put(CONTACT_NO, contact);
+        values.put(EMAIL_ADD, email);
+        values.put(ADDR, addr);
+
+        String sqlQuery = "SELECT * FROM " + TABLE3 + " WHERE " + CONTACT_NO + " = " + "\""
+                + contact + "\"";
+
+        Cursor c = db.rawQuery(sqlQuery, null);
+        if (c != null && c.getCount() != 0) {
+
+        } else {
+            db.insert(TABLE3,null,values);
+        }
+
     }
+
 
 
 
@@ -486,21 +506,21 @@ public class DBHelper extends SQLiteOpenHelper{
             addressesModel = new AddressesModel();
 
             String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-            String countycode = cursor.getString(cursor.getColumnIndexOrThrow("countycode"));
+           // String countycode = cursor.getString(cursor.getColumnIndexOrThrow("countycode"));
             String contactno = cursor.getString(cursor.getColumnIndexOrThrow("contactno"));
             String emailAdd = cursor.getString(cursor.getColumnIndexOrThrow("emailAdd"));
             String addre = cursor.getString(cursor.getColumnIndexOrThrow("addre"));
-            String cityname = cursor.getString(cursor.getColumnIndexOrThrow("edCity"));
-            String zipcode = cursor.getString(cursor.getColumnIndexOrThrow("edZipCode"));
+          //  String cityname = cursor.getString(cursor.getColumnIndexOrThrow("edCity"));
+          //  String zipcode = cursor.getString(cursor.getColumnIndexOrThrow("edZipCode"));
 
 
             addressesModel.setName(name);
-            addressesModel.setCountycode(countycode);
+            //addressesModel.setCountycode(countycode);
             addressesModel.setContactno(contactno);
             addressesModel.setEmailAdd(emailAdd);
             addressesModel.setAddre(addre);
-            addressesModel.setCityname(cityname);
-            addressesModel.setZipcode(zipcode);
+         //   addressesModel.setCityname(cityname);
+          //  addressesModel.setZipcode(zipcode);
 
         }
 

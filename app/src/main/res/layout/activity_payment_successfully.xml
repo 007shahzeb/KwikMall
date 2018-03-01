@@ -205,78 +205,29 @@
                         android:text="@string/congratulations"
                         android:gravity="center"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/_13sdp"/>
+                        android:textSize="@dimen/_14sdp"/>
 
 
                     <TextView
                         android:id="@+id/tvDes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/yourpaymentsuccess"
+                        android:text="Your Order No."
+                        android:gravity="center"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/txtOrderNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
                         android:gravity="center"
                         android:textSize="@dimen/_11sdp"/>
 
+
+
                 </LinearLayout>
-
-
-                <TableLayout
-                    android:layout_alignParentBottom="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    >
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/_10sdp"
-                            android:text="Payment Amount : " />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_10sdp"
-
-                            android:layout_height="wrap_content" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/_10sdp"
-
-                            android:text="Status : " />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_10sdp"
-
-                            android:layout_height="wrap_content" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/_10sdp"
-
-                            android:text="Payment Id : " />
-
-                        <TextView
-                            android:textStyle="bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </TableRow>
-
-
-                </TableLayout>
-
 
 
 
@@ -298,12 +249,12 @@
         android:layout_alignParentBottom="true">
 
 
-        <TextView            android:id="@+id/txtonSuccess"
-
+        <TextView
+            android:id="@+id/txtonSuccess"
             app:fontPath="fonts/HindVadodara-Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/trackyourorder"
+            android:text="GO TO MAIN PAGE"
             android:gravity="center"
             android:padding="@dimen/_10sdp"
             android:textSize="@dimen/_10sdp"

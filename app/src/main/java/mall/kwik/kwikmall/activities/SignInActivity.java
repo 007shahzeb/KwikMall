@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -28,11 +29,12 @@ import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.apiresponse.FirebaseNotification.FCMSUCCESS;
 import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
 import mall.kwik.kwikmall.R;
+import mall.kwik.kwikmall.interfaces.LoginView;
 import mall.kwik.kwikmall.presenter.LoginPresenter;
 import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
 import mall.kwik.kwikmall.sharedpreferences.UserDataUtility;
 
-public class SignInActivity extends BaseActivity implements View.OnClickListener, LoginPresenter.View{
+public class SignInActivity extends BaseActivity implements View.OnClickListener, LoginView{
 
 
     private ImageButton btnArrow;
@@ -44,12 +46,17 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     private NoInternetDialog noInternetDialog;
     private RelativeLayout mainLoginLayout;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private MaterialDialog dialog;
+    private LoginPresenter loginPresenter = new LoginPresenter();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        loginPresenter.bind(this);
+
 
         context = this;
         noInternetDialog = new NoInternetDialog.Builder(context).build();
@@ -87,6 +94,8 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     protected void onDestroy() {
         super.onDestroy();
         noInternetDialog.onDestroy();
+        loginPresenter.unbind();
+
     }
 
 
@@ -164,8 +173,9 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view1.getWindowToken(),0);
                 }
-                new LoginPresenter(SignInActivity.this,apiService,sharedPrefsHelper,edEmailAddressLogin.getText().toString().trim(),edPasswordLogin.getText().toString().trim());
+              //  new LoginPresenter(SignInActivity.this,apiService,sharedPrefsHelper,edEmailAddressLogin.getText().toString().trim(),edPasswordLogin.getText().toString().trim());
 
+                loginPresenter.ok_login(apiService,sharedPrefsHelper,edEmailAddressLogin.getText().toString().trim(),edPasswordLogin.getText().toString().trim());
 
             }
 
@@ -203,6 +213,9 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
 
 
 
+
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -213,12 +226,16 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     }
 
 
+    @Override
+    public void showError() {
+        Toast.makeText(this, "Invalid Password or number", Toast.LENGTH_LONG)
+                .show();
+    }
 
     @Override
-    public void loginSuccessful(String message) {
+    public void startMainActivity() {
 
-
-        Snackbar.make(mainLoginLayout, message, Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(mainLoginLayout, "", Snackbar.LENGTH_SHORT).show();
 
 
         DBHelper dbHelper = new DBHelper(SignInActivity.this);
@@ -241,17 +258,23 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         }, 1000);
 
 
+    }
 
+
+
+    @Override
+    public void showLoadingDialog() {
+        dialog = new MaterialDialog.Builder(this)
+                .title(R.string.app_name)
+                .content("Please wait...")
+                .progress(true, 0)
+                .show();
     }
 
     @Override
-    public void loginFailed(Throwable t) {
-
-        Snackbar.make(mainLoginLayout, t.getLocalizedMessage(), Snackbar.LENGTH_SHORT).show();
-
-
+    public void dismissLoadingDialog() {
+        dialog.dismiss();
     }
-
 
 
 }

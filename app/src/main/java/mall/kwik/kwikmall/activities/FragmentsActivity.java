@@ -18,6 +18,7 @@ import mall.kwik.kwikmall.fragments.AccountFragment;
 import mall.kwik.kwikmall.fragments.ExploreFragment;
 import mall.kwik.kwikmall.fragments.NearMeFragment;
 import mall.kwik.kwikmall.fragments.RestaurantsProductsFragment;
+import mall.kwik.kwikmall.fragments.TrackYourOrderFragment;
 import mall.kwik.kwikmall.fragments.ViewCartFragment;
 import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
 
@@ -78,21 +79,10 @@ public class FragmentsActivity extends BaseActivity {
 
     }
 
-    void myBackPressed(){
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.popBackStack();
-    }
 
 
 
     public void replace(){
-
-     /*   getSupportFragmentManager().beginTransaction()
-                .addToBackStack(null)
-                .replace(R.id.mainFrame,new RestaurantsProductsFragment(),"RestaurantsProductsFragment")
-                .setCustomAnimations(R.anim.enter, R.anim.exit)
-                .commit();*/
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =    fragmentManager.beginTransaction();
@@ -109,13 +99,6 @@ public class FragmentsActivity extends BaseActivity {
 
     public void replace2(){
 
-       /* getSupportFragmentManager().beginTransaction()
-                .addToBackStack(null)
-                .replace(R.id.mainFrame,new RestaurantsProductsFragment(),"RestaurantsProductsFragment")
-                .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
-                .commit();
-*/
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =    fragmentManager.beginTransaction();
         fragmentTransaction.addToBackStack(null);
@@ -123,6 +106,24 @@ public class FragmentsActivity extends BaseActivity {
         fragmentTransaction.replace(R.id.mainFrame, fragment);
         fragmentTransaction.commit();
 
+    }
+
+    public void replace3(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction =    fragmentManager.beginTransaction();
+        fragmentTransaction.addToBackStack(null);
+        Fragment fragment = new TrackYourOrderFragment();
+        fragmentTransaction.replace(R.id.mainFrame, fragment);
+        fragmentTransaction.commit();
+
+
+       /* Fragment trackYourOrderFragment = new TrackYourOrderFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainFrame, trackYourOrderFragment, "trackYourOrderFragment");
+        fragmentTransaction.addToBackStack("trackYourOrderFragment");
+        fragmentTransaction.commit();
+        */
     }
 
 

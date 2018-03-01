@@ -12,13 +12,15 @@ import android.widget.TextView;
 
 
 import am.appwise.components.ni.NoInternetDialog;
+import mall.kwik.kwikmall.AppConstants;
 import mall.kwik.kwikmall.R;
+import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
 import mall.kwik.kwikmall.fragments.TrackYourOrderFragment;
 
-public class PaymentSuccessfullyActivity extends AppCompatActivity {
+public class PaymentSuccessfullyActivity extends BaseActivity {
 
 
-    private TextView txtSuccess,tvAddress,tvPaymentMethod,tvSuccessfully,tvCongra,tvDes,txtonSuccess;
+    private TextView txtSuccess,tvAddress,tvPaymentMethod,tvSuccessfully,tvCongra,tvDes,txtonSuccess,txtOrderNo;
     private ImageView imageSuccessBack;
     private Context context;
     private NoInternetDialog noInternetDialog;
@@ -55,8 +57,11 @@ public class PaymentSuccessfullyActivity extends AppCompatActivity {
         tvCongra = findViewById(R.id.tvCongra);
         tvDes = findViewById(R.id.tvDes);
         txtonSuccess = findViewById(R.id.txtonSuccess);
+        txtOrderNo = findViewById(R.id.txtOrderNo);
 
 
+
+        txtOrderNo.setText(sharedPrefsHelper.get(AppConstants.ORDER_NO,""));
 
     }
 
@@ -76,16 +81,10 @@ public class PaymentSuccessfullyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+              //  ((FragmentsActivity) getApplicationContext()).replace3();
 
 
-                Fragment trackYourOrderFragment = new TrackYourOrderFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.mainFrame, trackYourOrderFragment, "trackYourOrderFragment");
-                fragmentTransaction.addToBackStack("trackYourOrderFragment");
-                fragmentTransaction.commit();
-
-
-                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                startActivity(new Intent(context,FragmentsActivity.class));
 
             }
         });

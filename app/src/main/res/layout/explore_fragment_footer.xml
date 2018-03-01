@@ -170,14 +170,16 @@
             android:scaleType="fitXY"/>
 
         <TextView
-            app:fontPath="fonts/HindVadodara-Bold.ttf"            android:layout_width="wrap_content"
+            app:fontPath="fonts/HindVadodara-Bold.ttf"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ohcrumbs"
             android:textColor="@color/black"
             android:layout_marginBottom="5dp"/>
 
         <TextView
-            app:fontPath="fonts/HindVadodara-Bold.ttf"            android:layout_width="wrap_content"
+            app:fontPath="fonts/HindVadodara-Bold.ttf"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/noresultsfound"
             android:lines="2"

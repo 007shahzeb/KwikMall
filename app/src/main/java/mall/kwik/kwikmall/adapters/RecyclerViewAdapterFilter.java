@@ -94,14 +94,14 @@ public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerView
                 holder.checkboxRecyclerRight.setChecked(false);
             }
 
-            if(ischecked.containsKey(position)){
+          /*  if(ischecked.containsKey(position)){
 
                 holder.checkboxRecyclerRight.setChecked(ischecked.get(position));
 
             }else {
                 holder.checkboxRecyclerRight.setChecked(false);
 
-            }
+            }*/
 
 
             holder.checkboxRecyclerRight.setOnCheckedChangeListener(null);

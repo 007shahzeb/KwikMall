@@ -111,7 +111,7 @@ public class AdapterRestaurantsFragment extends RecyclerView.Adapter<AdapterRest
         float distanceInMeters = location1.distanceTo(location2);
 
         //For example spead is 10 meters per minute.
-        int speedIs10MetersPerMinute = 80;
+        int speedIs10MetersPerMinute = 180;
         float estimatedDriveTimeInMinutes =distanceInMeters / speedIs10MetersPerMinute;
 
         string_temp = new Double(estimatedDriveTimeInMinutes).toString();

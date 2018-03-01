@@ -54,10 +54,8 @@
 
         <activity
             android:name=".activities.SplashActivity"
-            android:alwaysRetainTaskState="true"
-            android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/DashBoardTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -66,19 +64,19 @@
         </activity>
         <activity
             android:name=".activities.SignInSignUpButtonsActivity"
-            android:alwaysRetainTaskState="true"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            />
         <activity
             android:name=".activities.FragmentsActivity"
-            android:alwaysRetainTaskState="true"
-            android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
+
         <activity
             android:name=".activities.FilterActivity"
             android:alwaysRetainTaskState="true"
