@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     tools:context="mall.kwik.kwikmall.activities.FoodDetailsActivity">
 
+
     <include layout="@layout/map_content_main"/>
+
 
     <!-- Adding bottom sheet after main content -->
     <include layout="@layout/botom_sheet" />
