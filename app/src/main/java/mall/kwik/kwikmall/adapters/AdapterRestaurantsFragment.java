@@ -35,18 +35,18 @@ public class AdapterRestaurantsFragment extends RecyclerView.Adapter<AdapterRest
     private static AdapterRestaurantsFragment.PhoneClickLisetener phoneClickLisetener;
 
 
-
     public interface ClickListener {
-        void onItemClick(String string_form, String nameOfHotel, String address,int StoreId, View v);
-        void onItemLongClick( String nameOfHotel, String address,int StoreId, View v);
+        void onItemClick(String string_form, String nameOfHotel, String address, int StoreId, View v);
+
+        void onItemLongClick(String nameOfHotel, String address, int StoreId, View v);
     }
 
     public interface PhoneClickLisetener {
-        void onPhoneTextClick( String phone_no);
+        void onPhoneTextClick(String phone_no);
     }
 
 
-    public void setOnPhoneClickListener(AdapterRestaurantsFragment.PhoneClickLisetener phoneClickListener){
+    public void setOnPhoneClickListener(AdapterRestaurantsFragment.PhoneClickLisetener phoneClickListener) {
 
         AdapterRestaurantsFragment.phoneClickLisetener = phoneClickListener;
     }
@@ -55,7 +55,6 @@ public class AdapterRestaurantsFragment extends RecyclerView.Adapter<AdapterRest
         AdapterRestaurantsFragment.clickListener = clickListener;
 
     }
-
 
 
     public AdapterRestaurantsFragment(List<RestaurantsListPayload> restaurantsListPayloadList, Context context) {
@@ -78,11 +77,12 @@ public class AdapterRestaurantsFragment extends RecyclerView.Adapter<AdapterRest
         final RestaurantsListPayload restaurantsListPayload = restaurantsListPayloadList.get(position);
 
 
+        if (restaurantsListPayload.getCatType().equalsIgnoreCase("Non-veg")) {
 
-        if(restaurantsListPayload.getCatType().equalsIgnoreCase("Non-veg")){
             holder.imageVedNonVeg.setBackgroundResource(R.drawable.nonveg);
-        }
-        else {
+
+        } else {
+
             holder.imageVedNonVeg.setBackgroundResource(R.drawable.veg);
 
         }
@@ -94,10 +94,10 @@ public class AdapterRestaurantsFragment extends RecyclerView.Adapter<AdapterRest
         MarkerDataPreference markerData = new MarkerDataPreference(view.getContext());
 
 
-
         markerData.setShopAddLat(String.valueOf(lat));
         markerData.setShopAddLong(String.valueOf(longi));
 
+        // https://stackoverflow.com/questions/8049612/calculating-distance-between-two-geographic-locations
         Location location1 = new Location("");
         //currentlocation lat long
 
@@ -112,11 +112,10 @@ public class AdapterRestaurantsFragment extends RecyclerView.Adapter<AdapterRest
 
         //For example spead is 10 meters per minute.
         int speedIs10MetersPerMinute = 180;
-        float estimatedDriveTimeInMinutes =distanceInMeters / speedIs10MetersPerMinute;
+        float estimatedDriveTimeInMinutes = distanceInMeters / speedIs10MetersPerMinute;
 
         string_temp = new Double(estimatedDriveTimeInMinutes).toString();
-        string_form = string_temp.substring(0,string_temp.indexOf('.'));
-
+        string_form = string_temp.substring(0, string_temp.indexOf('.'));
 
 
         holder.tvDistance.setText(string_form);
@@ -124,18 +123,16 @@ public class AdapterRestaurantsFragment extends RecyclerView.Adapter<AdapterRest
         holder.rowClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                clickListener.onItemClick(holder.tvDistance.getText().toString(),restaurantsListPayload.getName(),restaurantsListPayload.getAddress(),restaurantsListPayload.getId(), v);
+                clickListener.onItemClick(holder.tvDistance.getText().toString(), restaurantsListPayload.getName(), restaurantsListPayload.getAddress(), restaurantsListPayload.getId(), v);
             }
         });
-
 
 
         holder.tvHotelname.setText(restaurantsListPayload.getName());
         holder.tvAddressHotel.setText(restaurantsListPayload.getAddress());
         holder.tvPhoneNo.setText(restaurantsListPayload.getPhoneNo());
 
-        final String phone_no= holder.tvPhoneNo.getText().toString().replaceAll("-", "");
+        final String phone_no = holder.tvPhoneNo.getText().toString().replaceAll("-", "");
 
 
         Picasso.with(view.getContext())
@@ -147,16 +144,18 @@ public class AdapterRestaurantsFragment extends RecyclerView.Adapter<AdapterRest
         holder.tvPhoneNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                System.out.println("AdapterRestaurantsFragment.onClick - - - Test123");
                 phoneClickLisetener.onPhoneTextClick(phone_no);
             }
         });
 
 
-
         holder.rowClick.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                clickListener.onItemLongClick(restaurantsListPayload.getName(),restaurantsListPayload.getAddress(),restaurantsListPayload.getId(), v);
+                System.out.println("AdapterRestaurantsFragment.onLongClick - - - Lonf Click");
+                clickListener.onItemLongClick(restaurantsListPayload.getName(), restaurantsListPayload.getAddress(), restaurantsListPayload.getId(), v);
 
                 return false;
             }
@@ -167,19 +166,20 @@ public class AdapterRestaurantsFragment extends RecyclerView.Adapter<AdapterRest
 
     @Override
     public int getItemCount() {
-        return restaurantsListPayloadList.size();        }
+        System.out.println("AdapterRestaurantsFragment.getItemCount - - -" + restaurantsListPayloadList.size());
+        return restaurantsListPayloadList.size();
+    }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvHotelname,tvAddressHotel,tvDiscount,tvRating,tvDistance,tvPhoneNo;
+        private TextView tvHotelname, tvAddressHotel, tvDiscount, tvRating, tvDistance, tvPhoneNo;
         private ImageView imageViewRestaurants;
         private ImageView imageVedNonVeg;
         private LinearLayout rowClick;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
 
 
             rowClick = itemView.findViewById(R.id.rowClick);
@@ -195,9 +195,6 @@ public class AdapterRestaurantsFragment extends RecyclerView.Adapter<AdapterRest
             //Image views
             imageViewRestaurants = itemView.findViewById(R.id.imageViewRestaurants);
             imageVedNonVeg = itemView.findViewById(R.id.imageVedNonVeg);
-
-
-
 
 
         }

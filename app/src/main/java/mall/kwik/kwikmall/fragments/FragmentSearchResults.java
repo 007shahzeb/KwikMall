@@ -79,6 +79,7 @@ public class FragmentSearchResults extends BaseFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search, container, false);
 
+        System.out.println("FragmentSearchResults.onCreateView  searchresult " );
         //Bold Text Views
         tvHotelNamebold = view.findViewById(R.id.tvHotelNamebold);
         tvRecommededBold = view.findViewById(R.id.tvRecommededBold);
@@ -175,6 +176,8 @@ public class FragmentSearchResults extends BaseFragment implements View.OnClickL
 
 
         if(v==btnMenu){
+
+            System.out.println("FragmentSearchResults.onClick - - - check menu lsit ");
 
 
             DialogMenu dialogMenu = new DialogMenu(getActivity());
@@ -554,6 +557,7 @@ public class FragmentSearchResults extends BaseFragment implements View.OnClickL
                 @Override
                 public void onClick(View v) {
 
+                    System.out.println("RecyclerViewAdapter.onClick - - - gridRow Check");
                     holder.gridRow.setEnabled(false);
 
                     clickListener.onItemClick(storeProductsPayload.getId(),position,storeProductsPayload.getName(),storeProductsPayload.getPrice(),v,storeProductsPayload.getImage(),storeProductsPayload.getDescription());

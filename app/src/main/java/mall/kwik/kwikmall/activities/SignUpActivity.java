@@ -18,6 +18,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.rilixtech.CountryCodePicker;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import am.appwise.components.ni.NoInternetDialog;
 import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
@@ -30,7 +31,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class SignUpActivity extends BaseActivity implements View.OnClickListener, SignUpView {
 
 
-    private EditText  edUsername,edEmailAddress,edPassword,edMobileNo,edAddressRegister;
+    private EditText edUsername, edEmailAddress, edPassword, edMobileNo, edAddressRegister;
     private ImageButton btnSignUp;
     private TextView tvSignIn;
     //defining AwesomeValidation object
@@ -96,7 +97,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
 
         //relative layout
         mainRegisterLayout = findViewById(R.id.mainRegisterLayout);
-        ccp =  findViewById(R.id.ccp);
+        ccp = findViewById(R.id.ccp);
 
 
         awesomeValidation.addValidation(SignUpActivity.this, R.id.edUsername, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.nameerror);
@@ -137,18 +138,16 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
 
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.btnSignUp:
 
                 ccp.registerPhoneNumberTextView(edMobileNo);
-
-
                 String codeWithPh = ccp.getFullNumberWithPlus();
 
 
                 if (TextUtils.isEmpty(edUsername.getText().toString()) || !isValidEmail(edEmailAddress.getText().toString()) || TextUtils.isEmpty(edAddressRegister.getText().toString())
-                        || TextUtils.isEmpty(edMobileNo.getText().toString()) || TextUtils.isEmpty(edPassword.getText().toString())) {
+                        || TextUtils.isEmpty(edMobileNo.getText().toString()) || TextUtils.isEmpty(edPassword.getText().toString()) || edMobileNo.getText().toString().length() < 4) {
 
 
                     if (TextUtils.isEmpty(edUsername.getText().toString())) {
@@ -161,37 +160,46 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                         Snackbar.make(mainRegisterLayout, "Use valid email address", Snackbar.LENGTH_SHORT).show();
                     } else if (TextUtils.isEmpty(edPassword.getText().toString())) {
                         Snackbar.make(mainRegisterLayout, "Password can't be empty", Snackbar.LENGTH_SHORT).show();
-                    }
-                    else if (TextUtils.isEmpty(edAddressRegister.getText().toString())) {
+                    } else if (TextUtils.isEmpty(edAddressRegister.getText().toString())) {
                         Snackbar.make(mainRegisterLayout, "Confirm Password can't be empty", Snackbar.LENGTH_SHORT).show();
+                    } else if (edMobileNo.getText().toString().isEmpty()) {
+                        TastyToast.makeText(getApplicationContext(), "Mobile No. can't be empty", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+                    } else if (edMobileNo.getText().toString().length() < 4) {
+                        TastyToast.makeText(getApplicationContext(), "Minimum number must be four digit", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
                     }
 
-                    else if (TextUtils.isEmpty(edMobileNo.getText().toString())) {
-                        Snackbar.make(mainRegisterLayout, "Mobile No can't be empty", Snackbar.LENGTH_SHORT).show();
-                    }
+//                    else if (edMobileNo.getText().toString().length() != 12) {
+//                        TastyToast.makeText(getApplicationContext(), "Please enter the maximum number", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+//                    }
+
+//
+//                            (TextUtils.isEmpty(edMobileNo.getText().toString()) && edMobileNo.getText().toString().length() != 10) {
+//                        Snackbar.make(mainRegisterLayout, "Mobile No. can't be empty or Please enter the number", Snackbar.LENGTH_SHORT).show();
+//                    } else if (edMobileNo.getText().toString().length() != 10) {
+////                        Snackbar.make(mainRegisterLayout, "Please enter the number", Snackbar.LENGTH_SHORT).show();
+//                        TastyToast.makeText(getApplicationContext(), "Please enter the number", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+//                    }
 
 
+                } else {
 
-                }
-                else {
+                    System.out.println("SignUpActivity.onClick - - Else Case ");
                     View view1 = this.getCurrentFocus();
 
-                    if(view1 !=null){
+                    if (view1 != null) {
 
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(view1.getWindowToken(),0);
+                        imm.hideSoftInputFromWindow(view1.getWindowToken(), 0);
                     }
                    /* new RegisterPresenter(apiService,sharedPrefsHelper,edUsername.getText().toString().trim(),edEmailAddress.getText().toString().trim(),
                             edPassword.getText().toString().trim(),codeWithPh,edAddressRegister.getText().toString().trim());
 */
 
-                    registerPresenter.ok_signUp(apiService,edUsername.getText().toString().trim(),edEmailAddress.getText().toString().trim(),
-                            edPassword.getText().toString().trim(),codeWithPh,edAddressRegister.getText().toString().trim());
+                    registerPresenter.ok_signUp(apiService, edUsername.getText().toString().trim(), edEmailAddress.getText().toString().trim(),
+                            edPassword.getText().toString().trim(), codeWithPh, edAddressRegister.getText().toString().trim());
 
 
                 }
-
-
 
                 break;
 
@@ -206,9 +214,8 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
 
         }
 
+
     }
-
-
 
 
     @Override

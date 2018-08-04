@@ -34,9 +34,10 @@ public class AdapterYourOrders extends RecyclerView.Adapter<AdapterYourOrders.My
         this.context = context;
     }
 
-    public interface ItemClickListenerYourOrder{
-        void ItemClick(int productid,String itemname,String price,String imagepath, String des,String nameofhotel);
-        void onDelete(int pos,int userId, String orderNo,int productId);
+    public interface ItemClickListenerYourOrder {
+        void ItemClick(int productid, String itemname, String price, String imagepath, String des, String nameofhotel);
+
+        void onDelete(int pos, int userId, String orderNo, int productId);
 
     }
 
@@ -73,11 +74,10 @@ public class AdapterYourOrders extends RecyclerView.Adapter<AdapterYourOrders.My
 
 
         Picasso.with(view.getContext())
-                .load("http://employeelive.com/kwiqmall/SuperAdmin/img/products/"+getOrderListPayload.getImage())
+                .load("http://employeelive.com/kwiqmall/SuperAdmin/img/products/" + getOrderListPayload.getImage())
                 .fit()
                 .error(R.drawable.errortriangle)
                 .into(holder.cartImageView);
-
 
 
         final int productid = getOrderListPayload.getProductId();
@@ -91,7 +91,7 @@ public class AdapterYourOrders extends RecyclerView.Adapter<AdapterYourOrders.My
             @Override
             public void onClick(View v) {
 
-            itemClickListenerYourOrder.ItemClick(productid,itemname,price,imagepath,des,nameofhotel);
+                itemClickListenerYourOrder.ItemClick(productid, itemname, price, imagepath, des, nameofhotel);
 
 
             }
@@ -103,17 +103,18 @@ public class AdapterYourOrders extends RecyclerView.Adapter<AdapterYourOrders.My
             public void onClick(View v) {
 
 
-                itemClickListenerYourOrder.onDelete(position,getOrderListPayload.getUserId(),
-                                    getOrderListPayload.getOrderNo(),getOrderListPayload.getProductId());
+                System.out.println("AdapterYourOrders.onClick - - - Deleted Items is " + position);
+                System.out.println("AdapterYourOrders.onClick - - - UserId is " + getOrderListPayload.getUserId());
+                System.out.println("AdapterYourOrders.onClick - - - OrderNo is " + getOrderListPayload.getOrderNo());
+                System.out.println("AdapterYourOrders.onClick - - - ProductId is " + getOrderListPayload.getProductId());
+                itemClickListenerYourOrder.onDelete(position, getOrderListPayload.getUserId(),
+                        getOrderListPayload.getOrderNo(), getOrderListPayload.getProductId());
 
 
             }
         });
 
     }
-
-
-
 
 
     @Override
@@ -123,7 +124,7 @@ public class AdapterYourOrders extends RecyclerView.Adapter<AdapterYourOrders.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvFoodName,tvPriceItem,tvOrderDate;
+        private TextView tvFoodName, tvPriceItem, tvOrderDate;
         private ImageView cartImageView;
         private Button btnDelete;
         public RelativeLayout relativeBuyitagain;

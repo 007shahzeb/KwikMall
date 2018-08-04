@@ -153,6 +153,7 @@ public class YourOrdersFragment extends BaseFragment implements View.OnClickList
 
                                                         saveOrdersModels.remove(position);
                                                         adapterYourOrders.notifyItemRemoved(position);
+                                                        adapterYourOrders.notifyDataSetChanged();
 
                                                     }
                                                     else {

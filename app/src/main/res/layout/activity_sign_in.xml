@@ -131,13 +131,13 @@
 
     <ImageButton
         android:id="@+id/btnArrow"
-        android:layout_width="@dimen/_50sdp"
+        android:layout_width="57dp"
         android:layout_height="@dimen/_50sdp"
-        android:elevation="8dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_365sdp"
-        android:src="@drawable/rightarrowwhite"
-        android:background="@drawable/circle" />
+        android:background="@drawable/circle"
+        android:elevation="8dp"
+        android:src="@drawable/rightarrowwhite" />
 
     <LinearLayout
         android:layout_width="match_parent"

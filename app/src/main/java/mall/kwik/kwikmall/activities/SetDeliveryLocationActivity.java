@@ -248,7 +248,7 @@ public class SetDeliveryLocationActivity extends BaseActivity implements
 
 
         imageBackArrowEnter = findViewById(R.id.imageBackArrowEnter);
-       // markerImage = findViewById(R.id.markerImage);
+        // markerImage = findViewById(R.id.markerImage);
 
         //TextInputLayout
         input_layout_flat = findViewById(R.id.input_layout_flat);
@@ -420,7 +420,6 @@ public class SetDeliveryLocationActivity extends BaseActivity implements
     }
 
 
-
     //Getting current location
     private void getCurrentLocation() {
         //Creating a location object
@@ -517,7 +516,6 @@ public class SetDeliveryLocationActivity extends BaseActivity implements
         mMap = googleMap;
 
 
-
         progressBar1.setVisibility(View.VISIBLE);
 
         final Handler handler = new Handler();
@@ -529,7 +527,6 @@ public class SetDeliveryLocationActivity extends BaseActivity implements
 
             }
         }, 3000);
-
 
 
         latLng = new LatLng(latitude, longitude);
@@ -549,25 +546,18 @@ public class SetDeliveryLocationActivity extends BaseActivity implements
 
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
-            public void onCameraChange(CameraPosition cameraPosition)
-            {
-                if(marker==null)
-                {
+            public void onCameraChange(CameraPosition cameraPosition) {
+                if (marker == null) {
+
                     marker = mMap.addMarker(new MarkerOptions().position(cameraPosition.target).
                             title("Marker").icon(BitmapDescriptorFactory.fromResource(R.drawable.markerpin)));
 
 
+                } else
 
-
-                }
-                else
                 {
 
                     marker.setPosition(cameraPosition.target);
-
-
-
-
 
                 }
             }
@@ -593,11 +583,14 @@ public class SetDeliveryLocationActivity extends BaseActivity implements
                 Geocoder geocoder = new Geocoder(SetDeliveryLocationActivity.this);
 
                 try {
+
                     List<Address> addressList = geocoder.getFromLocation(midLatLong.latitude, midLatLong.longitude, 1);
+
                     if (addressList != null && addressList.size() > 0) {
                         String locality = addressList.get(0).getAddressLine(0);
                         String country = addressList.get(0).getCountryName();
                         if (!locality.isEmpty() && !country.isEmpty())
+
                             edLocationCurrent.setText(locality + "  " + country);
                     }
 
@@ -614,54 +607,50 @@ public class SetDeliveryLocationActivity extends BaseActivity implements
             mMap.getUiSettings().setAllGesturesEnabled(true);
 
 
-                getCurrentLocation();
+            getCurrentLocation();
 
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),15));
-
-
-                Handler handler1 = new Handler();
-                handler1.postDelayed(new Runnable() {
-                    public void run() {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
 
 
-                        Intent it = getIntent();
+            Handler handler1 = new Handler();
 
-                        if (it != null) {
+            handler1.postDelayed(new Runnable() {
+                public void run() {
 
 
-                            Bundle params = it.getExtras();
-                            if (params != null) {
-                                latitude = params.getDouble("lat");
-                                longitude = params.getDouble("lng");
+                    Intent it = getIntent();
 
-                            }
+                    if (it != null) {
+
+
+                        Bundle params = it.getExtras();
+                        if (params != null) {
+                            latitude = params.getDouble("lat");
+                            longitude = params.getDouble("lng");
+
+
                         }
-
-
-
-                        LatLng point = new LatLng(latitude, longitude);
-
-
-
-
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
-
-                        CameraPosition cameraPosition = new CameraPosition.Builder()
-                                .target(new LatLng(latitude,longitude)  )    // Sets the center of the map to location user
-                                .zoom(17)                   // Sets the zoom
-                                .bearing(10)                // Sets the orientation of the camera to east
-                                .build();                   // Creates a CameraPosition from the builder
-                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                        //Add pointer to the map at location
-
-                        mapRipple = new MapRipple(mMap, point, context);
-                        simpleRipple();
-
                     }
-                }, 1000);
 
 
+                    LatLng point = new LatLng(latitude, longitude);
 
+
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
+
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(new LatLng(latitude, longitude))    // Sets the center of the map to location user
+                            .zoom(17)                   // Sets the zoom
+                            .bearing(10)                // Sets the orientation of the camera to east
+                            .build();                   // Creates a CameraPosition from the builder
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    //Add pointer to the map at location
+
+                    mapRipple = new MapRipple(mMap, point, context);
+                    simpleRipple();
+
+                }
+            }, 1000);
 
 
         }
@@ -680,7 +669,7 @@ public class SetDeliveryLocationActivity extends BaseActivity implements
         public View getInfoWindow(Marker marker) {
             View v = inflater.inflate(R.layout.balloon, null);
             if (marker != null) {
-                textViewTitle =  v.findViewById(R.id.textViewTitle);
+                textViewTitle = v.findViewById(R.id.textViewTitle);
                 textViewTitle.setText(marker.getTitle());
             }
             return (v);
@@ -693,13 +682,14 @@ public class SetDeliveryLocationActivity extends BaseActivity implements
     }
 
 
-
     public void simpleRipple() {
+
         mapRipple.withNumberOfRipples(1);
         mapRipple.withFillColor(Color.parseColor("#00000000"));
         mapRipple.withStrokeColor(Color.BLACK);
         mapRipple.withStrokewidth(10);      // 10dp
         mapRipple.startRippleMapAnimation();
+
     }
 
 
@@ -737,48 +727,47 @@ public class SetDeliveryLocationActivity extends BaseActivity implements
     }
 
 
-
- /*   @Override
-    public void onMarkerDragStart(Marker marker) {
-
-    }
-
-    @Override
-    public void onMarkerDrag(Marker marker) {
-
-    }
-
-    @Override
-    public void onMarkerDragEnd(Marker marker) {
-
-        mMap.clear();
-
-        //Getting the coordinates
-        latitude = marker.getPosition().latitude;
-        longitude = marker.getPosition().longitude;
-
-
-
-        Geocoder geocoder = new Geocoder(this);
-
-        try {
-            List<Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
-            if (addressList != null && addressList.size() > 0) {
-                String locality = addressList.get(0).getAddressLine(0);
-                String country = addressList.get(0).getCountryName();
-                if (!locality.isEmpty() && !country.isEmpty())
-                    edLocationCurrent.setText(locality + "  " + country);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //Moving the map
-        moveMap();
-    }
-
-*/
+//
+//    @Override
+//    public void onMarkerDragStart(Marker marker) {
+//
+//    }
+//
+//    @Override
+//    public void onMarkerDrag(Marker marker) {
+//
+//    }
+//
+//    @Override
+//    public void onMarkerDragEnd(Marker marker) {
+//
+//        mMap.clear();
+//
+//        //Getting the coordinates
+//        latitude = marker.getPosition().latitude;
+//        longitude = marker.getPosition().longitude;
+//
+//
+//
+//        Geocoder geocoder = new Geocoder(this);
+//
+//        try {
+//            List<Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
+//            if (addressList != null && addressList.size() > 0) {
+//                String locality = addressList.get(0).getAddressLine(0);
+//                String country = addressList.get(0).getCountryName();
+//                if (!locality.isEmpty() && !country.isEmpty())
+//                    edLocationCurrent.setText(locality + "  " + country);
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //Moving the map
+//        moveMap();
+//    }
+//
 
     @Override
     public void onMapClick(LatLng latLng) {

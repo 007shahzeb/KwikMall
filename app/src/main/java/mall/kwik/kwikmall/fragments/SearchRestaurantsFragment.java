@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.sdsmdg.tastytoast.TastyToast;
+
 import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -45,7 +47,7 @@ public class SearchRestaurantsFragment extends BaseFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search_by_store_id, container, false);
 
         findViewId();
@@ -64,27 +66,26 @@ public class SearchRestaurantsFragment extends BaseFragment {
     }
 
 
-
     private void GetStoreProductsApi() {
 
 
-        int storeId= sharedPrefsHelper.get(AppConstants.STORE_ID,0);
+        int storeId = sharedPrefsHelper.get(AppConstants.STORE_ID, 0);
 
 
         compositeDisposable.add(apiService.getStoreProducts(String.valueOf(storeId))
-                        .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
-                        .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<StoreProductsSuccess>() {
                     @Override
                     public void accept(StoreProductsSuccess storeProductsSuccess) throws Exception {
 
-                        if(storeProductsSuccess.getSuccess()){
+                        if (storeProductsSuccess.getSuccess()) {
 
                             storeProductsPayloadArrayList = new ArrayList<>(storeProductsSuccess.getPayload());
 
                             productsPayloadArrayList = new ArrayList<>();
 
-                            for(int i =0;i<storeProductsPayloadArrayList.size();i++){
+                            for (int i = 0; i < storeProductsPayloadArrayList.size(); i++) {
 
                                 StoreProductsPayload storeProductsPayload = new StoreProductsPayload();
 
@@ -96,23 +97,23 @@ public class SearchRestaurantsFragment extends BaseFragment {
 
                             }
 
-                            recyclerViewAdapter = new RecyclerViewAdapterSearch(productsPayloadArrayList,getActivity());
+                            recyclerViewAdapter = new RecyclerViewAdapterSearch(productsPayloadArrayList, getActivity());
 
                             recyclerViewAdapter.searchItemClickListener(new RecyclerViewAdapterSearch.ItemClickListener() {
                                 @Override
                                 public void ItemClick(String itemname) {
 
 
+                                    System.out.println("SearchRestaurantsFragment.ItemClick - - - 1 ");
                                     Bundle args = new Bundle();
-                                    args.putString("itemname",itemname);
+                                    args.putString("itemname", itemname);
 
                                     RestaurantsProductsFragment restaurantsProductsFragment = new RestaurantsProductsFragment();
                                     restaurantsProductsFragment.setArguments(args);
                                     getFragmentManager()
                                             .beginTransaction()
-                                            .replace(R.id.mainFrame, restaurantsProductsFragment,"restaurantsProductsFragment")
+                                            .replace(R.id.mainFrame, restaurantsProductsFragment, "restaurantsProductsFragment")
                                             .commit();
-
 
 
                                 }
@@ -125,8 +126,7 @@ public class SearchRestaurantsFragment extends BaseFragment {
                             recyclerviewSearch.setAdapter(recyclerViewAdapter);
 
 
-                        }
-                        else {
+                        } else {
 
 
                             linearNoMatchFoundImage.setVisibility(View.VISIBLE);
@@ -138,27 +138,28 @@ public class SearchRestaurantsFragment extends BaseFragment {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        showAlertDialog("Retry",throwable.getMessage());
+                        showAlertDialog("Retry", throwable.getMessage());
                     }
                 }));
-
 
 
     }
 
 
-    void clearText(){
+    void clearText() {
 
         imageCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clearable_edit.setText("");
+                linearNoMatchFoundImage.setVisibility(View.GONE);
+                clearable_edit.setEnabled(true);
             }
         });
 
     }
 
-    void showHideClearButton(){
+    void showHideClearButton() {
 
         clearable_edit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -169,25 +170,22 @@ public class SearchRestaurantsFragment extends BaseFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                if (recyclerViewAdapter.getLength() <= 0) {
+//                    linearNoMatchFoundImage.setVisibility(View.VISIBLE); // Shahzeb commented this
 
-
-                if(recyclerViewAdapter.getLength()<=0){
-
-
-                    linearNoMatchFoundImage.setVisibility(View.VISIBLE);
-
-                    clearable_edit.setEnabled(false);
+//                    TastyToast.makeText(getActivity(), "List is empty ", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+//                    clearable_edit.setEnabled(false);
 
                 }
 
 
-
-                if(s.length()>0)
+                if (s.length() > 0) {
                     imageCancel.setVisibility(View.VISIBLE);
-
-                else
+                } else {
                     imageCancel.setVisibility(RelativeLayout.INVISIBLE);
+                }
 
+                filter(s.toString());
 
 
             }
@@ -195,7 +193,7 @@ public class SearchRestaurantsFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
 
-                filter(s.toString());
+//                filter(s.toString());
 
             }
         });
@@ -218,6 +216,7 @@ public class SearchRestaurantsFragment extends BaseFragment {
 
         //calling a method of the adapter class and passing the filtered list
         recyclerViewAdapter.filterList(searchList);
+        recyclerViewAdapter.notifyDataSetChanged();
     }
 
 
@@ -232,7 +231,6 @@ public class SearchRestaurantsFragment extends BaseFragment {
     private void clickListeners() {
 
     }
-
 
 
 }

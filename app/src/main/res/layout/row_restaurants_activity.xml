@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="15dp">
 
 
     <LinearLayout
         android:id="@+id/rowClick"
+
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="@dimen/_4sdp">
+        android:layout_margin="@dimen/_4sdp"
+
+        android:orientation="horizontal">
+        <!--android:padding="10dp"-->
+        <!--android:background="@drawable/row_background"-->
 
         <ImageView
             android:id="@+id/imageViewRestaurants"
             android:layout_width="@dimen/_45sdp"
             android:layout_height="@dimen/_40sdp"
             android:scaleType="fitXY"
-            android:src="@drawable/burger"
-            />
+            android:src="@drawable/burger" />
 
         <LinearLayout
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:paddingLeft="@dimen/_3sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_3sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center"
-                >
+                android:orientation="horizontal">
 
 
                 <TextView
                     android:id="@+id/tvHotelname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:text="Hunger's Delight"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:textSize="@dimen/_10sdp"
-                    android:layout_weight="1"
-                    app:fontPath="fonts/HindVadodara-Bold.ttf"
-                    android:layout_gravity="center"
-                    />
+                    android:textStyle="bold"
+                    app:fontPath="fonts/HindVadodara-Bold.ttf" />
 
 
                 <ImageView
                     android:id="@+id/imageVedNonVeg"
                     android:layout_width="@dimen/_12sdp"
                     android:layout_height="@dimen/_12sdp"
-                    android:background="@drawable/veg"
                     android:layout_gravity="center"
                     android:layout_marginRight="@dimen/_5sdp"
-                    />
-
+                    android:background="@drawable/veg" />
 
 
             </LinearLayout>
@@ -67,12 +67,11 @@
                 android:id="@+id/tvAddressHotel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="40"
                 android:ellipsize="end"
+                android:maxLength="40"
                 android:maxLines="1"
-                android:textSize="@dimen/_8sdp"
                 android:text="North Indian,Tandoor,Snacks"
-                />
+                android:textSize="@dimen/_8sdp" />
 
             <!--  <TextView
                   android:id="@+id/tvDiscount"
@@ -87,19 +86,17 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="#FFF4B8">
-            </View>
+                android:layout_marginTop="5dp"
+                android:background="#FFF4B8"></View>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:gravity="center"
-                >
+                android:orientation="horizontal">
 
                 <!--  <ImageView
                       android:layout_width="wrap_content"
@@ -124,41 +121,36 @@
                     android:id="@+id/tvDistance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="44"
                     android:layout_marginBottom="5dp"
-                    android:textSize="@dimen/_8sdp"
                     android:gravity="center"
-                    />
+                    android:text="44"
+                    android:textSize="@dimen/_8sdp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" MIN"
                     android:layout_marginBottom="5dp"
-                    android:textSize="@dimen/_8sdp"
                     android:gravity="center"
-                    />
+                    android:text=" Min"
+                    android:textSize="@dimen/_8sdp" />
 
                 <TextView
                     android:id="@+id/tvPhoneNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginBottom="5dp"
-                    android:textSize="@dimen/_8sdp"
-                    android:padding="2dp"
+                    android:layout_weight="1"
                     android:gravity="right"
-                    android:textColor="#474AFF"
+                    android:padding="2dp"
                     android:text="9779269052"
-                    />
+                    android:textColor="#474AFF"
+                    android:textSize="@dimen/_8sdp" />
 
             </LinearLayout>
         </LinearLayout>
 
 
     </LinearLayout>
-
-
 
 
 </RelativeLayout>

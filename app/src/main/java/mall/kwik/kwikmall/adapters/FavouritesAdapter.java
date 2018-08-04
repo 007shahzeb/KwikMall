@@ -53,14 +53,11 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
     }
 
     public interface FavouriteClickListener{
-
         //void buttonClick(int productid,String nameOfFood, String price, View v,String imageUri,String description);
         void onDelete(View view, int position);
-
     }
 
     public interface FavouriteClickListenerToCart{
-
         void GoToCartActivity(View v);
     }
 
@@ -158,7 +155,9 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 favouriteClickListener.onDelete(v,position);
+
             }
         });
 

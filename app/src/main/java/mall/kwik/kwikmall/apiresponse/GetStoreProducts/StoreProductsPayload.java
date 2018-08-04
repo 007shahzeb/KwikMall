@@ -14,30 +14,39 @@ public class StoreProductsPayload {
     @SerializedName("id")
     @Expose
     private Integer id;
+
     @SerializedName("subId")
     @Expose
     private Integer subId;
+
     @SerializedName("catagoryType")
     @Expose
     private String catagoryType;
+
     @SerializedName("name")
     @Expose
     private String name;
+
     @SerializedName("description")
     @Expose
     private String description;
+
     @SerializedName("price")
     @Expose
     private String price;
+
     @SerializedName("quantity")
     @Expose
-    private String quantity;
+    private int quantity;
+
     @SerializedName("discount")
     @Expose
     private String discount;
+
     @SerializedName("image")
     @Expose
     private String image;
+
     @SerializedName("bussinessId")
     @Expose
     private Integer bussinessId;
@@ -90,11 +99,11 @@ public class StoreProductsPayload {
         this.price = price;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

@@ -30,14 +30,14 @@ import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
 
 public class EnterAddressActivity extends BaseActivity implements View.OnClickListener
-        ,ExpressPayApi.ExpressPayPaymentCompletionListener{
+        , ExpressPayApi.ExpressPayPaymentCompletionListener {
 
 
     private ImageView imagepaymenyBack;
-    private TextView txtPayment,txtPlaceorder;
-    private EditText edFullName,edCountryCode,edMobileNo,edEmailAddress,edAdd,edCity,edZipCode;
+    private TextView txtPayment, txtPlaceorder;
+    private EditText edFullName, edCountryCode, edMobileNo, edEmailAddress, edAdd, edCity, edZipCode;
     private DBHelper dbHelper;
-    private String name,countycode,contactno,emailAdd,addre,cityname,zipcode;
+    private String name, countycode, contactno, emailAdd, addre, cityname, zipcode;
     private String totalAmt;
     private Context context;
     private NoInternetDialog noInternetDialog;
@@ -71,14 +71,13 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
          * *                      if null it defaults to https://sandbox.expresspaygh.com/sdk/server.php 
          * */
 
-        expressPayApi= new ExpressPayApi(this,null);
+        expressPayApi = new ExpressPayApi(this, null);
 
         /**
          * Set the developnment env
          * Please ensure you set this value to false in your production code
          */
         expressPayApi.setDebugMode(true);
-
 
 
         clickListeners();
@@ -111,16 +110,16 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
             MarkerDataPreference markerData = new MarkerDataPreference(this);
 */
 
-            sharedPrefsHelper.put(AppConstants.DEL_LAT,String.valueOf(location.getLatitude()));
-            sharedPrefsHelper.put(AppConstants.DEL_LONG,String.valueOf(location.getLongitude()));
+            sharedPrefsHelper.put(AppConstants.DEL_LAT, String.valueOf(location.getLatitude()));
+            sharedPrefsHelper.put(AppConstants.DEL_LONG, String.valueOf(location.getLongitude()));
 
     /*        markerData.setDeliveryAddLat(String.valueOf(location.getLatitude()));
             markerData.setDeliveryAddLong(String.valueOf(location.getLongitude()));*/
 
 
-            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
 
             ex.printStackTrace();
         }
@@ -153,16 +152,13 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
         */
 
 
-        edFullName.setText(sharedPrefsHelper.get(AppConstants.USER_NAME,""));
-        edMobileNo.setText(sharedPrefsHelper.get(AppConstants.PHONE_NUMBER,""));
-        edEmailAddress.setText(sharedPrefsHelper.get(AppConstants.EMAIL,""));
-        edAdd.setText(sharedPrefsHelper.get(AppConstants.ADDRESS,""));
-
-
+        edFullName.setText(sharedPrefsHelper.get(AppConstants.USER_NAME, ""));
+        edMobileNo.setText(sharedPrefsHelper.get(AppConstants.PHONE_NUMBER, ""));
+        edEmailAddress.setText(sharedPrefsHelper.get(AppConstants.EMAIL, ""));
+        edAdd.setText(sharedPrefsHelper.get(AppConstants.ADDRESS, ""));
 
 
     }
-
 
 
     @Override
@@ -177,9 +173,9 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
 
-        if(v==imagepaymenyBack){
+        if (v == imagepaymenyBack) {
 
-            Intent intent = new Intent(EnterAddressActivity.this,FragmentsActivity.class);
+            Intent intent = new Intent(EnterAddressActivity.this, FragmentsActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             finish();
@@ -187,8 +183,7 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
 
         }
 
-        if(v==txtPlaceorder){
-
+        if (v == txtPlaceorder) {
 
 
             flipProgress();
@@ -201,10 +196,10 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
             //cityname = edCity.getText().toString();
             //zipcode = edZipCode.getText().toString();
 
-            getLocationFromAddress(this,addre);
+            getLocationFromAddress(this, addre);
 
 
-            dbHelper.insertAddress(name,contactno,emailAdd,addre);
+            dbHelper.insertAddress(name, contactno, emailAdd, addre);
 
 
             //  pay();
@@ -212,12 +207,13 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
 
             Bundle bundle = new Bundle();
 
-            bundle.putString("totalAmount",totalAmt);
+            bundle.putString("totalAmount", totalAmt);
 
 
-            Intent intent = new Intent(EnterAddressActivity.this,PaymentMethodActivity.class);
+            Intent intent = new Intent(EnterAddressActivity.this, PaymentMethodActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
+            finish();
 
             overridePendingTransition(R.anim.slide_in, R.anim.nothing);
 
@@ -241,7 +237,7 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
     }
 */
 
-    public void pay(){
+    public void pay() {
         /**
          * Make a request to your server to get a token
          * For this demo we have a sample server which we make the request to.
@@ -249,21 +245,21 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
          * In Dev: Use amount 1.00 to simulate a failed transaction and greater than or equals 2.00 for a successful transaction
          */
 
-        String order_no = sharedPrefsHelper.get(AppConstants.ORDER_NO,"");
+        String order_no = sharedPrefsHelper.get(AppConstants.ORDER_NO, "");
 
 
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("request","submit");
+        params.put("request", "submit");
         params.put("order_id", order_no);
         params.put("currency", "GHS");
         params.put("amount", totalAmt);
         params.put("order_desc", "Food Items");
-        params.put("user_name","testapi@expresspaygh.com");
-        params.put("first_name","Test");
-        params.put("last_name","Api");
-        params.put("email","testapi@expresspaygh.com");
-        params.put("phone_number","233244123123");
-        params.put("account_number","233244123123");
+        params.put("user_name", "testapi@expresspaygh.com");
+        params.put("first_name", "Test");
+        params.put("last_name", "Api");
+        params.put("email", "testapi@expresspaygh.com");
+        params.put("phone_number", "233244123123");
+        params.put("account_number", "233244123123");
 
 
         expressPayApi.submit(params, EnterAddressActivity.this, new ExpressPayApi.ExpressPaySubmitCompletionListener() {
@@ -274,15 +270,15 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
                  * if the jsonObject is null then there was an error
                  */
 
-                if (jsonObject!=null){
+                if (jsonObject != null) {
                     //You can access the returned token
                     try {
                         String status = jsonObject.getString("status");
                         if (status.equalsIgnoreCase("1")) {
-                            String token=expressPayApi.getToken();
+                            String token = expressPayApi.getToken();
                             checkout();
-                        }else {
-                            Log.d("expressPayDemo",message);
+                        } else {
+                            Log.d("expressPayDemo", message);
                             showDialog(message);
                         }
                     } catch (JSONException e) {
@@ -292,8 +288,8 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
 
                     }
 
-                }else {
-                    Log.d("expressPayDemo",message);
+                } else {
+                    Log.d("expressPayDemo", message);
                     showDialog(message);
                 }
             }
@@ -303,20 +299,19 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onExpressPayPaymentFinished(boolean paymentCompleted, String message) {
-        if (paymentCompleted){
+        if (paymentCompleted) {
             //Payment was completed
-            String token=expressPayApi.getToken();
+            String token = expressPayApi.getToken();
             queryPayment(token);
-        }
-        else{
+        } else {
             //There was an error
-            Log.d("expressPayDemo",message);
+            Log.d("expressPayDemo", message);
             showDialog(message);
         }
     }
 
 
-    public void checkout(){
+    public void checkout() {
         /**
          * Displays the payment page to accept the payment method from the user
          *
@@ -327,7 +322,7 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    public  void queryPayment(String token){
+    public void queryPayment(String token) {
         /**
          * After the payment has been completed we query our servers to find out
          * the status of the transaction
@@ -348,7 +343,6 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-
     private void showDialog(String message) {
         new AlertDialog.Builder(this)
                 .setMessage(message)
@@ -360,6 +354,10 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
                 })
                 .show();
     }
+
+
+
+
 
 
 

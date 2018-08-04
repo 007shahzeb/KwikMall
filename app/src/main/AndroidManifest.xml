@@ -29,16 +29,21 @@
         android:supportsRtl="true"
         android:theme="@style/NoInternetTheme"
         tools:replace="android:allowBackup,icon,theme,label,name">
+
+
         <service android:name=".firebasenotification.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+
         <service android:name=".firebasenotification.FirebaseIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
 
         <!-- Broadcast receiver declaration in manifest file and make sure to enable it -->
 
@@ -48,34 +53,38 @@
             </intent-filter>
         </receiver>
 
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAGBhiRN9SOnn85S7Isnb6acqDvWpMUeh8" />
+
 
         <activity
             android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+
         <activity
             android:name=".activities.SignInSignUpButtonsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.FragmentsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" />
 
-        </activity>
 
         <activity
             android:name=".activities.FilterActivity"
@@ -84,13 +93,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.SearchForAreaActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.SignInActivity"
             android:alwaysRetainTaskState="true"
@@ -98,6 +109,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.SignUpActivity"
             android:alwaysRetainTaskState="true"
@@ -105,6 +117,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.ForgetPasswordActivity"
             android:alwaysRetainTaskState="true"
@@ -112,12 +125,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.FoodDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.EnterAddressActivity"
             android:alwaysRetainTaskState="true"
@@ -125,13 +140,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.PaymentMethodActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.PaymentSuccessfullyActivity"
             android:alwaysRetainTaskState="true"
@@ -139,6 +155,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.TrackOrderMapActivity"
             android:alwaysRetainTaskState="true"
@@ -153,16 +170,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.SetDeliveryLocationActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/DashBoardTheme"
-            android:windowSoftInputMode="stateHidden">
-
-        </activity>
-
+            android:windowSoftInputMode="stateHidden" />
 
         <activity
             android:name=".activities.PaymentsModeActivity"
@@ -173,13 +188,10 @@
             android:windowSoftInputMode="stateHidden" />
 
 
-        <activity android:name=".activities.NewPassActivity"
-            android:theme="@style/DashBoardTheme"
+        <activity
+            android:name=".activities.NewPassActivity"
             android:screenOrientation="portrait"
-
-            >
-
-        </activity>
+            android:theme="@style/DashBoardTheme" />
 
 
     </application>

@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sdsmdg.tastytoast.TastyToast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,7 +46,6 @@ import mall.kwik.kwikmall.sharedpreferences.UtilityCartData;
 import static mall.kwik.kwikmall.activities.FragmentsActivity.nearby;
 
 
-
 public class FragmentWithoutSearchResults extends BaseFragment implements View.OnClickListener {
 
     private RecyclerView recyclerViewWithoutSearch;
@@ -53,20 +53,18 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
     private RecyclerViewAdapter recyclerViewAdapter;
     private View view;
     Bundle bundle;
-    private TextView tvHotelNamebold,tvTypeLight,tvStarRatingsMedium,tvDeliveryTimeMedium,
-            tvRatingsTextLight,tvRatingsnumberLight,txtDeliveryTimeLight,
-            tvFoodTypeMedium,tvDiscountoffersMedium,tvRecommededBold;
+    private TextView tvHotelNamebold, tvTypeLight, tvStarRatingsMedium, tvDeliveryTimeMedium,
+            tvRatingsTextLight, tvRatingsnumberLight, txtDeliveryTimeLight,
+            tvFoodTypeMedium, tvDiscountoffersMedium, tvRecommededBold;
 
 
     private RecyclerViewAdapterSearch recyclerViewAdapterSearch;
-    private ImageView imageBackArrow,imageSearchProducts,imageNoFoodProd;
+    private ImageView imageBackArrow, imageSearchProducts, imageNoFoodProd;
     private Button btnMenu;
     private ScaleAnimation scaleAnimation;
-    String itemname,nameOfHotel,address,string_form;
+    String itemname, nameOfHotel, address, string_form;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-
 
 
     @Nullable
@@ -75,6 +73,7 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
         view = inflater.inflate(R.layout.fragment_without_search, container, false);
 
 
+        System.out.println("FragmentWithoutSearchResults.onCreateView");
         //Bold Text Views
         tvHotelNamebold = view.findViewById(R.id.tvHotelNamebold);
         tvRecommededBold = view.findViewById(R.id.tvRecommededBold);
@@ -106,12 +105,12 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
         bundle = getArguments();
 
-        if(bundle != null){
+        if (bundle != null) {
 
             itemname = bundle.getString("itemname");
-            nameOfHotel=getArguments().getString("nameOfHotel");
-            address=getArguments().getString("address");
-            string_form=getArguments().getString("string_form");
+            nameOfHotel = getArguments().getString("nameOfHotel");
+            address = getArguments().getString("address");
+            string_form = getArguments().getString("string_form");
 
         }
 
@@ -124,7 +123,7 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
         tvDeliveryTimeMedium.setText(string_form);
 
 
-        if(bundle != null){
+        if (bundle != null) {
 
             itemname = bundle.getString("itemname");
 
@@ -134,7 +133,7 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
         GetStoreProductsApi();
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(),2);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerViewWithoutSearch.setHasFixedSize(true);
         recyclerViewWithoutSearch.setLayoutManager(mLayoutManager);
         recyclerViewWithoutSearch.setItemAnimator(new DefaultItemAnimator());
@@ -144,9 +143,6 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
 
     }
-
-
-
 
 
     private void clikListeners() {
@@ -159,13 +155,11 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
         imageBackArrow.setOnClickListener(this);
 
 
-
-
     }
 
     private void GetStoreProductsApi() {
 
-        int businessId= sharedPrefsHelper.get(AppConstants.STORE_ID,0);
+        int businessId = sharedPrefsHelper.get(AppConstants.STORE_ID, 0);
 
 
         compositeDisposable.add(apiService.getStoreProducts(String.valueOf(businessId))
@@ -176,8 +170,7 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
                     public void accept(StoreProductsSuccess storeProductsSuccess) throws Exception {
 
 
-                        if(storeProductsSuccess.getSuccess()){
-
+                        if (storeProductsSuccess.getSuccess()) {
 
 
                             storeProductsPayloadArrayList = new ArrayList<>(storeProductsSuccess.getPayload());
@@ -185,7 +178,7 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
                             ArrayList<StoreProductsPayload> productsPayloadArrayList = new ArrayList<>();
 
 
-                            if(storeProductsPayloadArrayList.size()==0){
+                            if (storeProductsPayloadArrayList.size() == 0) {
 
 
                                 btnMenu.setVisibility(View.GONE);
@@ -254,9 +247,7 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
                             });
 
 
-
-                        }
-                        else {
+                        } else {
 
                             // showAlertDialog("Retry","False");
                             btnMenu.setVisibility(View.GONE);
@@ -270,7 +261,7 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
                     @Override
                     public void accept(Throwable throwable) throws Exception {
 
-                        showAlertDialog("Retry",throwable.getMessage());
+                        showAlertDialog("Retry", throwable.getMessage());
                     }
                 }));
 
@@ -281,9 +272,10 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
     public void onClick(View v) {
 
 
-        if(v==btnMenu){
+        if (v == btnMenu) {
 
 
+            TastyToast.makeText(getContext(), "This is your menu list, Check your items , Thanku...", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
             DialogMenu dialogMenu = new DialogMenu(getActivity());
 
             Window window = dialogMenu.getWindow();
@@ -292,7 +284,7 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
             WindowManager.LayoutParams wmlp = dialogMenu.getWindow().getAttributes();
 
-            wmlp.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+            wmlp.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
             // wmlp.x = 350;   //x position
             wmlp.y = 200;   //y position
 
@@ -300,19 +292,19 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
         }
 
-        if(v==imageSearchProducts){
+        if (v == imageSearchProducts) {
 
             Fragment fragment = new SearchRestaurantsFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.mainFrame,fragment,fragment.getClass().getSimpleName()).addToBackStack(null).commit();
+                    .replace(R.id.mainFrame, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
 
         }
 
 
-        if(v==imageBackArrow){
+        if (v == imageBackArrow) {
 
-            ((FragmentsActivity)getActivity()).onBackPressed();
+            ((FragmentsActivity) getActivity()).onBackPressed();
 
          /*   FragmentManager fm = getFragmentManager();
             if (fm.getBackStackEntryCount() > 0) {
@@ -328,14 +320,10 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
             getActivity().overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
 
 
-
         }
 
 
-
     }
-
-
 
 
     public static class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -348,8 +336,9 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
 
         public interface ClickListener {
-            void onItemClick(int productid,int position,String nameOfFood, String price, View v,String imageUri,String description);
-            void onItemLongClick(int position,String nameOfFoof, String price, View v,String imageUri);
+            void onItemClick(int productid, int position, String nameOfFood, String price, View v, String imageUri, String description);
+
+            void onItemLongClick(int position, String nameOfFoof, String price, View v, String imageUri);
         }
 
         public void setOnItemClickListener(RecyclerViewAdapter.ClickListener clickListener) {
@@ -378,9 +367,9 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
 
             holder.tvTypeofFood.setText(storeProductsPayload.getName());
-            holder.tvPricefood.setText("GHS "+storeProductsPayload.getPrice());
+            holder.tvPricefood.setText("GHS " + storeProductsPayload.getPrice());
 
-            if(storeProductsPayload.getCatagoryType().equalsIgnoreCase("Non-veg")){
+            if (storeProductsPayload.getCatagoryType().equalsIgnoreCase("Non-veg")) {
 
                 holder.imageVedNonVeg.setBackgroundResource(R.drawable.nonveg);
 
@@ -389,7 +378,7 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
             Picasso.with(context)
                     .load(storeProductsPayload.getImage())
-                    .resize(500,250)
+                    .resize(500, 250)
                     .error(R.drawable.errortriangle)
                     .into(holder.imageFood);
 
@@ -413,12 +402,15 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
                     databaseHelper.insert(user_d,
                             storeProductsPayload.getId(),
                             storeProductsPayload.getName(),
-                            storeProductsPayload.getPrice(),"1",
+                            storeProductsPayload.getPrice(), "1",
                             storeProductsPayload.getImage(),
-                            storeProductsPayload.getPrice());
+                            storeProductsPayload.getPrice()
 
-                    databaseHelper.saveOrders(user_d,storeProductsPayload.getId(),storeProductsPayload.getName(),storeProductsPayload.getPrice()
-                            ,"1",storeProductsPayload.getImage(),storeProductsPayload.getPrice());
+
+                    );
+
+                    databaseHelper.saveOrders(user_d, storeProductsPayload.getId(), storeProductsPayload.getName(), storeProductsPayload.getPrice()
+                            , "1", storeProductsPayload.getImage(), storeProductsPayload.getPrice());
 
 
                     int counter = databaseHelper.getProductsCount();
@@ -437,8 +429,9 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
                 @Override
                 public void onClick(View v) {
 
+                    System.out.println("RecyclerViewAdapter.onClick - - -Click1");
                     holder.btnAddItemCart.setTextColor(Color.BLACK);
-                    clickListener.onItemClick(storeProductsPayload.getId(),position,storeProductsPayload.getName(),storeProductsPayload.getPrice(),v,storeProductsPayload.getImage(),storeProductsPayload.getDescription());
+                    clickListener.onItemClick(storeProductsPayload.getId(), position, storeProductsPayload.getName(), storeProductsPayload.getPrice(), v, storeProductsPayload.getImage(), storeProductsPayload.getDescription());
 
                 }
             });
@@ -447,9 +440,10 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
                 @Override
                 public boolean onLongClick(View v) {
 
+                    System.out.println("RecyclerViewAdapter.onLongClick - - - Click2");
                     holder.gridRow.setEnabled(false);
 
-                    clickListener.onItemLongClick(position,storeProductsPayload.getName(),storeProductsPayload.getPrice(),v,storeProductsPayload.getImage());
+                    clickListener.onItemLongClick(position, storeProductsPayload.getName(), storeProductsPayload.getPrice(), v, storeProductsPayload.getImage());
 
                     return false;
                 }
@@ -464,8 +458,8 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
 
         public class ViewHolder extends RecyclerView.ViewHolder {
 
-            private ImageView imageFood,imageVedNonVeg;
-            private TextView tvTypeofFood,tvFoodNationality,tvPricefood;
+            private ImageView imageFood, imageVedNonVeg;
+            private TextView tvTypeofFood, tvFoodNationality, tvPricefood;
             private RelativeLayout gridRow;
             private Button btnAddItemCart;
 
@@ -476,25 +470,14 @@ public class FragmentWithoutSearchResults extends BaseFragment implements View.O
                 imageFood = itemView.findViewById(R.id.imageFood);
                 imageVedNonVeg = itemView.findViewById(R.id.imageVedNonVeg);
 
-                tvTypeofFood=itemView.findViewById(R.id.tvTypeofFood);
-                tvFoodNationality=itemView.findViewById(R.id.tvFoodNationality);
-                tvPricefood=itemView.findViewById(R.id.tvPricefood);
-                btnAddItemCart=itemView.findViewById(R.id.btnAddItemCart);
+                tvTypeofFood = itemView.findViewById(R.id.tvTypeofFood);
+                tvFoodNationality = itemView.findViewById(R.id.tvFoodNationality);
+                tvPricefood = itemView.findViewById(R.id.tvPricefood);
+                btnAddItemCart = itemView.findViewById(R.id.btnAddItemCart);
 
-                gridRow=itemView.findViewById(R.id.gridRow);
-                btnAddItemCart=itemView.findViewById(R.id.btnAddItemCart);
-
-
-
-
+                gridRow = itemView.findViewById(R.id.gridRow);
+                btnAddItemCart = itemView.findViewById(R.id.btnAddItemCart);
             }
-
         }
-
-
-
-
     }
-
-
 }

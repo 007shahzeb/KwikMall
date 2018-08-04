@@ -101,6 +101,7 @@
 
 
     <android.support.v7.widget.RecyclerView
+        android:visibility="visible"
         android:id="@+id/recyclerviewSearch"
         android:layout_below="@id/cardView"
         android:layout_width="match_parent"

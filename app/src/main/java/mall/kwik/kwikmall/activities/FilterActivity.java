@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,19 +39,24 @@ import mall.kwik.kwikmall.sharedpreferences.UtilitySP;
  * Created by dharamveer on 29/12/17.
  */
 
-public class FilterActivity extends BaseActivity implements View.OnClickListener{
+public class FilterActivity extends BaseActivity implements View.OnClickListener {
 
     private RecyclerView filterRecyclerview;
-    private LinearLayout linearClear,btnCancel;
     private RecyclerViewAdapterFilter recyclerViewAdapterFilter;
+
     private List<FilterListPayload> filterListPayloadArrayList = new ArrayList<>();
-    public  static RelativeLayout footerFilter;
+    private LinearLayout linearClear, btnCancel;
+
+    public static RelativeLayout footerFilter;
+
     public static TextView tvClear;
+
     private String data = "";
     private List<Integer> list = new ArrayList<>();
     private Context context;
     private NoInternetDialog noInternetDialog;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
 
 
     @Override
@@ -67,7 +73,6 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
         clikListeners();
 
 
-
         compositeDisposable.add(apiService.GetCatagories()
                 .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -76,10 +81,10 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
                     public void accept(FilterListSuccess filterListSuccess) throws Exception {
 
 
-                        if(filterListSuccess.getSuccess()){
+                        if (filterListSuccess.getSuccess()) {
                             filterListPayloadArrayList = new ArrayList<>(filterListSuccess.getPayload());
 
-                            recyclerViewAdapterFilter = new RecyclerViewAdapterFilter(filterListPayloadArrayList,FilterActivity.this);
+                            recyclerViewAdapterFilter = new RecyclerViewAdapterFilter(filterListPayloadArrayList, FilterActivity.this);
 
                             recyclerViewAdapterFilter.setItemClickListenerCheck(new RecyclerViewAdapterFilter.ItemClickListenerCheck() {
                                 @Override
@@ -89,11 +94,9 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
                                     list.add(catId);
 
 
-                                    if (list.size() > 0)
-                                    {
+                                    if (list.size() > 0) {
                                         StringBuilder sb = new StringBuilder();
-                                        for (Integer s : list)
-                                        {
+                                        for (Integer s : list) {
                                             sb.append(s).append(",");
                                         }
                                         data = sb.deleteCharAt(sb.length() - 1).toString();
@@ -111,8 +114,7 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
                             filterRecyclerview.setItemAnimator(new DefaultItemAnimator());
                             filterRecyclerview.setAdapter(recyclerViewAdapterFilter);
 
-                        }
-                        else {
+                        } else {
 
 
                         }
@@ -120,7 +122,7 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        showAlertDialog("Retry",throwable.getMessage());
+                        showAlertDialog("Retry", throwable.getMessage());
 
                     }
                 }));
@@ -139,7 +141,7 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
     private void clikListeners() {
 
         btnCancel.setOnClickListener(this);
-       // linearClear.setOnClickListener(this);
+        // linearClear.setOnClickListener(this);
         footerFilter.setOnClickListener(this);
         tvClear.setOnClickListener(this);
 
@@ -150,7 +152,7 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
 
         filterRecyclerview = findViewById(R.id.filterRecyclerview);
 
-       // linearClear = findViewById(R.id.linearClear);
+        // linearClear = findViewById(R.id.linearClear);
 
         btnCancel = findViewById(R.id.btnCancel);
 
@@ -163,10 +165,13 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
 
             case R.id.btnCancel:
+
+
+
 
                 MaterialRippleLayout.on(btnCancel)
                         .rippleColor(Color.parseColor("#006400"))
@@ -176,15 +181,17 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
 
+
+
                 break;
 
             case R.id.footerFilter:
 
-                if(data!=null) {
+                if (data != null) {
 
 
-                    ( (AppController)  getApplication()).bus().send(new FilterEvent(data));
-                    sharedPrefsHelper.put(AppConstants.FILTER_DATA,"");
+                    ((AppController) getApplication()).bus().send(new FilterEvent(data));
+                    sharedPrefsHelper.put(AppConstants.FILTER_DATA, "");
 
                     finish();
 
@@ -195,12 +202,19 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
 
 
             case R.id.tvClear:
+                System.out.println("FilterActivity.onClick - - - Clear ");
 
-                recyclerViewAdapterFilter.unselectAll();
-                footerFilter.setBackgroundColor(Color.parseColor("#B2D0B2")); //dimgreen
+                for (int i = 0; i < filterListPayloadArrayList.size(); i++) {
+                    filterListPayloadArrayList.get(i).isSeleted = false;
+
+                    recyclerViewAdapterFilter.unselectAll();
+                    footerFilter.setBackgroundColor(Color.parseColor("#B2D0B2")); //dimgreen
+                    tvClear.setTextColor(Color.parseColor("#F4AC66"));
+                }
+//                recyclerViewAdapterFilter.notifyDataSetChanged();
 
 
-               // ( (AppController)  getApplication()).bus().send(new FilterEvent(""));
+                // ( (AppController)  getApplication()).bus().send(new FilterEvent(""));
 
                 break;
 
@@ -208,11 +222,7 @@ public class FilterActivity extends BaseActivity implements View.OnClickListener
         }
 
 
-
     }
-
-
-
 
 
 }

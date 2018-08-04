@@ -22,7 +22,7 @@
         android:id="@+id/imageFood"
         android:layout_below="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="230dp"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/_5sdp"
@@ -180,17 +180,16 @@
             </LinearLayout>
 
             <TextView
+                android:scrollbars = "vertical"
                 android:id="@+id/txtdescription"
                 android:layout_below="@+id/line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="2"
                 android:padding="5dp"
                 android:singleLine="false"
                 android:textSize="@dimen/_9sdp"
-                android:text="Japanese cuisine encompasses the regional and traditional foods of Japan,
-               "/>
+                android:text="Japanese cuisine encompasses the regional and traditional foods of Japan,"/>
 
 
         </RelativeLayout>

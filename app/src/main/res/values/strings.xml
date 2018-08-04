@@ -83,7 +83,7 @@
     <string name="noresultsfound">No results found. Please check the spelling or try a different search.</string>
 
     <string name="connectionunavailable">Connection Unavailable</string>
-    <string name="areyousuretologout">Are you sure you want yo logout?</string>
+    <string name="areyousuretologout">Are you sure you want to logout?</string>
     <string name="nointernetcoonection">Uh oh! Check your Internet connection and restart the app.</string>
     <string name="opensettings">OPEN SETTINGS</string>
     <string name="cancel">CANCEL</string>

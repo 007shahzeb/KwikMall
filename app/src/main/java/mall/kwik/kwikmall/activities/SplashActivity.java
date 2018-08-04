@@ -20,20 +20,24 @@ public class SplashActivity extends AppCompatActivity {
 
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 1000;
-    private ImageView imageLeftTop,imageRightTop,imageLeftBottom,imageRightBottom;
+
+    private ImageView imageLeftTop, imageRightTop,
+            imageLeftBottom, imageRightBottom;
 
     NoInternetDialog noInternetDialog;
+
     private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        hidingStatusBar();
+
         setContentView(R.layout.activity_splash);
 
 
-        context =this;
+        context = this;
 
         noInternetDialog = new NoInternetDialog.Builder(context).build();
 
@@ -55,44 +59,35 @@ public class SplashActivity extends AppCompatActivity {
         imageLeftBottom.startAnimation(pushUpIn);
 
 
-
-
         new Handler().postDelayed(new Runnable() {
-
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo / company
-             */
-
             @Override
             public void run() {
-                // This method will be executed once the timer is over
-                // Start your app main activity
-                    Intent intent = new Intent(getApplicationContext(), FragmentsActivity.class);
-                    startActivity(intent);
-                    finish();
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-                    return;
+                Intent intent = new Intent(getApplicationContext(), FragmentsActivity.class);
+                startActivity(intent);
+                finish();
+
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                return;
 
             }
         }, SPLASH_TIME_OUT);
 
+    }
 
+    private void hidingStatusBar() {
 
-
-
-
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         noInternetDialog.onDestroy();
     }
-
-
 
 
 }

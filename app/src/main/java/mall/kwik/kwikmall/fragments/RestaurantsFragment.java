@@ -228,6 +228,7 @@ public class RestaurantsFragment extends BaseFragment  {
                                 public void onItemClick(String string_form,String nameOfHotel, String address, int StoreId, View v) {
 
 
+                                    System.out.println("RestaurantsFragment.onItemClick - - - recyclerview Adpter");
                                     sharedPrefsHelper.put(AppConstants.STORE_ID,StoreId);
                                     sharedPrefsHelper.put(AppConstants.NAME_HOTEL,nameOfHotel);
                                     sharedPrefsHelper.put(AppConstants.ADDRESS,address);

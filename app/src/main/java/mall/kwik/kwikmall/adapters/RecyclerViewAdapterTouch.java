@@ -108,6 +108,7 @@ public class RecyclerViewAdapterTouch extends RecyclerView.Adapter<RecyclerViewA
             public void onClick(View v) {
 
 
+                System.out.println("RecyclerViewAdapterTouch.onClick - - - Increased button");
                 Quantity[0] = Quantity[0] + 1;
                 mHandler.post(new Runnable() {
                     @Override
@@ -126,7 +127,7 @@ public class RecyclerViewAdapterTouch extends RecyclerView.Adapter<RecyclerViewA
             public void onClick(View v) {
 
 
-
+                System.out.println("RecyclerViewAdapterTouch.onClick - - - DECREASED BUTTON");
 
                 if( Quantity[0]>=2) {
                     Quantity[0] = Quantity[0] - 1;

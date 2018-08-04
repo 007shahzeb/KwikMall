@@ -22,6 +22,9 @@ public class FilterListPayload {
     private String name;
 
 
+    public   boolean isSeleted;
+
+
 
     public FilterListPayload(String name) {
         this.name = name;

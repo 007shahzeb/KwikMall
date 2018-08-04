@@ -10,5 +10,7 @@ public enum OrderStatus {
     ACTIVE,
     INACTIVE;
 
+    static int count = 0;
+
 
 }

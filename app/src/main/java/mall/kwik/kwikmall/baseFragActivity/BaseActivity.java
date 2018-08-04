@@ -33,7 +33,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class BaseActivity extends AppCompatActivity {
 
-
     @Inject
     public GitApiInterface apiService;
 
@@ -100,8 +99,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-
-
     public void showSuccessDialog(String title){
 
         new AwesomeSuccessDialog(this)
@@ -125,8 +122,8 @@ public class BaseActivity extends AppCompatActivity {
 
 
 
-
     public void navigateToNextActivity(Class cla){
+
 
         startActivity(new Intent(BaseActivity.this,cla));
         overridePendingTransition(R.anim.enter, R.anim.exit);
@@ -156,8 +153,6 @@ public class BaseActivity extends AppCompatActivity {
         noInternetDialog.onDestroy();
     }
 
-
-
     public void showAlertDialog(String action,String message){
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
@@ -181,8 +176,6 @@ public class BaseActivity extends AppCompatActivity {
 
 
     }
-
-
 
 
 }

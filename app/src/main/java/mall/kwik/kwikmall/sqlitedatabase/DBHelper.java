@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper{
 
 
 
-    private static final String DATABASE_NAME = "kwiqmallDB1.db";
+    private static final String DATABASE_NAME = "kwiqmallD21B1.db";
     private static final int DATABASE_VERSION = 1;
 
     public static final String TABLE1 = "productsList";

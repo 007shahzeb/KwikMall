@@ -44,7 +44,6 @@ public class AppController extends Application {
                 .build();
 
 
-
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/HindVadodara-Medium.ttf")
                 .setFontAttrId(R.attr.fontPath)
@@ -74,7 +73,7 @@ public class AppController extends Application {
 
 
 
-
+/*
     public RequestQueue getReqQueue() {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -97,5 +96,5 @@ public class AppController extends Application {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
-    }
+    }*/
 }

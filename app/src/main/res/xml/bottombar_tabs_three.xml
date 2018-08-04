@@ -3,21 +3,26 @@
         id="@+id/tab_nearyby"
         icon="@drawable/location"
         title="Near Me"
+        activeColor="#006400"
         />
     <tab
         id="@+id/tab_search"
         icon="@drawable/searchicon"
-        title="Explore" />
+        title="Explore"
+        activeColor="#006400"
+        />
 
     <tab
         id="@+id/tab_cart"
         icon="@drawable/carticon"
         title="Cart"
+        activeColor="#006400"
         />
 
     <tab
         id="@+id/tab_account"
         icon="@drawable/user"
         title="Account"
+        activeColor="#006400"
         />
 </tabs>

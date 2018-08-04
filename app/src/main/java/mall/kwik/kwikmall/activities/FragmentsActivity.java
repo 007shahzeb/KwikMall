@@ -1,10 +1,15 @@
 package mall.kwik.kwikmall.activities;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
@@ -18,6 +23,7 @@ import mall.kwik.kwikmall.fragments.AccountFragment;
 import mall.kwik.kwikmall.fragments.ExploreFragment;
 import mall.kwik.kwikmall.fragments.NearMeFragment;
 import mall.kwik.kwikmall.fragments.RestaurantsProductsFragment;
+import mall.kwik.kwikmall.fragments.ShopsProductsFragment;
 import mall.kwik.kwikmall.fragments.TrackYourOrderFragment;
 import mall.kwik.kwikmall.fragments.ViewCartFragment;
 import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
@@ -26,7 +32,8 @@ import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
 public class FragmentsActivity extends BaseActivity {
 
     private DBHelper database;
-    private BottomBar bottomBar;
+
+    public static BottomBar bottomBar;
     public static BottomBarTab nearby;
 
     private Context context;
@@ -37,6 +44,7 @@ public class FragmentsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragments);
+
         ButterKnife.bind(this);
 
 
@@ -48,59 +56,38 @@ public class FragmentsActivity extends BaseActivity {
         database = new DBHelper(this);
 
         int counter = database.getProductsCount();
-
         nearby = bottomBar.getTabWithId(R.id.tab_cart);
 
         if (database.getProductsCount() != 0) {
-
             nearby.setBadgeCount(counter);
-
         }
 
 
         if (savedInstanceState == null) {
 
-
-
             FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction =    fragmentManager.beginTransaction();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack(null);
             Fragment fragment = new NearMeFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.commit();
 
-                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                    fragmentManager.popBackStack();
-                }
+            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+
+                fragmentManager.popBackStack();
+            }
 
 
         }
 
-
     }
 
 
+    public void replace() {
 
-
-    public void replace(){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction =    fragmentManager.beginTransaction();
-        fragmentTransaction.addToBackStack(null);
-        Fragment fragment = new RestaurantsProductsFragment();
-        fragmentTransaction.replace(R.id.mainFrame, fragment);
-        fragmentTransaction.commit();
-
-
-
-
-    }
-
-
-    public void replace2(){
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction =    fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.addToBackStack(null);
         Fragment fragment = new RestaurantsProductsFragment();
         fragmentTransaction.replace(R.id.mainFrame, fragment);
@@ -108,29 +95,42 @@ public class FragmentsActivity extends BaseActivity {
 
     }
 
-    public void replace3(){
+    public void replace2() { // Shops fragments using this
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction =    fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.addToBackStack(null);
+        Fragment fragment = new RestaurantsProductsFragment();
+//        Fragment fragment = new ShopsProductsFragment(); // shahzeb changed it from above to this one
+        fragmentTransaction.replace(R.id.mainFrame, fragment);
+        fragmentTransaction.commit();
+
+
+    }
+
+    public void replace3() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.addToBackStack(null);
         Fragment fragment = new TrackYourOrderFragment();
         fragmentTransaction.replace(R.id.mainFrame, fragment);
         fragmentTransaction.commit();
 
+//        Fragment trackYourOrderFragment = new TrackYourOrderFragment();
+//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.mainFrame, trackYourOrderFragment, "trackYourOrderFragment");
+//        fragmentTransaction.addToBackStack("trackYourOrderFragment");
+//        fragmentTransaction.commit();
 
-       /* Fragment trackYourOrderFragment = new TrackYourOrderFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainFrame, trackYourOrderFragment, "trackYourOrderFragment");
-        fragmentTransaction.addToBackStack("trackYourOrderFragment");
-        fragmentTransaction.commit();
-        */
     }
 
 
-
-        @Override
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+
         noInternetDialog.onDestroy();
     }
 
@@ -146,16 +146,20 @@ public class FragmentsActivity extends BaseActivity {
                 switch (tabId) {
 
                     case R.id.tab_nearyby:
+
+                        System.out.println("FragmentsActivity.onTabSelected - - -tabnearby ");
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         Fragment fragment = new NearMeFragment();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.mainFrame, fragment, "nearMefragment")
                                 .commit();
 
-
                         break;
+
+
                     case R.id.tab_search:
 
+                        System.out.println("FragmentsActivity.onTabSelected - - - tabsearch ");
                         Fragment exploreFragment = new ExploreFragment();
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.mainFrame, exploreFragment, "exploreFragment");
@@ -170,23 +174,33 @@ public class FragmentsActivity extends BaseActivity {
                     case R.id.tab_cart:
 
 
+//                        Bundle bundle = new Bundle();
+//                        bundle.putBoolean("click",true);
+
+                        System.out.println("FragmentsActivity.onTabSelected - - -tabcart ");
                         Fragment viewCartFragment = new ViewCartFragment();
+//                        viewCartFragment.setArguments(bundle);
                         FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction2.replace(R.id.mainFrame, viewCartFragment, "viewCartFragment");
                         fragmentTransaction2.addToBackStack("viewCartFragment");
                         fragmentTransaction2.commit();
 
                         overridePendingTransition(R.anim.enter, R.anim.exit);
-
+                        Log.i("Shbu->>FragActivity", "onClick: ");
 
                         break;
+
+
                     case R.id.tab_account:
+
+                        System.out.println("FragmentsActivity.onTabSelected - - - tabaccount ");
 
                         Fragment accountFrag = new AccountFragment();
                         FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction3.replace(R.id.mainFrame, accountFrag, "accountFrag");
                         fragmentTransaction3.addToBackStack("accountFrag");
                         fragmentTransaction3.commit();
+
 
                         break;
 
@@ -202,6 +216,7 @@ public class FragmentsActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
 
+        System.out.println("FragmentsActivity.onBackPressed");
 
       /*  if (getFragmentManager().getBackStackEntryCount() == 0) {
             super.onBackPressed();
@@ -215,6 +230,7 @@ public class FragmentsActivity extends BaseActivity {
 
         // if there is a fragment and the back stack of this fragment is not empty,
         // then emulate 'onBackPressed' behaviour, because in default, it is not working
+
         FragmentManager fm = getSupportFragmentManager();
         for (Fragment frag : fm.getFragments()) {
             if (frag.isVisible()) {
@@ -228,6 +244,7 @@ public class FragmentsActivity extends BaseActivity {
         super.onBackPressed();
 
 
-
     }
+
+
 }

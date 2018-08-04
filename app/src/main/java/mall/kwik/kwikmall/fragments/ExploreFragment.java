@@ -34,14 +34,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
-import mall.kwik.kwikmall.adapters.RecyclerViewAdapterSearchAllPro;
 import mall.kwik.kwikmall.R;
+import mall.kwik.kwikmall.SimpleDividerItemDecoration;
+import mall.kwik.kwikmall.adapters.RecyclerViewAdapterSearchAllPro;
 import mall.kwik.kwikmall.apiresponse.GetAllProductsResponse.GetAllProductsPayload;
 import mall.kwik.kwikmall.apiresponse.GetAllProductsResponse.GetAllProductsSuccess;
-import mall.kwik.kwikmall.SimpleDividerItemDecoration;
+import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
 
-
+import static mall.kwik.kwikmall.activities.FragmentsActivity.bottomBar;
 
 
 public class ExploreFragment extends BaseFragment implements View.OnClickListener {
@@ -69,6 +69,8 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
 
         clearText();
         showHideClearButton();
+
+        bottomBar.getTabWithId(R.id.tab_search).performClick();
 
         btnRetryInternet.setOnClickListener(this);
 
@@ -131,14 +133,12 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
 
         recyclerviewExplore = view.findViewById(R.id.recyclerviewExplore);
         search_products_ed = view.findViewById(R.id.search_products_ed);
-
         clearable_button_clear_explore = view.findViewById(R.id.clearable_button_clear_explore);
 
         //Linear layout
         linearNoItemsMatchLayout = view.findViewById(R.id.linearNoItemsMatchLayout);
         linearNoMatchFoundImage = view.findViewById(R.id.linearNoMatchFoundImage);
         linearNoInternetImage = view.findViewById(R.id.linearNoInternetImage);
-
         editextText = view.findViewById(R.id.editextText);
 
         //Button
@@ -171,13 +171,14 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
 
                             recyclerViewAdapterAllPro.searchItemClickListener(new RecyclerViewAdapterSearchAllPro.ItemClickListener() {
                                 @Override
-                                public void ItemClick(int productid, String itemname, String price, String imagepath, String des) {
+                                public void ItemClick(int productid, String itemname, String price, String imagepath, String des, int quantity) {
 
                                     Bundle bundle = new Bundle();
+
                                     bundle.putString("itemname", itemname);
 
 
-                                    sharedPrefsHelper.put(AppConstants.PRODUCT_ID,productid);
+                                    sharedPrefsHelper.put(AppConstants.PRODUCT_ID, productid);
 
 
                                     bundle.putInt("productid", productid);
@@ -185,7 +186,9 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
                                     bundle.putString("price", price);
                                     bundle.putString("imageUri", imagepath);
                                     bundle.putString("description", des);
+                                    bundle.putInt("quantity", quantity);
 
+                                    System.out.println("ExploreFragment.ItemClick - - - The value is " + quantity);
 
                                     Fragment foodDeatailsFragment = new FoodDetailsFragment();
                                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -201,10 +204,8 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
                             });
 
 
-
                             recyclerviewExplore.setAdapter(recyclerViewAdapterAllPro);
                             recyclerViewAdapterAllPro.notifyDataSetChanged();
-
 
 
                         } else {
@@ -224,15 +225,14 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
     }
 
 
-
-
-    void clearText(){
+    void clearText() {
 
         clearable_button_clear_explore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
+                System.out.println("ExploreFragment.onClick - - - Testing caeses");
                 linearNoItemsMatchLayout.setVisibility(View.GONE);
                 linearNoMatchFoundImage.setVisibility(View.GONE);
                 search_products_ed.setText("");
@@ -241,7 +241,7 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
 
     }
 
-    void showHideClearButton(){
+    void showHideClearButton() {
 
         search_products_ed.addTextChangedListener(new TextWatcher() {
 
@@ -253,11 +253,8 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
 
-
-                if(isConnected()){
-
+                if (isConnected()) {
                     exploreProgressBar.setVisibility(View.VISIBLE);
-
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -268,58 +265,21 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
                         }
                     }, 1000);
 
-
-                    if(recyclerViewAdapterAllPro.getLength()<=0){
-
-
-                        linearNoItemsMatchLayout.setVisibility(View.VISIBLE);
-                        linearNoMatchFoundImage.setVisibility(View.VISIBLE);
-                        editextText.setText(Html.fromHtml("&ldquo; " + search_products_ed.getText().toString() + " &rdquo;"));
-
-                    }
+                    filter(s.toString());
 
 
 
+                } else {
 
 
-                    if (s.length() > 0){
-
-
-                        btnCross.setVisibility(View.VISIBLE);
-                        recyclerviewExplore.setVisibility(View.VISIBLE);
-
-
-                    }
-
-                    else {
-                        btnCross.setVisibility(View.INVISIBLE);
-
-                        linearNoItemsMatchLayout.setVisibility(View.GONE);
-                        linearNoMatchFoundImage.setVisibility(View.GONE);
-
-                        recyclerviewExplore.setVisibility(View.GONE);
-
-                    }
-
-                }
-                else {
-
-
-                    if(count>2){
+                    if (count > 2) {
 
 
                         linearNoInternetImage.setVisibility(View.VISIBLE);
                         recyclerviewExplore.setVisibility(View.GONE);
 
                     }
-                    else {
-
-
-                    }
                 }
-
-
-
 
 
             }
@@ -328,10 +288,7 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
             public void afterTextChanged(Editable s) {
 
 
-                if(isConnected()) {
 
-                    filter(s.toString());
-                }
 
             }
         });
@@ -351,12 +308,30 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
                 getAllProductsPayloads1.add(s);
             }
 
+
         }
 
         //tvNoItemsMatch.setVisibility(View.VISIBLE);
         //calling a method of the adapter class and passing the filtered list
         recyclerViewAdapterAllPro.filterList(getAllProductsPayloads1);
         recyclerViewAdapterAllPro.notifyDataSetChanged();
+
+        if(getAllProductsPayloads1.size()<=0)
+        {
+            linearNoItemsMatchLayout.setVisibility(View.VISIBLE);
+            linearNoMatchFoundImage.setVisibility(View.VISIBLE);
+            editextText.setText(Html.fromHtml("&ldquo; " + search_products_ed.getText().toString() + " &rdquo;"));
+            recyclerviewExplore.setVisibility(View.GONE);
+        }
+        else {
+            recyclerviewExplore.setVisibility(View.VISIBLE);
+            linearNoItemsMatchLayout.setVisibility(View.GONE);
+            linearNoMatchFoundImage.setVisibility(View.GONE);
+        }
+
+
+
+
     }
 
 
@@ -364,7 +339,7 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View v) {
 
 
-        if(v==btnRetryInternet){
+        if (v == btnRetryInternet) {
 
             getFragmentManager().beginTransaction().detach(this).attach(this).commit();
 

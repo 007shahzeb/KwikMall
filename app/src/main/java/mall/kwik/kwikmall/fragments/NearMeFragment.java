@@ -14,6 +14,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -52,22 +53,29 @@ import mall.kwik.kwikmall.services.LocationAddress;
 import mall.kwik.kwikmall.sharedpreferences.UtilitySP;
 import pl.charmas.android.reactivelocation2.ReactiveLocationProvider;
 
+import static mall.kwik.kwikmall.activities.FragmentsActivity.bottomBar;
+
 
 public class NearMeFragment extends Fragment implements View.OnClickListener {
 
     private View view;
     private LinearLayout filterLayout, linearNearmeLocation;
+
     private TextView tvCityName, tvAddress;
     private String city;
-   // private BroadcastReceiver mMessageReceiver;
+    // private BroadcastReceiver mMessageReceiver;
+
     private double latituteR, longitudeR;
-    public  ImageView imageFilteOn;
+    public ImageView imageFilteOn;
     UtilitySP utilitySP;
+
     private TextView txtRestaurants, txtShops;
     private ViewPager frame_near_me;
 
     FragmentPagerAdapter adapterViewPager;
+
     private Disposable subscription;
+    private long lastClickTime = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +85,7 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
 
         clikListeners();
 
+        bottomBar.getTabWithId(R.id.tab_nearyby).performClick();
         //  getActivity().startService(new Intent(getActivity(), LocationService.class));
 
         utilitySP = new UtilitySP(getActivity());
@@ -111,7 +120,6 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
 
         // LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver, new IntentFilter("intentKey"));
 
-
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED &&
@@ -119,7 +127,7 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
 
         }
 
-        LocationRequest request = LocationRequest.create() //standard GMS LocationRequest
+        LocationRequest request = LocationRequest.create() //Standard GMS LocationRequest
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setNumUpdates(5)
                 .setInterval(100);
@@ -128,14 +136,14 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
         ReactiveLocationProvider locationProvider = new ReactiveLocationProvider(getActivity());
 
 
-        subscription =  locationProvider.getUpdatedLocation(request)
+        subscription = locationProvider.getUpdatedLocation(request)
                 .subscribe(new Consumer<Location>() {
                     @Override
                     public void accept(Location location) throws Exception {
 
 
                         latituteR = location.getLatitude();
-                        longitudeR  = location.getLongitude();
+                        longitudeR = location.getLongitude();
 
 
                         Observable<List<Address>> reverseGeocodeObservable = locationProvider
@@ -148,7 +156,6 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
                                     public void accept(List<Address> addresses) throws Exception {
 
 
-
                                         String addres = addresses.get(0).getSubLocality();
                                         String cityName = addresses.get(0).getLocality();
                                         String stateName = addresses.get(0).getAdminArea();
@@ -157,9 +164,6 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
 
 
                                         tvAddress.setText(addres);
-
-
-
 
 
                                     }
@@ -185,7 +189,7 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
 
                 frame_near_me.setCurrentItem(position);
 
-                if(position==0){
+                if (position == 0) {
 
                     txtRestaurants.setBackgroundResource(R.drawable.layout_bg_white);
                     txtShops.setBackgroundResource(R.drawable.layout_bg_green);
@@ -194,8 +198,7 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
                     txtShops.setTextColor(Color.parseColor("#ffffff"));  //white
 
 
-                }
-                else {
+                } else {
 
                     txtShops.setBackgroundResource(R.drawable.layout_bg_white);
                     txtRestaurants.setBackgroundResource(R.drawable.layout_bg_green);
@@ -213,23 +216,22 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+// data passing from one activity to another without opening that particular activity where we want to send the data
 
-
-        ((AppController)  getActivity().getApplication()).bus().toObservable().subscribe(new Consumer<Object>() {
+        ((AppController) getActivity().getApplication()).bus().toObservable().subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Exception {
 
-                if(o instanceof FilterEvent){
+                if (o instanceof FilterEvent) {
 
-                    String ids =   ((FilterEvent)o) .getFilteredIds();
+                    String ids = ((FilterEvent) o).getFilteredIds();
 
                     imageFilteOn.setVisibility(View.VISIBLE);
 
-                  if( TextUtils.isEmpty(ids)) {
+                    if (TextUtils.isEmpty(ids)) {
 
 
-
-                  }
+                    }
 
                 }
 
@@ -242,11 +244,9 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
         });
 
 
-
         return view;
 
     }
-
 
 
     public static class MyPagerAdapter extends FragmentPagerAdapter {
@@ -262,8 +262,13 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0: // Fragment # 0 - This will show FirstFragment
+
+
                     return new RestaurantsFragment();
+
                 case 1: // Fragment # 0 - This will show FirstFragment different title
+
+
                     return new ShopsFragments();
 
                 default:
@@ -279,13 +284,14 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
         // Returns the page title for the top indicator
         @Override
         public CharSequence getPageTitle(int position) {
+            System.out.println("MyPagerAdapter.getPageTitle  - - - Position is " + position);
             return "Page " + position;
         }
 
     }
 
 
-
+    // Checking the connectivity of the Internet
     public boolean isConnected() {
         ConnectivityManager connectivity = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -304,7 +310,7 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
     public void onDestroyView() {
         super.onDestroyView();
 
-      //  LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
+        //  LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
 
 
     }
@@ -353,6 +359,11 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
 
         if (v == filterLayout) {
 
+            if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+                return;
+            }
+            lastClickTime = SystemClock.elapsedRealtime();
+
             onButtonClick(filterLayout);
 
         }
@@ -360,7 +371,7 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
 
         if (v == linearNearmeLocation) {
 
-            Intent intent = new Intent(getActivity(),SearchForAreaActivity.class);
+            Intent intent = new Intent(getActivity(), SearchForAreaActivity.class);
             startActivity(intent);
 
             getActivity().overridePendingTransition(R.anim.slide_up, R.anim.stay);
@@ -375,7 +386,6 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
 
             txtRestaurants.setTextColor(Color.parseColor("#008000")); //green
             txtShops.setTextColor(Color.parseColor("#ffffff"));  //white
-
 
 
             frame_near_me.setCurrentItem(0);
@@ -403,22 +413,20 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
     public void onButtonClick(View view) {
 
         // Start the SecondActivity
-        startActivity(new Intent(getActivity(),FilterActivity.class));
+        startActivity(new Intent(getActivity(), FilterActivity.class));
         getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
 
     }
 
 
-
-
-    private class GeocoderHandler extends Handler{
+    private class GeocoderHandler extends Handler {
 
 
         @Override
         public void handleMessage(Message msg) {
 
             String locationAddress;
-            switch (msg.what){
+            switch (msg.what) {
 
                 case 1:
                     Bundle bundle = msg.getData();
@@ -430,21 +438,18 @@ public class NearMeFragment extends Fragment implements View.OnClickListener {
             }
 
 
-
-          //  utilitySP.setAddress(locationAddress);
-          //  utilitySP.setCityName(city);
+            //  utilitySP.setAddress(locationAddress);
+            //  utilitySP.setCityName(city);
 
             tvAddress.setText(locationAddress);
             tvCityName.setText(city);
             //tvAddressLoadingText.setVisibility(View.GONE);
 
 
-
             Log.e("location Address=", locationAddress);
 
         }
     }
-
 
 
 }

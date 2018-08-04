@@ -7,6 +7,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -29,6 +31,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
+import mall.kwik.kwikmall.apiresponse.GetStoreProducts.StoreProductsPayload;
 import mall.kwik.kwikmall.baseFragActivity.BaseActivity;
 import mall.kwik.kwikmall.apiresponse.AddFavourites.AddFavouritesSuccess;
 import mall.kwik.kwikmall.fragments.ViewCartFragment;
@@ -41,18 +44,18 @@ import static mall.kwik.kwikmall.activities.FragmentsActivity.nearby;
 
 public class FoodDetailsActivity extends BaseActivity implements View.OnClickListener {
 
-    private ImageView imageFood,imageBackArrow;
-    private TextView txtNameofItem,tvPrice,txtCount,txtCountItems,txtTotatPrice,txtViewCart,txtdescription;
-    private Button btnAddtoCart,btnBuyNow,btnInc,btnDec;
-    private   int count=1;
-    private RelativeLayout layoutOverlay,layoutInvisible;
+    private ImageView imageFood, imageBackArrow;
+    private TextView txtNameofItem, tvPrice, txtCount, txtCountItems, txtTotatPrice, txtViewCart, txtdescription;
+    private Button btnAddtoCart, btnBuyNow, btnInc, btnDec;
+    private int count = 1;
+    private RelativeLayout layoutOverlay, layoutInvisible;
 
-    String imageUri,totalItems,totalPrice,description,nameofhotel;
-    int cart_id=0;
-    int product_id=0;
+    String imageUri, totalItems, totalPrice, description, nameofhotel;
+    int cart_id = 0;
+    int product_id = 0;
     DBHelper databaseHelper;
     int userId;
-    private String nameofItem,price;
+    private String nameofItem, price;
     private LikeButton button_favorite;
     private TextView tvHotelNameFoodDetailsTopbar;
     private Context context;
@@ -67,20 +70,23 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
 
         findIds();
 
+
         context = this;
         noInternetDialog = new NoInternetDialog.Builder(context).build();
 
 
-        userId = sharedPrefsHelper.get(AppConstants.USER_ID,0);
+        userId = sharedPrefsHelper.get(AppConstants.USER_ID, 0);
 
-        nameofItem  = getIntent().getExtras().getString("nameOfFood");
-        nameofhotel  = getIntent().getExtras().getString("nameofhotel");
-        price  = getIntent().getExtras().getString("price");
-        imageUri  = getIntent().getExtras().getString("imageUri");
-        description  = getIntent().getExtras().getString("description");
-        cart_id  = getIntent().getExtras().getInt("position");
-        product_id  = getIntent().getExtras().getInt("productid");
+        nameofItem = getIntent().getExtras().getString("nameOfFood");
+        nameofhotel = getIntent().getExtras().getString("nameofhotel");
+        price = getIntent().getExtras().getString("price");
+        imageUri = getIntent().getExtras().getString("imageUri");
+        description = getIntent().getExtras().getString("description");
+        cart_id = getIntent().getExtras().getInt("position");
+        product_id = getIntent().getExtras().getInt("productid");
 
+        // Shahzeb added this code to make textview scrollable in case of much data thats contained by Textview
+        txtdescription.setMovementMethod(new ScrollingMovementMethod());
 
         Picasso.with(this)
                 .load(imageUri)
@@ -107,11 +113,10 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
 
         txtViewCart.setOnClickListener(this);
 
-        if(LoadButtonState()==product_id){
+        if (LoadButtonState() == product_id) {
 
             button_favorite.setLiked(true);
-        }
-        else {
+        } else {
             button_favorite.setLiked(false);
         }
 
@@ -119,9 +124,9 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void liked(LikeButton likeButton) {
 
-                if(LoadButtonState()==product_id){
+                if (LoadButtonState() == product_id) {
 
-                    Toast.makeText(FoodDetailsActivity.this,"Already added",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FoodDetailsActivity.this, "Already added", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -145,7 +150,6 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-
     private void AddToFavouritesListApi() {
 
 
@@ -157,36 +161,35 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
         HashMap<String, String> stringStringHashMap = new HashMap<>();
         stringStringHashMap.put("userId", String.valueOf(userId));
         stringStringHashMap.put("productId", String.valueOf(product_id));
-        stringStringHashMap.put("productName",nameofItem);
-        stringStringHashMap.put("productPrice",price);
-        stringStringHashMap.put("productQty",totalItems1);
-        stringStringHashMap.put("totalPrice",totalPrice2);
-        stringStringHashMap.put("imageUrl",imageUri);
-        stringStringHashMap.put("bussinessName",nameofhotel);
+        stringStringHashMap.put("productName", nameofItem);
+        stringStringHashMap.put("productPrice", price);
+        stringStringHashMap.put("productQty", totalItems1);
+        stringStringHashMap.put("totalPrice", totalPrice2);
+        stringStringHashMap.put("imageUrl", imageUri);
+        stringStringHashMap.put("bussinessName", nameofhotel);
 
 
         compositeDisposable.add(apiService.addFavourites(stringStringHashMap)
-                        .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
-                        .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<AddFavouritesSuccess>() {
                     @Override
                     public void accept(AddFavouritesSuccess addFavouritesSuccess) throws Exception {
 
-                        if(addFavouritesSuccess.getSuccess()){
+                        if (addFavouritesSuccess.getSuccess()) {
 
 
                             SaveButtonState(product_id);
-                            Toast.makeText(FoodDetailsActivity.this,"Added to favourites",Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                            Toast.makeText(FoodDetailsActivity.this, "Added to favourites", Toast.LENGTH_SHORT).show();
+                        } else {
 
-                        showAlertDialog("Retry",addFavouritesSuccess.getMessage());
+                            showAlertDialog("Retry", addFavouritesSuccess.getMessage());
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        showAlertDialog("Retry",throwable.getMessage());
+                        showAlertDialog("Retry", throwable.getMessage());
 
                     }
                 }));
@@ -250,14 +253,14 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
 
     }
 
-    public void SaveButtonState(int product_id){
+    public void SaveButtonState(int product_id) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(FoodDetailsActivity.this);
         SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putInt("product_id",product_id);
+        edit.putInt("product_id", product_id);
         edit.commit();
     }
 
-    public int LoadButtonState(){
+    public int LoadButtonState() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         int buttonState = preferences.getInt("product_id", 0);
         return buttonState;
@@ -297,8 +300,7 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
         txtNameofItem = findViewById(R.id.txtNameofItem);
         txtdescription = findViewById(R.id.txtdescription);
 
-        button_favorite =findViewById(R.id.button_favorite);
-
+        button_favorite = findViewById(R.id.button_favorite);
 
 
     }
@@ -307,7 +309,7 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
 
-        if(v==txtViewCart){
+        if (v == txtViewCart) {
 
 
             Animation a = AnimationUtils.loadAnimation(this, R.anim.scale);
@@ -327,13 +329,19 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
             utilityCartData.setTotalPrice(totalPrice);
 
 
-            databaseHelper.insert(userId,product_id,nameOfFood,price,totalItems,imageUri,totalPrice);
+            databaseHelper.insert(userId, product_id, nameOfFood, price, totalItems, imageUri, totalPrice);
 
             int counter = databaseHelper.getProductsCount();
 
             nearby.setBadgeCount(counter);
 
+
+//            Bundle bundle = new Bundle();
+//            bundle.putBoolean("click",true);
+
+
             Fragment viewCartFragment = new ViewCartFragment();
+//            viewCartFragment.setArguments(bundle);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.foodDetailsContainer, viewCartFragment, "viewCartFragment");
             fragmentTransaction.addToBackStack("viewCartFragment");
@@ -341,41 +349,41 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
 
 
             overridePendingTransition(R.anim.slide_in, R.anim.nothing);
+            Log.i("Shbu->>FoodDetailActi", "onClick: ");
 
 
         }
 
 
-        if(v==btnInc){
+        if (v == btnInc) {
 
             count++;
             txtCount.setText(String.valueOf(count));
 
         }
-        if(v==btnDec){
+        if (v == btnDec) {
 
-            if(count<1)
-            {
-                count=1;
+            if (count < 1) {
+                count = 1;
                 txtCount.setText("");
 
             }
-            if(count>1)
-            {
+            if (count > 1) {
                 count--;
                 txtCount.setText(String.valueOf(count));
             }
 
         }
 
-        if(v==imageBackArrow){
+        if (v == imageBackArrow) {
 
             finish();
             overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
 
         }
 
-        if(v==btnAddtoCart){
+        if (v == btnAddtoCart) {
+            System.out.println("FoodDetailsActivity.onClick Add To cart");
 
             MaterialRippleLayout.on(btnAddtoCart)
                     .rippleColor(Color.parseColor("#006400"))
@@ -404,11 +412,32 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
             btnBuyNow.setTextColor(Color.parseColor("#00d048"));
             btnAddtoCart.setTextColor(Color.WHITE);
             btnAddtoCart.setBackgroundColor(Color.parseColor("#00d048"));
+            int user_d = sharedPrefsHelper.get(AppConstants.USER_ID, 0);
+            StoreProductsPayload storeProductsPayload = null;
+
+/*
+            nameofItem = getIntent().getExtras().getString("nameOfFood");
+            nameofhotel = getIntent().getExtras().getString("nameofhotel");
+            price = getIntent().getExtras().getString("price");
+            imageUri = getIntent().getExtras().getString("imageUri");
+            description = getIntent().getExtras().getString("description");
+            cart_id = getIntent().getExtras().getInt("position");
+            product_id = getIntent().getExtras().getInt("productid");*/
+
+            databaseHelper.saveOrders(userId, product_id, nameofItem, price
+                    , "1", imageUri, "2");
+
+
+            int counter = databaseHelper.getProductsCount();
+
+
+            nearby.setBadgeCount(counter);
 
         }
 
-        if(v==btnBuyNow){
+        if (v == btnBuyNow) {
 
+            System.out.println("FoodDetailsActivity.onClick - -  Buy Now");
 
 
             layoutOverlay.setVisibility(View.VISIBLE);
@@ -444,7 +473,7 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
             utilityCartData.setTotalPrice(totalPrice);
 
 
-            databaseHelper.insert(userId,product_id,nameOfFood,price,totalItems,imageUri,totalPrice);
+            databaseHelper.insert(userId, product_id, nameOfFood, price, totalItems, imageUri, totalPrice);
 
 
             int counter = databaseHelper.getProductsCount();
@@ -452,11 +481,19 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
             nearby.setBadgeCount(counter);
 
 
+
+//            Bundle bundle = new Bundle();
+//            bundle.putBoolean("click",true);
+
+
+
             Fragment viewCartFragment = new ViewCartFragment();
+//            viewCartFragment.setArguments(bundle);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.foodDetailsContainer, viewCartFragment, "viewCartFragment");
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+            Log.i("Shbu->>FoodDetailA", "onClick: ");
 
            /* Fragment mFragment = null;
             mFragment = new ViewCartFragment();
@@ -465,7 +502,6 @@ public class FoodDetailsActivity extends BaseActivity implements View.OnClickLis
                     .add(R.id.mainFrame, mFragment).commit();
 
 */
-
 
 
         }

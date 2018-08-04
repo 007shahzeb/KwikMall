@@ -3,6 +3,7 @@ package mall.kwik.kwikmall.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
     private TextView tvFlatNo,tvAddressNew,tvDeleteNewAdd;
     private Context context;
     private NoInternetDialog noInternetDialog;
+    private long lastClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +189,12 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         }
 
         if(v==btnAddNewAddresses){
+
+
+            if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+                return;
+            }
+            lastClickTime = SystemClock.elapsedRealtime();
 
 
             Intent intent = new Intent(ManageAddressActivity.this,SetDeliveryLocationActivity.class);

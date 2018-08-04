@@ -47,11 +47,9 @@ public class LoginPresenter{
 
     public void ok_login(GitApiInterface apiService, SharedPrefsHelper sharedPrefsHelper, String email, String passw){
 
-
         compositeDisposable = new CompositeDisposable();
 
         view.showLoadingDialog();
-
 
         compositeDisposable.add(apiService.LoginUser(email,passw)
                 .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
@@ -64,8 +62,8 @@ public class LoginPresenter{
                         compositeDisposable.dispose();
 
 
-                        if(userLoginSuccess.getSuccess()){
-
+                        if(userLoginSuccess.getSuccess())
+                        {
 
                             sharedPrefsHelper.put(AppConstants.USER_ID,userLoginSuccess.getPayload().getId());
                             sharedPrefsHelper.put(AppConstants.USER_NAME,userLoginSuccess.getPayload().getName());

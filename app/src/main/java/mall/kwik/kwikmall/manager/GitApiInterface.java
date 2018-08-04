@@ -23,12 +23,13 @@ import mall.kwik.kwikmall.apiresponse.RegisterResponse.RegisterSuccess;
 import mall.kwik.kwikmall.apiresponse.RestaurantsListSuccess.RestaurantsListSuccess;
 import mall.kwik.kwikmall.apiresponse.RestaurantsShopsResponse.ShopsListSuccess;
 import mall.kwik.kwikmall.apiresponse.SendCategoriesResponse.SendCatToSuccess;
+import mall.kwik.kwikmall.apiresponse.deleteFavProduct.ResponseDeleteFavProduct;
+import mall.kwik.kwikmall.apiresponse.getOrderStatusAPI.ResponseGetOrderStatus;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
-
 
 
 public interface GitApiInterface {
@@ -82,7 +83,6 @@ public interface GitApiInterface {
                                                 @Field("email") String Email);
 
 
-
     //------------------------8
     @POST("forgotPassword")
     Observable<ForgetPasswordSuccess> forgetPassword(@Body HashMap<String, String> hashMap);
@@ -132,6 +132,18 @@ public interface GitApiInterface {
     //------------------------17
     @POST("deleteOrderByUser")
     Observable<DeleteOrderSuccess> deleteOrderByUser(@Body HashMap<String, String> hashMap);
+
+    @FormUrlEncoded
+    @POST("deleteFavProduct")
+    Observable<ResponseDeleteFavProduct> deleteFavProductAPI(@Field("id") String Id,
+                                                             @Field("userId") String userId,
+                                                             @Field("productId") String productId);
+
+
+    @FormUrlEncoded
+    @POST("getOrderStatus")
+    Observable<ResponseGetOrderStatus> getStatusOrderAPI(@Field("userId") String userId,
+                                                         @Field("orderNo") String orderNo);
 
 
 }

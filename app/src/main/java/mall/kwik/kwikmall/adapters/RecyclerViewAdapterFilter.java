@@ -14,8 +14,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import mall.kwik.kwikmall.apiresponse.FilterListResponse.FilterListPayload;
 import mall.kwik.kwikmall.R;
+import mall.kwik.kwikmall.apiresponse.FilterListResponse.FilterListPayload;
 
 import static mall.kwik.kwikmall.activities.FilterActivity.footerFilter;
 import static mall.kwik.kwikmall.activities.FilterActivity.tvClear;
@@ -24,30 +24,31 @@ import static mall.kwik.kwikmall.activities.FilterActivity.tvClear;
  * Created by dharamveer on 30/12/17.
  */
 
-public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerViewAdapterFilter.MyHolderRight>
-{
+public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerViewAdapterFilter.MyHolderRight> {
 
     List<FilterListPayload> filterListPayloadList = Collections.emptyList();
     Context context;
     View view;
-    public  boolean isUnSelectedAll;
+    public boolean isUnSelectedAll;
     private RecyclerViewAdapterFilter.ItemClickListenerCheck itemClickListenerCheck;
     private HashMap<Integer, Boolean> ischecked = new HashMap<>();
 
-    public void unselectAll(){
-        Log.e("onClickUnSelectAll","no");
+    private boolean isAllunselect = true;
+
+    public void unselectAll() {
+        Log.e("onClickUnSelectAll", "no");
         isUnSelectedAll = false;
         notifyDataSetChanged();
     }
 
 
-    public interface ItemClickListenerCheck{
+    public interface ItemClickListenerCheck {
 
         void itemClick(int catId);
     }
 
 
-    public void setItemClickListenerCheck(RecyclerViewAdapterFilter.ItemClickListenerCheck itemClickListenerCheck){
+    public void setItemClickListenerCheck(RecyclerViewAdapterFilter.ItemClickListenerCheck itemClickListenerCheck) {
 
         this.itemClickListenerCheck = itemClickListenerCheck;
 
@@ -71,7 +72,6 @@ public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerView
     }
 
 
-
     @Override
     public void onBindViewHolder(final RecyclerViewAdapterFilter.MyHolderRight holder, final int position) {
 
@@ -79,17 +79,16 @@ public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerView
         final FilterListPayload filterListPayload = filterListPayloadList.get(position);
 
 
-        if(filterListPayload!=null){
+        if (filterListPayload != null) {
 
 
             holder.checkboxRecyclerRight.setText(filterListPayload.getName());
 
 
-            if(isUnSelectedAll){
+            if (isUnSelectedAll) {
 
                 holder.checkboxRecyclerRight.setChecked(true);
-            }
-            else {
+            } else {
 
                 holder.checkboxRecyclerRight.setChecked(false);
             }
@@ -111,30 +110,69 @@ public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerView
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                    isAllunselect = true;
 
-                    if(isChecked){
+                   /* CheckBox checkBox = buttonView.findViewById(R.id.checkboxRecyclerRight);
+                    checkBox.setChecked(true);*/
 
-                        holder.checkboxRecyclerRight.setChecked(isChecked);
 
-                        ischecked.put(position, isChecked);
+                    if (isChecked) {
+
+
+
+                        System.out.println("RecyclerViewAdapterFilter.onCheckedChanged - - - 1");
+                        holder.checkboxRecyclerRight.setChecked(true);
+
+                        ischecked.put(position, true);
 
                         itemClickListenerCheck.itemClick(filterListPayload.getId());
 
                         footerFilter.setBackgroundColor(Color.parseColor("#00d048")); //darkgreen
                         tvClear.setTextColor(Color.parseColor("#FF6347")); //darkorange
-
                         footerFilter.setEnabled(true);
 
-                    }
-                    else {
+                        filterListPayloadList.get(position).isSeleted = true;
 
-                        ischecked.put(position, isChecked);
 
-                        holder.checkboxRecyclerRight.setChecked(isChecked);
+                    } else {
 
-                        footerFilter.setBackgroundColor(Color.parseColor("#B2D0B2")); //dimgreen
+                        filterListPayloadList.get(position).isSeleted = false;
 
-                        footerFilter.setEnabled(false);
+                        for(int i=0;i<filterListPayloadList.size();i++)
+                        {
+                            if(filterListPayloadList.get(i).isSeleted)  // if any greens
+                            {
+                                isAllunselect = false;
+                                break;
+                            }
+                        }
+
+
+                        if(isAllunselect)
+                        {
+                            System.out.println("RecyclerViewAdapterFilter.onCheckedChanged if case");
+                            footerFilter.setBackgroundColor(Color.parseColor("#B2D0B2")); //darkgreen
+//                        tvClear.setTextColor(Color.parseColor("#F4AC66"));
+                            footerFilter.setEnabled(false);
+                        }
+                        else
+                        {
+                            System.out.println("RecyclerViewAdapterFilter.onCheckedChanged - - - else case");
+                            footerFilter.setBackgroundColor(Color.parseColor("#00d048")); //darkgreen
+//                        tvClear.setTextColor(Color.parseColor("#F4AC66"));
+                            footerFilter.setEnabled(true);
+                        }
+
+
+
+
+
+//                        ischecked.put(position, isChecked);
+
+//                        holder.checkboxRecyclerRight.setChecked(isChecked);
+
+//                        footerFilter.setBackgroundColor(Color.parseColor("#B2D0B2")); //dimgreen
+
                     }
 
 
@@ -145,12 +183,7 @@ public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerView
         }
 
 
-
     }
-
-
-
-
 
 
     @Override
@@ -168,9 +201,6 @@ public class RecyclerViewAdapterFilter extends RecyclerView.Adapter<RecyclerView
             super(itemView);
 
             checkboxRecyclerRight = itemView.findViewById(R.id.checkboxRecyclerRight);
-
-
-
 
 
         }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,7 +23,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
+import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.activities.ManageAddressActivity;
 import mall.kwik.kwikmall.activities.PaymentsModeActivity;
 import mall.kwik.kwikmall.activities.SignInActivity;
@@ -32,31 +31,35 @@ import mall.kwik.kwikmall.apiresponse.GetFavouriteResponse.GetFavouritePayload;
 import mall.kwik.kwikmall.apiresponse.GetFavouriteResponse.GetFavouriteSuccess;
 import mall.kwik.kwikmall.apiresponse.GetOrderListResponse.GetOrderListPayload;
 import mall.kwik.kwikmall.apiresponse.GetOrderListResponse.GetOrderListSuccess;
+import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
 import mall.kwik.kwikmall.dialogs.LogoutConfirmDialog;
-import mall.kwik.kwikmall.R;
 import mall.kwik.kwikmall.dialogs.SendFeedbackDialog;
 import mall.kwik.kwikmall.sharedpreferences.UserDataUtility;
+
+import static mall.kwik.kwikmall.activities.FragmentsActivity.bottomBar;
 
 
 public class AccountFragment extends BaseFragment implements View.OnClickListener {
 
     private View view;
-    private LinearLayout layoutLogoutRipple,linearYourOrders;
-    private LinearLayout linearManageAddress,linearPayment;
-    private LinearLayout linearFavorites,linearTrackorder;
-    private TextView tvUserName,tvUserEmail;
-    public static TextView tvOrdersCount,tvFavouritesCount;
+    private LinearLayout layoutLogoutRipple, linearYourOrders;
+    private LinearLayout linearManageAddress, linearPayment;
+    private LinearLayout linearFavorites, linearTrackorder;
+    private TextView tvUserName, tvUserEmail;
+    public static TextView tvOrdersCount, tvFavouritesCount;
     private String idUser;
-    private LinearLayout offersLayout,sendFeedbacklayout;
+    private LinearLayout offersLayout, sendFeedbacklayout;
 
     public ArrayList<GetOrderListPayload> saveOrdersModels = new ArrayList<>();
     public ArrayList<GetFavouritePayload> getFavouritePayloads = new ArrayList<>();
     LogoutConfirmDialog logoutConfirmDialog = null;
-    private LinearLayout loginTrue,loginFalse;
+    private LinearLayout loginTrue, loginFalse;
     private TextView txtLoginAgain;
     private Context context;
     private NoInternetDialog noInternetDialog;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private long lastClickTime = 0;
+    private SendFeedbackDialog sendFeedbackDialog = null;
 
 
     @Override
@@ -70,13 +73,14 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
         findViewId();
 
         clikListeners();
+        bottomBar.getTabWithId(R.id.tab_account).performClick();
 
-        idUser = String.valueOf(sharedPrefsHelper.get(AppConstants.USER_ID,0));
+        idUser = String.valueOf(sharedPrefsHelper.get(AppConstants.USER_ID, 0));
 
-        tvUserName.setText(sharedPrefsHelper.get(AppConstants.USER_NAME,"Dharam"));
-        tvUserEmail.setText(sharedPrefsHelper.get(AppConstants.EMAIL,"abc"));
 
-        GetFavouritesListApi();
+        tvUserName.setText(sharedPrefsHelper.get(AppConstants.USER_NAME, "Dharam"));
+        tvUserEmail.setText(sharedPrefsHelper.get(AppConstants.EMAIL, "abc"));
+
 
         GetOrderListApi();
 
@@ -86,14 +90,10 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
             loginTrue.setVisibility(View.VISIBLE);
             loginFalse.setVisibility(View.GONE);
 
-        }
-
-        else {
+        } else {
             loginFalse.setVisibility(View.VISIBLE);
             loginTrue.setVisibility(View.GONE);
         }
-
-
 
 
         return view;
@@ -111,9 +111,8 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
     private void GetFavouritesListApi() {
 
 
-
         HashMap<String, String> stringStringHashMap = new HashMap<>();
-        stringStringHashMap.put("userId",idUser);
+        stringStringHashMap.put("userId", idUser);
 
 
         compositeDisposable.add(apiService.getfavouriteProducts(stringStringHashMap)
@@ -124,19 +123,19 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
                     public void accept(GetFavouriteSuccess getFavouriteSuccess) throws Exception {
 
 
-                        if(getFavouriteSuccess.getSuccess()){
+                        if (getFavouriteSuccess.getSuccess()) {
+
 
                             getFavouritePayloads = new ArrayList<>(getFavouriteSuccess.getPayload());
 
                             int size = getFavouritePayloads.size();
+                            System.out.println("AccountFragment.accept - the size is - -" + size);
 
                             tvFavouritesCount.setVisibility(View.VISIBLE);
                             tvFavouritesCount.setText(String.valueOf(size));
 
 
-
-                        }
-                        else {
+                        } else {
                             tvFavouritesCount.setVisibility(View.GONE);
 
 
@@ -157,8 +156,7 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
 
 
         HashMap<String, String> stringStringHashMap = new HashMap<>();
-        stringStringHashMap.put("userId",idUser);
-
+        stringStringHashMap.put("userId", idUser);
 
 
         compositeDisposable.add(apiService.getOrderList(stringStringHashMap)
@@ -169,7 +167,7 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
                     public void accept(GetOrderListSuccess getOrderListSuccess) throws Exception {
 
 
-                        if(getOrderListSuccess.getSuccess()){
+                        if (getOrderListSuccess.getSuccess()) {
 
                             saveOrdersModels = new ArrayList<>(getOrderListSuccess.getPayload());
 
@@ -179,9 +177,7 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
                             tvOrdersCount.setText(String.valueOf(size));
 
 
-
-                        }
-                        else {
+                        } else {
 
                             tvOrdersCount.setVisibility(View.GONE);
 
@@ -221,11 +217,9 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
         loginFalse = view.findViewById(R.id.loginFalse);
 
 
-
         //static text views
         tvOrdersCount = view.findViewById(R.id.tvOrdersCount);
         tvFavouritesCount = view.findViewById(R.id.tvFavouritesCount);
-
 
 
         materialRipple(linearManageAddress);
@@ -240,7 +234,7 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
     }
 
 
-    public void materialRipple(View view){
+    public void materialRipple(View view) {
 
         MaterialRippleLayout.on(view)
                 .rippleColor(Color.parseColor("#006400"))
@@ -270,28 +264,37 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
 
+        if (v == sendFeedbacklayout) {
 
-        if(v==sendFeedbacklayout){
+            if (sendFeedbackDialog == null) {
+                sendFeedbackDialog = new SendFeedbackDialog(getActivity());
+                sendFeedbackDialog.show();
+            } else {
+                if (!sendFeedbackDialog.isShowing())
+                    sendFeedbackDialog.show();
+            }
 
-
-            SendFeedbackDialog sendFeedbackDialog = new SendFeedbackDialog(getActivity());
-            sendFeedbackDialog.show();
 
         }
 
 
-        if(v==txtLoginAgain){
+        if (v == txtLoginAgain) {
 
-
-            Intent intent = new Intent(getActivity(),SignInActivity.class);
+            Intent intent = new Intent(getActivity(), SignInActivity.class);
             startActivity(intent);
             getActivity().finish();
             getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
 
         }
 
-        if(v==layoutLogoutRipple){
+        if (v == layoutLogoutRipple) {
 
+
+
+            if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+                return;
+            }
+            lastClickTime = SystemClock.elapsedRealtime();
 
             LogoutConfirmDialog.myOnClickListener myOnClickListener;
 
@@ -300,7 +303,7 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
                 public void onButtonClick() {
 
 
-                    UserDataUtility.setLogin(false,getActivity());
+                    UserDataUtility.setLogin(false, getActivity());
 
                     loginTrue.setVisibility(View.GONE);
                     loginFalse.setVisibility(View.VISIBLE);
@@ -311,17 +314,19 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
                 }
             };
 
-            logoutConfirmDialog = new LogoutConfirmDialog(getActivity(),myOnClickListener);
+            logoutConfirmDialog = new LogoutConfirmDialog(getActivity(), myOnClickListener);
             logoutConfirmDialog.show();
-
 
 
         }
 
 
+        if (v == linearFavorites) {
 
-        if(v==linearFavorites){
-
+            if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+                return;
+            }
+            lastClickTime = SystemClock.elapsedRealtime();
 
             Fragment favouritesFragment = new FavouritesFragment();
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -330,13 +335,17 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
             fragmentTransaction.commit();
 
 
-            getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
 
         }
 
-        if(v==linearTrackorder){
+        if (v == linearTrackorder) {
 
+            if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+                return;
+            }
+            lastClickTime = SystemClock.elapsedRealtime();
 
             Fragment trackYourOrderFragment = new TrackYourOrderFragment();
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -345,7 +354,7 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
             fragmentTransaction.commit();
 
 
-            getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
 
            /* Intent intent = new Intent(getActivity(),TrackOrderMapActivity.class);
@@ -356,10 +365,12 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
 
         }
 
-        if(v==linearYourOrders){
+        if (v == linearYourOrders) {
 
-
-
+            if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+                return;
+            }
+            lastClickTime = SystemClock.elapsedRealtime();
 
             Fragment yourOrdersFragment = new YourOrdersFragment();
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -368,34 +379,54 @@ public class AccountFragment extends BaseFragment implements View.OnClickListene
             fragmentTransaction.commit();
 
 
-            getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
 
         }
 
 
-        if(v==linearPayment){
+        if (v == linearPayment) {
 
-            Intent intent = new Intent(getActivity(),PaymentsModeActivity.class);
+            if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+                return;
+            }
+            lastClickTime = SystemClock.elapsedRealtime();
+            Intent intent = new Intent(getActivity(), PaymentsModeActivity.class);
             startActivity(intent);
 
-            getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
 
         }
 
-        if(v==linearManageAddress){
+        if (v == linearManageAddress) {
 
-            Intent intent = new Intent(getActivity(),ManageAddressActivity.class);
+            if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+                return;
+            }
+            lastClickTime = SystemClock.elapsedRealtime();
+
+            Intent intent = new Intent(getActivity(), ManageAddressActivity.class);
             startActivity(intent);
 
-            getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
         }
 
 
     }
 
+    private void stoppingDoubleClick() {
 
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+            return;
+        }
+        lastClickTime = SystemClock.elapsedRealtime();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        GetFavouritesListApi();
+    }
 }

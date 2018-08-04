@@ -16,6 +16,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -45,6 +46,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.sdsmdg.tastytoast.TastyToast;
 
 
 import org.json.JSONException;
@@ -62,6 +64,9 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import mall.kwik.kwikmall.AppConstants;
 import mall.kwik.kwikmall.activities.FragmentsActivity;
+import mall.kwik.kwikmall.activities.PaymentSuccessfullyActivity;
+import mall.kwik.kwikmall.apiresponse.GetDeliveryStatus.GetDeliveryStatusSuccess;
+import mall.kwik.kwikmall.apiresponse.getOrderStatusAPI.ResponseGetOrderStatus;
 import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
 import mall.kwik.kwikmall.activities.EnterAddressActivity;
 import mall.kwik.kwikmall.activities.SignInActivity;
@@ -76,6 +81,7 @@ import mall.kwik.kwikmall.swipedItemtouchhelper.RecyclerItemTouchHelper;
 import pl.charmas.android.reactivelocation2.ReactiveLocationProvider;
 
 
+import static mall.kwik.kwikmall.activities.FragmentsActivity.bottomBar;
 import static mall.kwik.kwikmall.activities.FragmentsActivity.nearby;
 import static mall.kwik.kwikmall.fragments.FragmentWithoutSearchResults.RecyclerViewAdapter._counter;
 
@@ -108,6 +114,10 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
     private double latituteR, longitudeR;
+    private Context context;
+    public static String orderNo;
+    public static int userId;
+
 
     @Nullable
     @Override
@@ -118,6 +128,18 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
         viewCartModels = new ArrayList<CartModel>();
 
         findViewId();
+
+        if(getArguments()!=null)
+        {
+            if (!getArguments().getBoolean("click")) {
+                bottomBar.getTabWithId(R.id.tab_cart).performClick();
+            }
+        }
+
+
+
+        context = getActivity();
+
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -134,6 +156,10 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
         totalItems = utilityCartData.getTotalItems();
         imageUri = utilityCartData.getImageUri();
         totalPrice = utilityCartData.getTotalPrice();
+
+
+        orderNo = sharedPrefsHelper.get(AppConstants.ORDER_NO, "");
+        userId = sharedPrefsHelper.get(AppConstants.USER_ID, 0);
 
 
         viewCartModels = database.getStoreProducts();
@@ -204,7 +230,6 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
 
 
         }
-
 
         return view;
 
@@ -363,13 +388,17 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
 
 
         if (v == imageViewCartBack) {
+            System.out.println("ViewCartFragment.onClick - - - Baclarrow ");
 
             FragmentManager fm = getFragmentManager();
             if (fm.getBackStackEntryCount() > 0) {
-                Log.i("MainActivity", "popping backstack");
+                System.out.println("ViewCartFragment.onClick - -  ifcase ");
+
                 fm.popBackStack();
+
             } else {
-                Log.i("MainActivity", "nothing on backstack, calling super");
+                System.out.println("ViewCartFragment.onClick - - - else case ");
+
                 super.getActivity().onBackPressed();
             }
 
@@ -385,14 +414,16 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
 
                 flipProgress();
 
+//                popUpDialog();
 
-
-
+//               placeOrderStatusAPI();
 
 
                 placeOrderApi();
-
-
+                txtPlaceorder.setClickable(false);
+                txtPlaceorder.setTextColor(Color.parseColor("#ffffff"));
+                txtPlaceorder.setBackground(getContext().getResources().getDrawable(R.drawable.placeorder_background));
+                TastyToast.makeText(getActivity(), "You have to wait for a minute atleast ", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
 
 
             } else {
@@ -421,6 +452,46 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
     }
 
 
+    private void popUpDialog() {
+
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(context);
+        }
+        builder.setCancelable(false);
+        builder.setTitle("Choose The Action")
+
+//                            .setMessage("Are you sure you want to delete this entry?")
+                .setPositiveButton("ACCEPT", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        System.out.println("PaymentMethodActivity.onClick - - - Aceept");
+                        Toast.makeText(context, "Order successfully Submitted", Toast.LENGTH_SHORT).show();
+//
+                        startActivity(new Intent(context, PaymentSuccessfullyActivity.class));
+                        getActivity().finish();
+                        getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
+                    }
+                })
+                .setNegativeButton("REJECT", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+
+                        System.out.println("PaymentMethodActivity.onClick - - - Reject");
+                        Toast.makeText(getContext(), "Not in policy", Toast.LENGTH_SHORT).show();
+//                                checkboxPaypal.setChecked(false);
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+        builder.setCancelable(false);
+
+
+    }
+
+
     public void placeOrderApi() {
 
 
@@ -439,29 +510,28 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
                     @Override
                     public void accept(Location location) throws Exception {
 
-                            latituteR = location.getLatitude();
-                            longitudeR = location.getLongitude();
+                        latituteR = location.getLatitude();
+                        longitudeR = location.getLongitude();
 
 
-                        for(int i=0;i<viewCartModels.size();i++){
+                        for (int i = 0; i < viewCartModels.size(); i++) {
 
                             JsonObject object = new JsonObject();
 
-                            object.addProperty("userId",sharedPrefsHelper.get(AppConstants.USER_ID,1));
-                            object.addProperty("productId",viewCartModels.get(i).getKEY_ID());
-                            object.addProperty("productName",viewCartModels.get(i).getKEY_name());
-                            object.addProperty("productPrice",viewCartModels.get(i).getKEY_price());
-                            object.addProperty("productQty",viewCartModels.get(i).getKEY_qty());
-                            object.addProperty("bussinessId",sharedPrefsHelper.get(AppConstants.STORE_ID,0));
-                            object.addProperty("total",viewCartModels.get(i).getKEY_TotalPrice());
-                            object.addProperty("userLat",latituteR);
-                            object.addProperty("userLng",longitudeR);
+                            object.addProperty("userId", sharedPrefsHelper.get(AppConstants.USER_ID, 1));
+                            object.addProperty("productId", viewCartModels.get(i).getKEY_ID());
+                            object.addProperty("productName", viewCartModels.get(i).getKEY_name());
+                            object.addProperty("productPrice", viewCartModels.get(i).getKEY_price());
+                            object.addProperty("productQty", viewCartModels.get(i).getKEY_qty());
+                            object.addProperty("bussinessId", sharedPrefsHelper.get(AppConstants.STORE_ID, 0));
+                            object.addProperty("total", viewCartModels.get(i).getKEY_TotalPrice());
+                            object.addProperty("userLat", latituteR);
+                            object.addProperty("userLng", longitudeR);
 
                             jsonArray.add(object);
 
 
                         }
-
 
 
                         compositeDisposable.add(apiService.placeOrder(jsonArray)
@@ -472,31 +542,43 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
                                     public void accept(PlaceOrder placeOrder) throws Exception {
 
 
-                                        if(placeOrder.getSuccess()){
+                                        if (placeOrder.getSuccess()) {
 
                                             database.deleteAllOrders();
 
                                             fpd.dismiss();
 
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString("totalAmount", String.valueOf(sum));
+//                                            Bundle bundle = new Bundle();
+//                                            bundle.putString("totalAmount", String.valueOf(sum));
 
 
-                                            String orderNo = placeOrder.getPayload().getOrderNo();
+                                            orderNo = placeOrder.getPayload().getOrderNo();
+                                            System.out.println("ViewCartFragment.accept - - - ORDER NUMBER IS " + orderNo);
+                                            userId = sharedPrefsHelper.get(AppConstants.USER_ID, 0);
+                                            System.out.println("ViewCartFragment.accept - -  USER ID IS " + userId);
 
 
-                                            sharedPrefsHelper.put(AppConstants.ORDER_NO,orderNo);
+                                            sharedPrefsHelper.put(AppConstants.ORDER_NO, orderNo);
 
-                                            Intent intent = new Intent(getActivity(),EnterAddressActivity.class);
-                                            intent.putExtras(bundle);
-                                            startActivity(intent);
-                                            getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
 
-                                        }
-                                        else {
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+
+                                                    placeOrderStatusAPI();
+                                                }
+                                            }, 60000);
+
+
+//                                            Intent intent = new Intent(getActivity(), EnterAddressActivity.class);
+//                                            intent.putExtras(bundle);
+//                                            startActivity(intent);
+//                                            getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
+
+                                        } else {
 
                                             fpd.dismiss();
-                                            showAlertDialog("Retry",placeOrder.getMessage());
+                                            showAlertDialog("Retry", placeOrder.getMessage());
 
                                         }
                                     }
@@ -512,18 +594,55 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
                                 }));
 
 
-
-
-
                     }
                 });
-
 
 
     }
 
 
+    private void placeOrderStatusAPI() {
 
+        System.out.println("ViewCartFragment.placeOrderStatusAPI -useriod check  -  " + userId);
+        System.out.println("ViewCartFragment.placeOrderStatusAPI - Ordernumbercheck-  " + orderNo);
+
+        compositeDisposable.add(apiService.getStatusOrderAPI(String.valueOf(userId), orderNo)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResponseGetOrderStatus>() {
+                    @Override
+                    public void accept(ResponseGetOrderStatus responseGetOrderStatus) throws Exception {
+
+
+                        if (responseGetOrderStatus.success && responseGetOrderStatus.status == 1) {
+
+                            TastyToast.makeText(getActivity(), responseGetOrderStatus.getMessage(), TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+//                            placeOrderApi();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("totalAmount", String.valueOf(sum));
+                            Intent intent = new Intent(getActivity(), EnterAddressActivity.class);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
+
+                        } else {
+
+                            TastyToast.makeText(getActivity(), responseGetOrderStatus.getMessage(), TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+                            fpd.dismiss();
+                        }
+
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                        fpd.dismiss();
+                        System.out.println("ViewCartFragment.accept OnFailureTesting " + throwable);
+
+                    }
+                }));
+    }
 
 
     @Override
@@ -555,7 +674,6 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
         }
 
 
-
     }
 
     @Override
@@ -573,7 +691,7 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
 
 
-        if(viewHolder instanceof RecyclerViewAdapterTouch.ViewCartHolder){
+        if (viewHolder instanceof RecyclerViewAdapterTouch.ViewCartHolder) {
 
 
             // get the removed item name to display it in snack bar
@@ -587,7 +705,7 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
             database.deleteSingleRowTABLE1(name);
 
 
-            if(viewCartModels.size()>=1) {
+            if (viewCartModels.size() >= 1) {
 
                 deleted = Integer.parseInt(deletedItem.getKEY_price());
 
@@ -614,7 +732,7 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
          /*   CounterModel counterModel = new CounterModel(this);
 
             counterModel.setCounter(viewCartModels.size());*/
-            if(viewCartModels.size()==0){
+            if (viewCartModels.size() == 0) {
 
                 recyclerViewCart.setVisibility(View.INVISIBLE);
                 imageCartEmpty.setVisibility(View.VISIBLE);
@@ -631,9 +749,12 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
             snackbar.setAction("UNDO", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     // undo is selected, restore the deleted item
                     recyclerViewAdapter.restoreItem(deletedItem, deletedIndex);
+                    recyclerViewCart.setVisibility(View.VISIBLE);
+                    imageCartEmpty.setVisibility(View.INVISIBLE);
+
+                    bottomPlaceOrder.setVisibility(View.VISIBLE);
 
                 }
             });
@@ -645,10 +766,7 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
         }
 
 
-
     }
-
-
 
 
 }

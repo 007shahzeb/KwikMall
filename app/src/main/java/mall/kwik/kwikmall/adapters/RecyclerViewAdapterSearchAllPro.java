@@ -31,7 +31,7 @@ public class RecyclerViewAdapterSearchAllPro extends RecyclerView.Adapter<Recycl
 
 
     public interface ItemClickListener{
-        void ItemClick(int productid,String itemname,String price,String imagepath, String des);
+        void ItemClick(int productid,String itemname,String price,String imagepath, String des,int quantity);
     }
 
 
@@ -82,7 +82,9 @@ public class RecyclerViewAdapterSearchAllPro extends RecyclerView.Adapter<Recycl
                         ,clickedItem
                         ,getAllProductsPayload.getPrice(),
                         getAllProductsPayload.getImage(),
-                        getAllProductsPayload.getDescription());
+                        getAllProductsPayload.getDescription(),
+                        getAllProductsPayload.getQuantity()
+                        );
 
 
 

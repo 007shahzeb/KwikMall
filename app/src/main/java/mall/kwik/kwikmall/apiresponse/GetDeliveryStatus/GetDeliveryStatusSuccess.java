@@ -13,9 +13,11 @@ public class GetDeliveryStatusSuccess {
     @Expose
     @SerializedName("payload")
     private DeliveryStatusPayload payload;
+
     @Expose
     @SerializedName("error")
     private boolean error;
+
     @Expose
     @SerializedName("success")
     private boolean success;

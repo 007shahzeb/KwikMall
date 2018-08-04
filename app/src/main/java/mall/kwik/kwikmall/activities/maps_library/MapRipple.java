@@ -199,6 +199,7 @@ public class MapRipple {
          }
      };
  */
+
     private void startAnimation(final int numberOfRipple) {
         ValueAnimator animator = ValueAnimator.ofInt(0, (int) mDistance);
         animator.setRepeatCount(ValueAnimator.INFINITE);

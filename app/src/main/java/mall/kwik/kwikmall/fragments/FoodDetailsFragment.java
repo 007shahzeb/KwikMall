@@ -3,6 +3,7 @@ package mall.kwik.kwikmall.fragments;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,10 +21,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.balysv.materialripple.MaterialRippleLayout;
 import com.like.LikeButton;
 import com.like.OnAnimationEndListener;
 import com.like.OnLikeListener;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -32,11 +33,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import mall.kwik.kwikmall.AppConstants;
-import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
-import mall.kwik.kwikmall.apiresponse.AddFavourites.AddFavouritesSuccess;
 import mall.kwik.kwikmall.R;
-import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
+import mall.kwik.kwikmall.apiresponse.AddFavourites.AddFavouritesSuccess;
+import mall.kwik.kwikmall.baseFragActivity.BaseFragment;
 import mall.kwik.kwikmall.sharedpreferences.UtilityCartData;
+import mall.kwik.kwikmall.sqlitedatabase.DBHelper;
 
 import static mall.kwik.kwikmall.activities.FragmentsActivity.nearby;
 
@@ -48,23 +49,27 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
 
     private View view;
 
-    private ImageView imageFood,imageBackArrow;
-    private TextView txtNameofItem,tvPrice,txtCount,txtCountItems,txtTotatPrice,txtViewCart,txtdescription;
-    private Button btnAddtoCart,btnBuyNow,btnInc,btnDec;
-    private   int count=1;
-    private RelativeLayout layoutOverlay,layoutInvisible;
+    private ImageView imageFood, imageBackArrow;
+    private TextView txtNameofItem, tvPrice, txtCount, txtCountItems, txtTotatPrice, txtViewCart, txtdescription;
+    private Button btnAddtoCart, btnBuyNow, btnInc, btnDec;
+    private int count = 1;
+    private RelativeLayout layoutOverlay, layoutInvisible;
 
-    String imageUri,totalItems,totalPrice,description,nameofhotel;
-    int cart_id=0;
-    int product_id=0;
+    String imageUri, totalItems, totalPrice, description, nameofhotel;
+    int cart_id = 0;
+    int product_id = 0;
     DBHelper databaseHelper;
     int userId;
-    private String nameofItem,price;
+    private String nameofItem, price;
+    private int quantity;
     private LikeButton button_favorite;
     private TextView tvHotelNameFoodDetailsTopbar;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     String finalImageUri;
+
+//    private String quantity;
+
 
     @Nullable
     @Override
@@ -73,26 +78,27 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
 
         findIds();
 
-
-        userId = sharedPrefsHelper.get(AppConstants.USER_ID,0);
+        userId = sharedPrefsHelper.get(AppConstants.USER_ID, 0);
 
         Bundle bundle = this.getArguments();
 
-        if(bundle!=null){
+        if (bundle != null) {
 
             nameofItem = bundle.getString("nameOfFood");
             nameofhotel = bundle.getString("nameofhotel");
             price = bundle.getString("price");
             imageUri = bundle.getString("imageUri");
-            description =bundle.getString("description");
+            description = bundle.getString("description");
             cart_id = bundle.getInt("position");
             product_id = bundle.getInt("productid");
+            quantity = bundle.getInt("quantity");
+            System.out.println("FoodDetailsFragment.onCreateView - Shahahahahahah- - " + quantity);
 
 
         }
 
 
-        if(imageUri.contains("http")){
+        if (imageUri.contains("http")) {
 
             Picasso.with(getActivity())
                     .load(imageUri)
@@ -101,20 +107,19 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
                     .into(imageFood);
 
 
-             finalImageUri = imageUri;
+            finalImageUri = imageUri;
 
 
-        }
-        else {
+        } else {
 
             Picasso.with(getActivity())
-                    .load("http://employeelive.com/kwiqmall/SuperAdmin/img/products/"+imageUri)
+                    .load("http://employeelive.com/kwiqmall/SuperAdmin/img/products/" + imageUri)
                     .fit()
                     .error(R.drawable.errortriangle)
                     .into(imageFood);
 
 
-            finalImageUri = "http://employeelive.com/kwiqmall/SuperAdmin/img/products/"+imageUri;
+            finalImageUri = "http://employeelive.com/kwiqmall/SuperAdmin/img/products/" + imageUri;
         }
 
 
@@ -152,11 +157,10 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
 
                     Toast.makeText(getActivity(), "Already added", Toast.LENGTH_SHORT).show();
 
+                } else if (LoadButtonState() != product_id) {
+
+                    AddToFavouritesListApi();
                 }
-
-
-                AddToFavouritesListApi();
-
 
             }
 
@@ -187,12 +191,12 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
         HashMap<String, String> stringStringHashMap = new HashMap<>();
         stringStringHashMap.put("userId", String.valueOf(userId));
         stringStringHashMap.put("productId", String.valueOf(product_id));
-        stringStringHashMap.put("productName",nameofItem);
-        stringStringHashMap.put("productPrice",price);
-        stringStringHashMap.put("productQty",totalItems1);
-        stringStringHashMap.put("totalPrice",totalPrice2);
-        stringStringHashMap.put("imageUrl",finalImageUri);
-        stringStringHashMap.put("bussinessName",nameofhotel);
+        stringStringHashMap.put("productName", nameofItem);
+        stringStringHashMap.put("productPrice", price);
+        stringStringHashMap.put("productQty", totalItems1);
+        stringStringHashMap.put("totalPrice", totalPrice2);
+        stringStringHashMap.put("imageUrl", finalImageUri);
+        stringStringHashMap.put("bussinessName", nameofhotel);
 
 
         compositeDisposable.add(apiService.addFavourites(stringStringHashMap)
@@ -202,12 +206,11 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
                     @Override
                     public void accept(AddFavouritesSuccess addFavouritesSuccess) throws Exception {
 
-                        if(addFavouritesSuccess.getSuccess()){
+                        if (addFavouritesSuccess.getSuccess()) {
 
                             SaveButtonState(product_id);
-                            Toast.makeText(getActivity(),"Added to favourites",Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                            Toast.makeText(getActivity(), "Added to favourites", Toast.LENGTH_SHORT).show();
+                        } else {
 
 
                         }
@@ -216,23 +219,21 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                showAlertDialog("Retry",throwable.getMessage());
+                        showAlertDialog("Retry", throwable.getMessage());
                     }
                 }));
 
 
-
-
     }
 
-    public void SaveButtonState(int product_id){
+    public void SaveButtonState(int product_id) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putInt("product_id",product_id);
+        edit.putInt("product_id", product_id);
         edit.commit();
     }
 
-    public int LoadButtonState(){
+    public int LoadButtonState() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         int buttonState = preferences.getInt("product_id", 0);
         return buttonState;
@@ -263,8 +264,7 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
         txtNameofItem = view.findViewById(R.id.txtNameofItem);
         txtdescription = view.findViewById(R.id.txtdescription);
 
-        button_favorite =view.findViewById(R.id.button_favorite);
-
+        button_favorite = view.findViewById(R.id.button_favorite);
 
 
     }
@@ -273,7 +273,7 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
 
-        if(v==txtViewCart){
+        if (v == txtViewCart) {
 
 
             Animation a = AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
@@ -293,13 +293,19 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
             utilityCartData.setTotalPrice(totalPrice);
 
 
-            databaseHelper.insert(userId,product_id,nameOfFood,price,totalItems,finalImageUri,totalPrice);
+            databaseHelper.insert(userId, product_id, nameOfFood, price, totalItems, finalImageUri, totalPrice);
 
             int counter = databaseHelper.getProductsCount();
 
             nearby.setBadgeCount(counter);
 
+
+//            Bundle bundle = new Bundle();
+//            bundle.putBoolean("click",true);
+
+
             Fragment viewCartFragment = new ViewCartFragment();
+//            viewCartFragment.setArguments(bundle);
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mainFrame, viewCartFragment, "viewCartFragment");
             fragmentTransaction.addToBackStack("viewCartFragment");
@@ -307,34 +313,45 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
 
 
             getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
-
-
-        }
-
-
-        if(v==btnInc){
-
-            count++;
-            txtCount.setText(String.valueOf(count));
+            Log.i("Shbu->>FoodDetailF", "onClick: ");
 
         }
-        if(v==btnDec){
 
-            if(count<1)
-            {
-                count=1;
+        else if (v == btnInc) {
+
+            System.out.println("FoodDetailsFragment.onClick - - - checking----" + quantity);
+
+            if (count > quantity)
+
+                TastyToast.makeText(getActivity(), "We have not enough stock", TastyToast.LENGTH_SHORT, TastyToast.INFO).show();
+
+            if (count <= quantity) {
+
+                ++count;
+                if (count > quantity)
+                    return;
+                txtCount.setText(count + "");
+
+            }
+
+
+//            count++;
+//            txtCount.setText(String.valueOf(count));
+
+        } else if (v == btnDec) {
+
+
+            if (count < 1) {
+                count = 1;
                 txtCount.setText("");
 
             }
-            if(count>1)
-            {
+            if (count > 1) {
                 count--;
                 txtCount.setText(String.valueOf(count));
             }
 
-        }
-
-        if(v==imageBackArrow){
+        } else if (v == imageBackArrow) {
 
 
             FragmentManager fm = getFragmentManager();
@@ -346,7 +363,7 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
                 super.getActivity().onBackPressed();
             }
 
-          //  getActivity().finish();
+            //  getActivity().finish();
             layoutOverlay.setVisibility(View.INVISIBLE);
 
             Animation pushUpIn = AnimationUtils.loadAnimation(getActivity(), R.anim.push_up_in);
@@ -355,19 +372,34 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
 
             getActivity().overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
 
-        }
+        } else if (v == btnAddtoCart) {
 
-        if(v==btnAddtoCart){
+            System.out.println("FoodDetailsFragment.onClick - -  ADD TO CART");
+            btnAddtoCart.setEnabled(false);
 
-            MaterialRippleLayout.on(btnAddtoCart)
-                    .rippleColor(Color.parseColor("#006400"))
-                    .rippleAlpha(0.5f)
-                    .rippleHover(true)
-                    .create();
 
-            layoutOverlay.setVisibility(View.VISIBLE);
-            Animation pushUpIn = AnimationUtils.loadAnimation(getActivity(), R.anim.push_up_in);
-            layoutOverlay.startAnimation(pushUpIn);
+//            MaterialRippleLayout.on(btnAddtoCart)
+//                    .rippleColor(Color.parseColor("#006400"))
+//                    .rippleAlpha(0.5f)
+//                    .rippleHover(true)
+//                    .create();
+
+            TastyToast.makeText(getActivity(), "Items added in cart", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+
+//            layoutOverlay.setVisibility(View.VISIBLE);
+//            Animation pushUpIn = AnimationUtils.loadAnimation(getActivity(), R.anim.push_up_in);
+//            Animation pushDownIn = AnimationUtils.loadAnimation(getActivity(), R.anim.push_down_new);
+//            layoutOverlay.startAnimation(pushUpIn);
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    layoutOverlay.startAnimation(pushDownIn);
+//                    layoutOverlay.setVisibility(View.GONE);
+//                    TastyToast.makeText(getActivity(), "Added , Click on buy now to check your items", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+//                }
+//            }, 2000);
+
+
 
             /*----------------------------------------- */
 
@@ -387,10 +419,7 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
             btnAddtoCart.setTextColor(Color.WHITE);
             btnAddtoCart.setBackgroundColor(Color.parseColor("#00d048"));
 
-        }
-
-        if(v==btnBuyNow){
-
+        } else if (v.getId() == R.id.btnBuyNow) {
 
 
             layoutOverlay.setVisibility(View.VISIBLE);
@@ -426,25 +455,28 @@ public class FoodDetailsFragment extends BaseFragment implements View.OnClickLis
             utilityCartData.setTotalPrice(totalPrice);
 
 
-            databaseHelper.insert(userId,product_id,nameOfFood,price,totalItems,finalImageUri,totalPrice);
+            databaseHelper.insert(userId, product_id, nameOfFood, price, totalItems, finalImageUri, totalPrice);
 
 
             int counter = databaseHelper.getProductsCount();
 
             nearby.setBadgeCount(counter);
 
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("click", true);
 
             Fragment viewCartFragment = new ViewCartFragment();
+            viewCartFragment.setArguments(bundle);
+
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mainFrame, viewCartFragment, "viewCartFragment");
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-
+            Log.i("Shbu->>FoodDetailF", "onClick: ");
 
 
         }
     }
-
 
 
 }

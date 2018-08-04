@@ -14,13 +14,13 @@ import mall.kwik.kwikmall.activities.FragmentsActivity;
  * Created by dharamveer on 1/12/17.
  */
 
-public class RestaurantsProductsFragment extends Fragment{
+public class RestaurantsProductsFragment extends Fragment {
 
 
     private View view;
 
     Bundle bundle;
-    private String itemname,nameOfHotel;
+    private String itemname, nameOfHotel;
 
 
     @Override
@@ -28,33 +28,33 @@ public class RestaurantsProductsFragment extends Fragment{
         view = inflater.inflate(R.layout.fragment_restaurants_details, container, false);
 
 
+        System.out.println("RestaurantsProductsFragment.onCreateView - - - oncreateViewtest ");
 
         bundle = getArguments();
 
-        if(bundle != null)
-        {
+        if (bundle != null) {
 
             itemname = bundle.getString("itemname");
             nameOfHotel = bundle.getString("nameOfHotel");
+            System.out.println("RestaurantsProductsFragment.onCreateView - - - Test1 " + itemname);
+            System.out.println("RestaurantsProductsFragment.onCreateView - - - Test2 " + nameOfHotel);
 
         }
 
 
-        if(itemname!=null){
+        if (itemname != null) {
 
+            System.out.println("RestaurantsProductsFragment.onCreateView Shahzeb1");
             Bundle args = new Bundle();
-            args.putString("itemname",itemname);
+            args.putString("itemname", itemname);
             FragmentSearchResults fragmentSearch = new FragmentSearchResults();
             fragmentSearch.setArguments(args);
-            getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragmentSearch,"fragmentSearch").commit();
+            getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragmentSearch, "fragmentSearch").commit();
+        } else {
 
-        }
-        else {
-
+            System.out.println("RestaurantsProductsFragment.onCreateView Shahzeb2");
             FragmentWithoutSearchResults fragmentWithoutSearch = new FragmentWithoutSearchResults();
-            getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragmentWithoutSearch,"fragmentWithoutSearch").commit();
-
-
+            getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragmentWithoutSearch, "fragmentWithoutSearch").commit();
         }
 
 

@@ -1,14 +1,14 @@
 <resources>
 
-    <attr format="reference" name="cardStyle"/>
+    <attr name="cardStyle" format="reference" />
 
-    <attr format="reference" name="accentColor"/>
-    <attr format="reference" name="iconColor"/>
-    <attr format="reference" name="windowBackground"/>
-    <attr format="reference" name="progressBackgroundColor"/>
-    <attr format="reference" name="progressDrawable"/>
-    <attr format="reference" name="progressDrawableWithBackground" />
-    <attr format="reference" name="stateSelector" />
+    <attr name="accentColor" format="reference" />
+    <attr name="iconColor" format="reference" />
+    <attr name="windowBackground" format="reference" />
+    <attr name="progressBackgroundColor" format="reference" />
+    <attr name="progressDrawable" format="reference" />
+    <attr name="progressDrawableWithBackground" format="reference" />
+    <attr name="stateSelector" format="reference" />
 
 
     <!-- Base application theme. -->
@@ -27,8 +27,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppThemeNormalLight" parent="ThemeBaseLight">
-    </style>
+    <style name="AppThemeNormalLight" parent="ThemeBaseLight"></style>
 
     <style name="ThemeBaseLight" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -42,14 +41,14 @@
         <item name="stateSelector">@color/state_selector_light</item>
         <item name="progressBackgroundColor">@color/progressBackgroundColorLight</item>
         <item name="progressDrawable">@drawable/progress_drawable</item>
-        <item name="progressDrawableWithBackground">@drawable/progress_drawable_withbackground</item>
+        <item name="progressDrawableWithBackground">@drawable/progress_drawable_withbackground
+        </item>
 
     </style>
 
     <style name="CardViewStyle.Light" parent="CardView">
         <item name="cardBackgroundColor">@color/window_background</item>
     </style>
-
 
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
@@ -59,8 +58,8 @@
     <!-- Base application theme. -->
     <style name="DashBoardTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-      <!--  <item name="colorPrimaryDark">@android:color/holo_green_dark</item>
-        <item name="colorPrimary">@android:color/holo_green_dark</item>-->
+        <!--  <item name="colorPrimaryDark">@android:color/holo_green_dark</item>
+          <item name="colorPrimary">@android:color/holo_green_dark</item>-->
 
         <item name="colorPrimary">@color/green</item>
         <item name="android:background">@null</item>
@@ -88,29 +87,23 @@
     </style>
 
 
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
 
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
-    </style>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"></style>
 
     <style name="TextLabel" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">8sp</item>
     </style>
 
 
-
     <style name="ActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/transparent2</item>
-        <item name="colorAccent">@color/colorAccent</item>    </style>
-
-
-
-
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
 
 </resources>

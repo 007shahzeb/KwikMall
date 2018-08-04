@@ -9,9 +9,11 @@ public class StoreProductsSuccess {
     @SerializedName("success")
     @Expose
     private Boolean success;
+
     @SerializedName("error")
     @Expose
     private Boolean error;
+
     @SerializedName("payload")
     @Expose
     private List<StoreProductsPayload> payload = null;

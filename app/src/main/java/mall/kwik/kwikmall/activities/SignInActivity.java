@@ -228,7 +228,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void showError() {
-        Toast.makeText(this, "Invalid Password or number", Toast.LENGTH_LONG)
+        Toast.makeText(this, "Invalid Password or Email", Toast.LENGTH_LONG) // Invalid Password or number
                 .show();
     }
 

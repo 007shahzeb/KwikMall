@@ -1,48 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#ffffff"
     tools:context="mall.kwik.kwikmall.activities.FragmentsActivity">
-
 
 
     <FrameLayout
         android:id="@+id/afterShimmerLayout"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewRestaurants"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_marginRight="@dimen/_5sdp">
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp">
 
 
         </android.support.v7.widget.RecyclerView>
 
 
-
-
         <ImageView
             android:id="@+id/imageNoFoodProd"
-            android:visibility="gone"
-
             android:layout_width="@dimen/_150sdp"
+
             android:layout_height="@dimen/_150sdp"
             android:layout_gravity="center"
             android:src="@drawable/nofoodproducts"
-            />
-
-
-
+            android:visibility="gone" />
 
 
     </FrameLayout>
@@ -53,8 +45,7 @@
         android:layout_height="match_parent"
         android:layout_margin="@dimen/_2sdp"
         app:shimmer_angle="0"
-        app:shimmer_color="#e4e4e4"
-        >
+        app:shimmer_color="#e4e4e4">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,236 +55,209 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:orientation="horizontal"
 
                 >
 
                 <View
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_70sdp"
-                    android:scaleType="fitXY"
                     android:background="@color/shimmerlayoutcolor"
-                    />
+                    android:scaleType="fitXY" />
 
                 <LinearLayout
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:paddingLeft="@dimen/_4sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/_4sdp">
 
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
-
+                        android:background="@color/shimmerlayoutcolor" />
 
 
                     <View
                         android:layout_width="@dimen/_150sdp"
                         android:layout_height="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
+                        android:background="@color/shimmerlayoutcolor" />
 
 
                     <View
                         android:layout_width="@dimen/_250sdp"
                         android:layout_height="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
+                        android:background="@color/shimmerlayoutcolor" />
 
 
                     <View
                         android:layout_width="@dimen/_180sdp"
                         android:layout_height="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_weight="1"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-
-                >
-
-                <View
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_70sdp"
-                    android:scaleType="fitXY"
-                    android:background="@color/shimmerlayoutcolor"
-                    />
-
-                <LinearLayout
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:paddingLeft="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
-
-
-
-                    <View
-                        android:layout_width="@dimen/_150sdp"
-                        android:layout_height="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
-
-
-                    <View
-                        android:layout_width="@dimen/_250sdp"
-                        android:layout_height="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
-
-
-                    <View
-                        android:layout_width="@dimen/_180sdp"
-                        android:layout_height="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
+                        android:background="@color/shimmerlayoutcolor" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_weight="1"
                 android:gravity="center"
+                android:orientation="horizontal"
 
                 >
 
                 <View
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_70sdp"
-                    android:scaleType="fitXY"
                     android:background="@color/shimmerlayoutcolor"
-                    />
+                    android:scaleType="fitXY" />
 
                 <LinearLayout
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:paddingLeft="@dimen/_4sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/_4sdp">
 
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
-
+                        android:background="@color/shimmerlayoutcolor" />
 
 
                     <View
                         android:layout_width="@dimen/_150sdp"
                         android:layout_height="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
+                        android:background="@color/shimmerlayoutcolor" />
 
 
                     <View
                         android:layout_width="@dimen/_250sdp"
                         android:layout_height="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
+                        android:background="@color/shimmerlayoutcolor" />
 
 
                     <View
                         android:layout_width="@dimen/_180sdp"
                         android:layout_height="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
+                        android:background="@color/shimmerlayoutcolor" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:orientation="horizontal"
+
                 >
 
                 <View
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_70sdp"
-                    android:scaleType="fitXY"
                     android:background="@color/shimmerlayoutcolor"
-                    />
+                    android:scaleType="fitXY" />
 
                 <LinearLayout
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:paddingLeft="@dimen/_4sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/_4sdp">
 
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
+                        android:background="@color/shimmerlayoutcolor" />
 
 
                     <View
                         android:layout_width="@dimen/_150sdp"
                         android:layout_height="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
+                        android:background="@color/shimmerlayoutcolor" />
 
 
                     <View
                         android:layout_width="@dimen/_250sdp"
                         android:layout_height="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
+                        android:background="@color/shimmerlayoutcolor" />
 
 
                     <View
                         android:layout_width="@dimen/_180sdp"
                         android:layout_height="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/shimmerlayoutcolor"
-                        />
+                        android:background="@color/shimmerlayoutcolor" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@color/shimmerlayoutcolor"
+                    android:scaleType="fitXY" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/_4sdp">
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"
+                        android:background="@color/shimmerlayoutcolor" />
+
+
+                    <View
+                        android:layout_width="@dimen/_150sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/shimmerlayoutcolor" />
+
+
+                    <View
+                        android:layout_width="@dimen/_250sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/shimmerlayoutcolor" />
+
+
+                    <View
+                        android:layout_width="@dimen/_180sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/shimmerlayoutcolor" />
                 </LinearLayout>
             </LinearLayout>
 
 
         </LinearLayout>
     </io.supercharge.shimmerlayout.ShimmerLayout>
-
 
 
 </RelativeLayout>

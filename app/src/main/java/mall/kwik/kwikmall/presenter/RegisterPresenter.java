@@ -37,6 +37,7 @@ public class RegisterPresenter {
 
         view.showLoadingDialog();
 
+
         compositeDisposable.add(apiService.registerUser(username,email,pass,mobile,address)
                 .subscribeOn(io.reactivex.schedulers.Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -50,6 +51,7 @@ public class RegisterPresenter {
                         if(registerSuccess.getSuccess()){
 
 
+                            System.out.println("RegisterPresenter.accept");
                             view.dismissLoadingDialog();
                             view.startLoginActivity();
 

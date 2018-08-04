@@ -24,7 +24,7 @@ public class GetAllProductsPayload {
     private String discount;
     @Expose
     @SerializedName("quantity")
-    private String quantity;
+    private int quantity;
     @Expose
     @SerializedName("price")
     private String price;
@@ -92,11 +92,11 @@ public class GetAllProductsPayload {
         this.discount = discount;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
