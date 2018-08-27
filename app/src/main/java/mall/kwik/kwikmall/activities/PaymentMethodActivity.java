@@ -1,9 +1,12 @@
 package mall.kwik.kwikmall.activities;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,13 +26,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.expresspaygh.api.ExpressPayApi;
+import com.expresspaygh.api.models.Configuration;
+import com.google.gson.JsonObject;
 import com.sdsmdg.tastytoast.TastyToast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
+import java.util.Currency;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import am.appwise.components.ni.NoInternetDialog;
 import mall.kwik.kwikmall.AppConstants;
@@ -55,9 +71,17 @@ public class PaymentMethodActivity extends BaseActivity implements View.OnClickL
     private Context context;
     private NoInternetDialog noInternetDialog;
     static ExpressPayApi expressPayApi;
-
+    String SUBMIT_TESTING_API_URL = "https://sandbox.expresspaygh.com/api/submit.php";
+    String REDIRECT_URL = "http://employeelive.com/Kwiqmall/public/";
     private Button dialog_accept, dialog_reject;
     Dialog dialog;
+    private String MerchantID;
+    private String API_Key;
+    private String order_no;
+    //    private String order_no;
+//    private String API_Key;
+//    private String MerchantID;
+//    public static Activity fa;
 
 
     @Override
@@ -65,8 +89,14 @@ public class PaymentMethodActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_method);
 
+
+//        fa = this;
+
+
         context = this;
         noInternetDialog = new NoInternetDialog.Builder(context).build();
+
+        String order_no = sharedPrefsHelper.get(AppConstants.ORDER_NO, "");
 
         findViewId();
 
@@ -89,7 +119,7 @@ public class PaymentMethodActivity extends BaseActivity implements View.OnClickL
          * *                      if null it defaults to https://sandbox.expresspaygh.com/sdk/server.php 
          * */
 
-        expressPayApi = new ExpressPayApi(this, null);
+        expressPayApi = new ExpressPayApi(this, SUBMIT_TESTING_API_URL);
 
         /**
          * Set the developnment env
@@ -150,13 +180,16 @@ public class PaymentMethodActivity extends BaseActivity implements View.OnClickL
                                 edCardnumber.setSelection(edCardnumber.getText().length());
                             }
                         }
+
                         a = edCardnumber.getText().toString();
                     } else {
+
                         a = edCardnumber.getText().toString();
                         keyDel = 0;
                     }
 
                 } else {
+
                     edCardnumber.setText(a);
                 }
 
@@ -223,22 +256,37 @@ public class PaymentMethodActivity extends BaseActivity implements View.OnClickL
          * In Dev: Use amount 1.00 to simulate a failed transaction and greater than or equals 2.00 for a successful transaction
          */
 
-        String order_no = sharedPrefsHelper.get(AppConstants.ORDER_NO, "");
+
+        order_no = sharedPrefsHelper.get(AppConstants.ORDER_NO, "");
+        String user_name = sharedPrefsHelper.get(AppConstants.USER_NAME, "");
+        String email = sharedPrefsHelper.get(AppConstants.EMAIL, "");
+        Integer user_id = sharedPrefsHelper.get(AppConstants.USER_ID, 0);
+        String phonenumber = sharedPrefsHelper.get(AppConstants.PHONE_NUMBER, "");
+
+        Locale current = getResources().getConfiguration().locale;
+        String currency = Currency.getInstance(current).getCurrencyCode();
+
+        MerchantID = "36945b03f0395f9685b0";
+        API_Key = "wHURN7If4egq4DzlrZm9I-DwRFDaXTWKabz9BA2xd9-LzHws0mrFFg4CGjIJdgu-YgetvegMog4BFJ2NV0M";
+        double amountFailed = 1.00;
+        double amountSuccess = 2.00;
+        String REDIRECT_URL = "https://sandbox.expresspaygh.com/api/checkout.php";    // it called finally when transaction completed
 
 
         HashMap<String, String> params = new HashMap<String, String>();
 
-        params.put("request", "submit");
-        params.put("order_id", "82373");
+
+//      params.put("request", "Submit");
+        params.put("order-id", order_no);
+        params.put("email", email);
+        params.put("phone_number", phonenumber);
+        params.put("merchant-id", MerchantID);
+        params.put("api-key", API_Key);
+        params.put("firstname", user_name);
+        params.put("lastname", "Ventures");
         params.put("currency", "GHS");
-        params.put("amount", "55");
-        params.put("order_desc", "Food Items");
-        params.put("user_name", "testapi@expresspaygh.com");
-        params.put("first_name", "Test");
-        params.put("last_name", "Api");
-        params.put("email", "testapi@expresspaygh.com");
-        params.put("phone_number", "233244123123");
-        params.put("account_number", "233244123123");
+        params.put("amount", String.valueOf(amountSuccess));
+        params.put("redirect-url", "http://employeelive.com/Kwiqmall/public/");
 
 
         expressPayApi.submit(params, PaymentMethodActivity.this, new ExpressPayApi.ExpressPaySubmitCompletionListener() {
@@ -258,7 +306,7 @@ public class PaymentMethodActivity extends BaseActivity implements View.OnClickL
                         if (status.equalsIgnoreCase("1")) {
                             String token = expressPayApi.getToken();
 
-                            checkout();
+                            checkout(token);
 
                         } else {
 
@@ -278,6 +326,8 @@ public class PaymentMethodActivity extends BaseActivity implements View.OnClickL
                     Log.d("expressPayDemo", message);
                     showDialog(message);
                 }
+
+
             }
         });
 
@@ -285,12 +335,15 @@ public class PaymentMethodActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onExpressPayPaymentFinished(boolean paymentCompleted, String message) {
+
         if (paymentCompleted) {
             //Payment was completed
             String token = expressPayApi.getToken();
+
             queryPayment(token);
 
         } else {
+
             //There was an error
             Log.d("expressPayDemo", message);
             showDialog(message);
@@ -310,35 +363,120 @@ public class PaymentMethodActivity extends BaseActivity implements View.OnClickL
     }
 
 
-    public void checkout() {
+    public void checkout(String token) {
         /**
          * Displays the payment page to accept the payment method from the user
          *
          * When the payment is complete the ExpressPayPaymentCompletionListener is called
          */
 
-        expressPayApi.checkout(this);
+        expressPayApi.checkout(this, token, "http://employeelive.com/Kwiqmall/public/");
+
+//        Toast.makeText(getApplicationContext(),"Completing your payment",Toast.LENGTH_SHORT).show();
+
     }
 
 
     public void queryPayment(String token) {
+
         /**
          * After the payment has been completed we query our servers to find out
          * the status of the transaction
          * url: https://sandbox.expresspaygh.com/api/server.php
          */
-        expressPayApi.query(token, new ExpressPayApi.ExpressPayQueryCompletionListener() {
+
+//        expressPayApi.query(token, new ExpressPayApi.ExpressPayQueryCompletionListener() {
+//            @Override
+//            public void onExpressPayQueryFinished(Boolean paymentSuccessful, JSONObject jsonObject, String message) {
+//                if (paymentSuccessful) {
+//
+//                    Toast.makeText(getApplicationContext() , "Query payment IF part is working" , 0).show();
+//                    showDialog(message);
+//                } else {
+//                    //There was an error
+//                    Log.d("expressPayDemo", message);
+//                    showDialog(message);
+//
+//                    Toast.makeText(getApplicationContext() , "Query payment Else part is working" , 0).show();
+//
+//                }
+//            }
+//        });
+
+
+        String url = "https://sandbox.expresspaygh.com/api/query.php";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onExpressPayQueryFinished(Boolean paymentSuccessful, JSONObject jsonObject, String message) {
-                if (paymentSuccessful) {
-                    showDialog(message);
-                } else {
-                    //There was an error
-                    Log.d("expressPayDemo", message);
-                    showDialog(message);
+            public void onResponse(String response) {
+
+                System.out.println("PaymentMethodActivity.onResponse " + response);
+
+                //This code is executed if the server responds, whether or not the response contains data.
+                //The String 'response' contains the server's response.
+
+
+//                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+
+
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (json.optInt("result") == 1) {
+                        TastyToast.makeText(getApplicationContext(), "Approved", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+
+                        callSuccessfully();
+
+
+                    } else if (json.optInt("result") == 2) {
+
+                        TastyToast.makeText(getApplicationContext(), "Declined", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+
+                    } else if (json.optInt("result") == 3) {
+
+                        TastyToast.makeText(getApplicationContext(), "Error in transaction data or system error", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+
+                    } else if (json.optInt("result") == 4) {
+
+                        TastyToast.makeText(getApplicationContext(), "Pending", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+
+                    } else {
+
+                        TastyToast.makeText(getApplicationContext(), "Retry", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
+
+//                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://sandbox.expresspaygh.com/api/query.php" + token + order_no));
+//                startActivity(browserIntent);
+
+
             }
-        });
+        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //This code is executed if there is an error.
+                Log.i("", "onErrorResponse: ");
+            }
+        }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> MyData = new HashMap<String, String>();
+                MyData.put("token", token); //Add the data you'd like to send to the server.
+                MyData.put("merchant-id", MerchantID); //Add the data you'd like to send to the server.
+                MyData.put("api-key", API_Key); //Add the data you'd like to send to the server.
+                return MyData;
+            }
+        };
+        queue.add(MyStringRequest);
+
+    }
+
+    private void callSuccessfully() {
+
+        startActivity(new Intent(this, PaymentSuccessfullyActivity.class));
+
     }
 
 
@@ -366,75 +504,77 @@ public class PaymentMethodActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+
+
+                    txtonfirmpayment.setClickable(false);
+
+
+//                    txtonfirmpayment.setTextColor(Color.parseColor("#ffffff"));
+//                    txtonfirmpayment.setBackground(getDrawable(R.drawable.false_submit));
+
                     // perform logic
 
-                 /*   creditCardLayout.setVisibility(View.VISIBLE);
-
-                    customCreditLinearLayout.setBackgroundResource(R.drawable.custom_background_selected);
-
-                  //  customDiscoverLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
-                    customPaypalLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
-
-                  //  checkboxDiscover.setChecked(false);
-
-                  //  DiscoverCardLayout.setVisibility(View.GONE);
-
-                    //CashOnDelivery.setVisibility(View.GONE);
-
-
-         */
+//                    creditCardLayout.setVisibility(View.VISIBLE);
+//
+//                    customCreditLinearLayout.setBackgroundResource(R.drawable.custom_background_selected);
+//
+//                  //  customDiscoverLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
+//                    customPaypalLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
+//
+//                  //  checkboxDiscover.setChecked(false);
+//
+//                  //  DiscoverCardLayout.setVisibility(View.GONE);
+//
+//                    //CashOnDelivery.setVisibility(View.GONE);
+//
+//
 
                     pay();
 
 
-                    checkboxPaypal.setChecked(false);
-
-
                 } else {
-
-                /*    creditCardLayout.setVisibility(View.GONE);
-                    customCreditLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
-*/
-
-
-                }
-            }
-        });
-
-/*
-        checkboxDiscover.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    // perform logic
-
-                    DiscoverCardLayout.setVisibility(View.VISIBLE);
-
                     checkboxPaypal.setChecked(false);
-                    checkboxCreditCard.setChecked(false);
 
-                    customDiscoverLinearLayout.setBackgroundResource(R.drawable.custom_background_selected);
+//                    creditCardLayout.setVisibility(View.GONE);
+//                    customCreditLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
 
-                    customCreditLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
-                    customPaypalLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
-
-
-                    creditCardLayout.setVisibility(View.GONE);
-
-                    //CashOnDelivery.setVisibility(View.GONE);
 
                 }
-                else {
-
-                    DiscoverCardLayout.setVisibility(View.GONE);
-
-                    customDiscoverLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
-
-                }
-
             }
         });
-*/
+
+//        checkboxDiscover.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked){
+//                    // perform logic
+//
+//                    DiscoverCardLayout.setVisibility(View.VISIBLE);
+//
+//                    checkboxPaypal.setChecked(false);
+//                    checkboxCreditCard.setChecked(false);
+//
+//                    customDiscoverLinearLayout.setBackgroundResource(R.drawable.custom_background_selected);
+//
+//                    customCreditLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
+//                    customPaypalLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
+//
+//
+//                    creditCardLayout.setVisibility(View.GONE);
+//
+//                    //CashOnDelivery.setVisibility(View.GONE);
+//
+//                }
+//                else {
+//
+//                    DiscoverCardLayout.setVisibility(View.GONE);
+//
+//                    customDiscoverLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
+//
+//                }
+//
+//            }
+//        });
 
         checkboxPaypal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -443,55 +583,56 @@ public class PaymentMethodActivity extends BaseActivity implements View.OnClickL
 
                     System.out.println("PaymentMethodActivity.onCheckedChanged - - - Checked case");
 
+                    txtonfirmpayment.setClickable(true);
                     checkboxCreditCard.setChecked(false);
                     // perform logic
 
                     // CashOnDelivery.setVisibility(View.VISIBLE);
-
-                   /* customPaypalLinearLayout.setBackgroundResource(R.drawable.custom_background_selected);
-
-                    customCreditLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
-                   // customDiscoverLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
-
-                   // checkboxDiscover.setChecked(false);
-
-                   // DiscoverCardLayout.setVisibility(View.GONE);
-
-                    creditCardLayout.setVisibility(View.GONE);*/
-
-                    /*AlertDialog.Builder builder;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
-                    } else {
-                        builder = new AlertDialog.Builder(context);
-                    }
-                    builder.setCancelable(false);
-                    builder.setTitle("Choose The Action")
-
-//                            .setMessage("Are you sure you want to delete this entry?")
-                            .setPositiveButton("ACCEPT", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // continue with delete
-                                    System.out.println("PaymentMethodActivity.onClick - - - Aceept");
-                                    Toast.makeText(context, "Order successfully Submitted", Toast.LENGTH_SHORT).show();
 //
-                                    startActivity(new Intent(context, PaymentSuccessfullyActivity.class));
-                                    finish();
-                                    overridePendingTransition(R.anim.slide_in, R.anim.nothing);
-                                }
-                            })
-                            .setNegativeButton("REJECT", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // do nothing
-
-                                    System.out.println("PaymentMethodActivity.onClick - - - Reject");
-                                    Toast.makeText(getApplicationContext(), "Not in policy", Toast.LENGTH_SHORT).show();
-                                    checkboxPaypal.setChecked(false);
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
-                    builder.setCancelable(false);*/
+//                    customPaypalLinearLayout.setBackgroundResource(R.drawable.custom_background_selected);
+//
+//                    customCreditLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
+//                   // customDiscoverLinearLayout.setBackgroundResource(R.drawable.custom_background_unselected);
+//
+//                   // checkboxDiscover.setChecked(false);
+//
+//                   // DiscoverCardLayout.setVisibility(View.GONE);
+//
+//                    creditCardLayout.setVisibility(View.GONE);
+//
+//                    AlertDialog.Builder builder;
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+//                    } else {
+//                        builder = new AlertDialog.Builder(context);
+//                    }
+//                    builder.setCancelable(false);
+//                    builder.setTitle("Choose The Action")
+//
+////                            .setMessage("Are you sure you want to delete this entry?")
+//                            .setPositiveButton("ACCEPT", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // continue with delete
+//                                    System.out.println("PaymentMethodActivity.onClick - - - Aceept");
+//                                    Toast.makeText(context, "Order successfully Submitted", Toast.LENGTH_SHORT).show();
+////
+//                                    startActivity(new Intent(context, PaymentSuccessfullyActivity.class));
+//                                    finish();
+//                                    overridePendingTransition(R.anim.slide_in, R.anim.nothing);
+//                                }
+//                            })
+//                            .setNegativeButton("REJECT", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // do nothing
+//
+//                                    System.out.println("PaymentMethodActivity.onClick - - - Reject");
+//                                    Toast.makeText(getApplicationContext(), "Not in policy", Toast.LENGTH_SHORT).show();
+//                                    checkboxPaypal.setChecked(false);
+//                                }
+//                            })
+//                            .setIcon(android.R.drawable.ic_dialog_alert)
+//                            .show();
+//                    builder.setCancelable(false);
 
 
 //                    dialog = new Dialog(context); // Context, this, etc.
@@ -514,47 +655,47 @@ public class PaymentMethodActivity extends BaseActivity implements View.OnClickL
         });
 
 
-      /*  chkMtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-
-                   // chkVodafone.setChecked(false);
-                  //  chkTigoAirtel.setChecked(false);
-                }
-
-
-            }
-        });*/
-
-
-     /*   chkVodafone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if(isChecked) {
-
-                    chkMtn.setChecked(false);
-                    chkTigoAirtel.setChecked(false);
-
-                }
-            }
-        });
+//        chkMtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if(isChecked){
+//
+//                   // chkVodafone.setChecked(false);
+//                  //  chkTigoAirtel.setChecked(false);
+//                }
+//
+//
+//            }
+//        });
 
 
-        chkTigoAirtel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if(isChecked) {
-
-                    chkMtn.setChecked(false);
-                    chkVodafone.setChecked(false);
-
-                }
-
-            }
-        });*/
+//        chkVodafone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//
+//                if(isChecked) {
+//
+//                    chkMtn.setChecked(false);
+//                    chkTigoAirtel.setChecked(false);
+//
+//                }
+//            }
+//        });
+//
+//
+//        chkTigoAirtel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//
+//                if(isChecked) {
+//
+//                    chkMtn.setChecked(false);
+//                    chkVodafone.setChecked(false);
+//
+//                }
+//
+//            }
+//        });
 
 
     }

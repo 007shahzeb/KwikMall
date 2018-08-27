@@ -20,6 +20,7 @@ public class RegisterPresenter {
     private CompositeDisposable compositeDisposable;
 
 
+
     private SignUpView view;
 
     public void bind(SignUpView view) {
@@ -36,6 +37,9 @@ public class RegisterPresenter {
         compositeDisposable = new CompositeDisposable();
 
         view.showLoadingDialog();
+
+
+
 
 
         compositeDisposable.add(apiService.registerUser(username,email,pass,mobile,address)

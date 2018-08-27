@@ -34,7 +34,6 @@ import pl.droidsonroids.gif.GifImageView;
 public class TrackYourOrderFragment extends BaseFragment {
 
 
-
     // private RecyclerView mRecyclerView;
     // private List<TimeLineModel> mDataList = new ArrayList<>();
     // private TimeLineAdapter mTimeLineAdapter;
@@ -61,9 +60,10 @@ public class TrackYourOrderFragment extends BaseFragment {
         context = getActivity();
         noInternetDialog = new NoInternetDialog.Builder(context).build();
 
-      /*  mRecyclerView =  view.findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setHasFixedSize(true)*/;
+//        mRecyclerView =  view.findViewById(R.id.recyclerView);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+//        mRecyclerView.setHasFixedSize(true)
+//        ;
 
         // initView();
 
@@ -71,8 +71,7 @@ public class TrackYourOrderFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                if ( getFragmentManager().getBackStackEntryCount() > 0)
-                {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStack();
                     return;
                 }
@@ -83,13 +82,12 @@ public class TrackYourOrderFragment extends BaseFragment {
         });
 
 
-        int bussinessId = sharedPrefsHelper.get(AppConstants.STORE_ID,0);
-        String orderNo  = sharedPrefsHelper.get(AppConstants.ORDER_NO,"");
-        int userId = sharedPrefsHelper.get(AppConstants.USER_ID,0);
+        int bussinessId = sharedPrefsHelper.get(AppConstants.STORE_ID, 0);
+        String orderNo = sharedPrefsHelper.get(AppConstants.ORDER_NO, "");
+        int userId = sharedPrefsHelper.get(AppConstants.USER_ID, 0);
 
 
-
-        compositeDisposable.add(apiService.getDeliveryStatus(String.valueOf(bussinessId),orderNo,String.valueOf(userId))
+        compositeDisposable.add(apiService.getDeliveryStatus(String.valueOf(bussinessId), orderNo, String.valueOf(userId))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<GetDeliveryStatusSuccess>() {
@@ -97,46 +95,49 @@ public class TrackYourOrderFragment extends BaseFragment {
                     public void accept(GetDeliveryStatusSuccess getDeliveryStatusSuccess) throws Exception {
 
 
-                        if(getDeliveryStatusSuccess.getSuccess()){
+                        if (getDeliveryStatusSuccess.getSuccess()) {
 
 
-                            if(getDeliveryStatusSuccess.getPayload().equals(0)){
-
-
-
-                            }
-                            else if(getDeliveryStatusSuccess.getPayload().equals(1)){
-
-
-                                //order successfully delivered
-
+                            if (getDeliveryStatusSuccess.getPayload().getDeliveryStatus() == 0) {
+                                imageOrderGif.setVisibility(View.VISIBLE);
+                            } else if (getDeliveryStatusSuccess.getPayload().getDeliveryStatus() == 1) {
                                 imageOrderGif.setBackgroundResource(R.drawable.cashondelivery);
-                            }
-
-                            else if(getDeliveryStatusSuccess.getPayload().equals(2)){
-
-                                //order is ready to deliver
+                            } else if (getDeliveryStatusSuccess.getPayload().getDeliveryStatus() == 2) {
                                 imageOrderGif.setBackgroundResource(R.drawable.cooking);
 
-
-                            }
-
-                            else if(getDeliveryStatusSuccess.getPayload().equals(3)){
-
-                                //order is on the way
-
+                            } else if (getDeliveryStatusSuccess.getPayload().getDeliveryStatus() == 3) {
                                 imageOrderGif.setBackgroundResource(R.drawable.deliveryonway);
-
                             }
 
 
+//                            if (getDeliveryStatusSuccess.getPayload().equals(0)) {
+//
+//                                imageOrderGif.setVisibility(View.VISIBLE);
+//
+//                            } else if (getDeliveryStatusSuccess.getPayload().equals(1)) {
+//
+//
+//                                //order successfully delivered
+//
+//                                imageOrderGif.setBackgroundResource(R.drawable.cashondelivery);
+//                            } else if (getDeliveryStatusSuccess.getPayload().equals(2)) {
+//
+//                                //order is ready to deliver
+//                                imageOrderGif.setBackgroundResource(R.drawable.cooking);
+//
+//
+//                            } else if (getDeliveryStatusSuccess.getPayload().equals(3)) {
+//
+//                                //order is on the way
+//
+//                                imageOrderGif.setBackgroundResource(R.drawable.deliveryonway);
+//
+//                            }
 
 
-                        }
-                        else
-                        {
+                        } else {
 
-                           // showAlertDialog("Retry","False");
+                            showAlertDialog("Retry", "False");
 
                         }
 
@@ -146,7 +147,7 @@ public class TrackYourOrderFragment extends BaseFragment {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
 
-                        showAlertDialog("Retry",throwable.getMessage());
+                        showAlertDialog("Retry", throwable.getMessage());
 
 
                     }
@@ -164,23 +165,22 @@ public class TrackYourOrderFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-/*
-    private void initView() {
-        setDataListItems();
-        mTimeLineAdapter = new TimeLineAdapter(mDataList,mWithLinePadding);
-        mRecyclerView.setAdapter(mTimeLineAdapter);
-    }
-
-    private void setDataListItems(){
-        mDataList.add(new TimeLineModel("Item successfully delivered", "", OrderStatus.INACTIVE));
-        mDataList.add(new TimeLineModel("Courier is out to delivery your order", "2017-02-12 08:00", OrderStatus.ACTIVE));
-        mDataList.add(new TimeLineModel("Item has reached courier facility at New Delhi", "2017-02-11 21:00", OrderStatus.COMPLETED));
-        mDataList.add(new TimeLineModel("Item has been given to the courier", "2017-02-11 18:00", OrderStatus.COMPLETED));
-        mDataList.add(new TimeLineModel("Item is packed and will dispatch soon", "2017-02-11 09:30", OrderStatus.COMPLETED));
-        mDataList.add(new TimeLineModel("Order is being readied for dispatch", "2017-02-11 08:00", OrderStatus.COMPLETED));
-        mDataList.add(new TimeLineModel("Order processing initiated", "2017-02-10 15:00", OrderStatus.COMPLETED));
-        mDataList.add(new TimeLineModel("Order confirmed by seller", "2017-02-10 14:30", OrderStatus.COMPLETED));
-        mDataList.add(new TimeLineModel("Order placed successfully", "2017-02-10 14:00", OrderStatus.COMPLETED));
-    }*/
+//    private void initView() {
+//        setDataListItems();
+//        mTimeLineAdapter = new TimeLineAdapter(mDataList,mWithLinePadding);
+//        mRecyclerView.setAdapter(mTimeLineAdapter);
+//    }
+//
+//    private void setDataListItems(){
+//        mDataList.add(new TimeLineModel("Item successfully delivered", "", OrderStatus.INACTIVE));
+//        mDataList.add(new TimeLineModel("Courier is out to delivery your order", "2017-02-12 08:00", OrderStatus.ACTIVE));
+//        mDataList.add(new TimeLineModel("Item has reached courier facility at New Delhi", "2017-02-11 21:00", OrderStatus.COMPLETED));
+//        mDataList.add(new TimeLineModel("Item has been given to the courier", "2017-02-11 18:00", OrderStatus.COMPLETED));
+//        mDataList.add(new TimeLineModel("Item is packed and will dispatch soon", "2017-02-11 09:30", OrderStatus.COMPLETED));
+//        mDataList.add(new TimeLineModel("Order is being readied for dispatch", "2017-02-11 08:00", OrderStatus.COMPLETED));
+//        mDataList.add(new TimeLineModel("Order processing initiated", "2017-02-10 15:00", OrderStatus.COMPLETED));
+//        mDataList.add(new TimeLineModel("Order confirmed by seller", "2017-02-10 14:30", OrderStatus.COMPLETED));
+//        mDataList.add(new TimeLineModel("Order placed successfully", "2017-02-10 14:00", OrderStatus.COMPLETED));
+//    }
 
 }

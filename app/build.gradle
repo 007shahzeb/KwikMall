@@ -199,7 +199,7 @@ dependencies {
     //Time line view order tracking
     implementation 'com.github.vipulasri:timelineview:1.0.6'
 
-    //Express Way Payment SDK
+    //Express Pay Payment SDK
     implementation(name: 'expressPayLibrary-1.4', ext: 'aar')
     implementation 'com.github.joielechong:countrycodepicker:2.1.5'
     implementation 'com.github.d-max:spots-dialog:0.7@aar'

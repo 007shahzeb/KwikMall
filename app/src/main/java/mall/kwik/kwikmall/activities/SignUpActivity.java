@@ -2,6 +2,7 @@ package mall.kwik.kwikmall.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
@@ -194,6 +195,18 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                    /* new RegisterPresenter(apiService,sharedPrefsHelper,edUsername.getText().toString().trim(),edEmailAddress.getText().toString().trim(),
                             edPassword.getText().toString().trim(),codeWithPh,edAddressRegister.getText().toString().trim());
 */
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+
+//                    editor.putBoolean("key_name1", true);           // Saving boolean - true/false
+//                    editor.putInt("key_name2", "int value");        // Saving integer
+//                    editor.putFloat("key_name3", "float value");    // Saving float
+//                    editor.putLong("key_name4", "long value");      // Saving long
+                    editor.putString("userAddress", edAddressRegister.getText().toString().trim());  // Saving string
+                    // Save the changes in SharedPreferences
+//                    editor.commit(); // commit changes
+                    editor.apply();
+
 
                     registerPresenter.ok_signUp(apiService, edUsername.getText().toString().trim(), edEmailAddress.getText().toString().trim(),
                             edPassword.getText().toString().trim(), codeWithPh, edAddressRegister.getText().toString().trim());

@@ -20,7 +20,7 @@ import mall.kwik.kwikmall.fragments.TrackYourOrderFragment;
 public class PaymentSuccessfullyActivity extends BaseActivity {
 
 
-    private TextView txtSuccess,tvAddress,tvPaymentMethod,tvSuccessfully,tvCongra,tvDes,txtonSuccess,txtOrderNo;
+    private TextView txtSuccess, tvAddress, tvPaymentMethod, tvSuccessfully, tvCongra, tvDes, txtonSuccess, txtOrderNo;
     private ImageView imageSuccessBack;
     private Context context;
     private NoInternetDialog noInternetDialog;
@@ -60,8 +60,7 @@ public class PaymentSuccessfullyActivity extends BaseActivity {
         txtOrderNo = findViewById(R.id.txtOrderNo);
 
 
-
-        txtOrderNo.setText(sharedPrefsHelper.get(AppConstants.ORDER_NO,""));
+        txtOrderNo.setText(sharedPrefsHelper.get(AppConstants.ORDER_NO, ""));
 
     }
 
@@ -81,10 +80,10 @@ public class PaymentSuccessfullyActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-              //  ((FragmentsActivity) getApplicationContext()).replace3();
+                //  ((FragmentsActivity) getApplicationContext()).replace3();
 
 
-                startActivity(new Intent(context,FragmentsActivity.class));
+                startActivity(new Intent(context, FragmentsActivity.class));
 
             }
         });
@@ -94,6 +93,10 @@ public class PaymentSuccessfullyActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
+
+        // finishing the previous activity
+//        PaymentMethodActivity.fa.finish();
 
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);

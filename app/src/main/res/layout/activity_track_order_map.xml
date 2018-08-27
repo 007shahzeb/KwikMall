@@ -7,7 +7,6 @@
     tools:context="mall.kwik.kwikmall.activities.FoodDetailsActivity">
 
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,41 +19,37 @@
             android:id="@+id/mapLayout"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_gravity="center"
             android:layout_height="match_parent"
-            />
+            android:layout_gravity="center" />
 
         <Button
             android:id="@+id/btnGotoFragmentAct"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
+            android:layout_margin="30dp"
+            android:background="@drawable/addtocartbtn"
             android:text="Start Shopping Again"
             android:textAllCaps="false"
-            android:textSize="@dimen/_12sdp"
-            android:layout_margin="30dp"
-            android:background="@drawable/addtocartbtn"/>
-
+            android:textSize="@dimen/_12sdp" />
 
 
     </FrameLayout>
-
 
 
     <RelativeLayout
         android:id="@+id/footerSuccess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00d048"
-        android:layout_alignParentBottom="true">
-
+        android:layout_alignParentBottom="true"
+        android:background="#00d048">
 
 
         <LinearLayout
-            android:layout_alignParentLeft="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
             android:gravity="center"
+            android:orientation="vertical"
             android:padding="@dimen/_5sdp">
 
             <TextView
@@ -62,51 +57,47 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/totaltime"
-                android:textSize="@dimen/_9sdp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="@dimen/_9sdp" />
 
             <TextView
                 android:id="@+id/tvTotaltime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10 min"
-                android:textSize="@dimen/_9sdp"
-                android:textColor="@color/white"/>
-
+                android:textColor="@color/white"
+                android:textSize="@dimen/_9sdp" />
 
 
         </LinearLayout>
 
         <LinearLayout
-            android:padding="5dp"
-            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
             android:orientation="vertical"
-            android:gravity="center">
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/txtTotalDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/totaldistance"
-                android:textSize="@dimen/_9sdp"
+                android:textColor="@color/white"
 
-                android:textColor="@color/white"/>
+                android:textSize="@dimen/_9sdp" />
 
             <TextView
                 android:id="@+id/tvTotaldistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="25 km"
-                android:textSize="@dimen/_9sdp"
-
-                android:textColor="@color/white"/>
-
+                android:textColor="@color/white"
+                android:textSize="@dimen/_9sdp" />
 
 
         </LinearLayout>
-
 
 
     </RelativeLayout>

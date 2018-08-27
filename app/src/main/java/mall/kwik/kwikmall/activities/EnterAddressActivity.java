@@ -3,6 +3,7 @@ package mall.kwik.kwikmall.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -57,6 +58,8 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
         findViewId();
 
         dbHelper = new DBHelper(this);
+
+
 
 
         Bundle bundle = getIntent().getExtras();
@@ -151,11 +154,22 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
         edZipCode = findViewById(R.id.edZipCode);
         */
 
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+//        boolean userFirstLogin= pref.getBoolean("key_name1", true);  // getting boolean
+//        int pageNumber=pref.getInt("key_name2", 0);             // getting Integer
+//        float amount=pref.getFloat("key_name3", null);          // getting Float
+//        long distance=pref.getLong("key_name4", null);          // getting Long
+        String useradd=pref.getString("userAddress", null);
+
 
         edFullName.setText(sharedPrefsHelper.get(AppConstants.USER_NAME, ""));
         edMobileNo.setText(sharedPrefsHelper.get(AppConstants.PHONE_NUMBER, ""));
         edEmailAddress.setText(sharedPrefsHelper.get(AppConstants.EMAIL, ""));
-        edAdd.setText(sharedPrefsHelper.get(AppConstants.ADDRESS, ""));
+//        edAdd.setText(sharedPrefsHelper.get(AppConstants.ADDRESS, ""));
+                edAdd.setText(useradd);
+
 
 
     }
@@ -354,11 +368,6 @@ public class EnterAddressActivity extends BaseActivity implements View.OnClickLi
                 })
                 .show();
     }
-
-
-
-
-
 
 
 }

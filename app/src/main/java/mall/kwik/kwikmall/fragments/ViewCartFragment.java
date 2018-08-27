@@ -567,7 +567,7 @@ public class ViewCartFragment extends BaseFragment implements View.OnClickListen
 
                                                     placeOrderStatusAPI();
                                                 }
-                                            }, 60000);
+                                            }, 30000);
 
 
 //                                            Intent intent = new Intent(getActivity(), EnterAddressActivity.class);
